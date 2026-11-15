@@ -25,6 +25,7 @@ jobs:
           python -m PyInstaller --noconfirm --clean --onefile --name HealthQualifyLocal \
             --add-data "healthqualify/local_ui_v08.html:healthqualify" \
             --add-data "healthqualify/local_ui_v08.js:healthqualify" \
+            --add-data "healthqualify/local_ui_v08.css:healthqualify" \
             --add-data "examples/synthetic_lis_v2/protocol.json:examples/synthetic_lis_v2" \
             --add-data "examples/synthetic_lis_v3/protocol.json:examples/synthetic_lis_v3" \
             scripts/local_entry_v08.py
