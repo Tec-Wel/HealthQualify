@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="396" viewBox="0 0 1280 396" role="img" aria-labelledby="title description">
+<title id="title">HealthQualify — qualify with evidence, not assumptions</title>
+<desc id="description">A polished deep navy banner with a modular verification workflow showing requirements, deterministic checks, and tamper-evident evidence.</desc>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0B1326"/><stop offset=".57" stop-color="#111F39"/><stop offset="1" stop-color="#0B3441"/></linearGradient>
+  <linearGradient id="teal" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#72E4CD"/><stop offset="1" stop-color="#85BFFF"/></linearGradient>
+  <linearGradient id="plate" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#253A57"/><stop offset="1" stop-color="#162941"/></linearGradient>
+  <filter id="soft"><feGaussianBlur stdDeviation="32"/></filter>
+</defs>
+<rect width="1280" height="396" rx="25" fill="url(#bg)"/>
+<circle cx="1083" cy="40" r="225" fill="#6CCBC2" opacity=".065" filter="url(#soft)"/>
+<circle cx="880" cy="364" r="170" fill="#5FAEFF" opacity=".065" filter="url(#soft)"/>
+<g stroke="#79A8CD" opacity=".13" stroke-width="1">
+<path d="M702 40V346M764 40V346M826 40V346M888 40V346M950 40V346M1012 40V346M1074 40V346M1136 40V346M1198 40V346"/>
+<path d="M681 68H1233M681 130H1233M681 192H1233M681 254H1233M681 316H1233"/>
+</g>
+<g font-family="Arial,Helvetica,sans-serif">
+  <rect x="64" y="58" width="205" height="32" rx="16" fill="#193C47" stroke="#4AB5A8" stroke-opacity=".65"/>
+  <circle cx="83" cy="74" r="5" fill="#80E9CA"/>
+  <text x="98" y="79" font-size="12" font-weight="700" fill="#B6F9E9" letter-spacing="1.35">OPEN-SOURCE TOOLING</text>
+  <text x="62" y="168" fill="#FFFFFF" font-size="65" font-weight="700" letter-spacing="-2.6">HealthQualify</text>
+  <text x="66" y="216" fill="#BFD2E5" font-size="26" font-weight="500">Qualify with evidence. Not assumptions.</text>
+  <text x="66" y="268" fill="#ADC3D8" font-size="17">Trace requirements. Run deterministic checks.</text>
+  <text x="66" y="298" fill="#ADC3D8" font-size="17">Verify outcomes. Understand what changed.</text>
+  <text x="66" y="361" fill="#76E2D0" font-size="13" font-weight="700" letter-spacing="1.1">LOCAL FIRST  ·  SYNTHETIC DATA  ·  HUMAN REVIEW</text>
+</g>
+<g font-family="Arial,Helvetica,sans-serif" text-anchor="middle">
+<g>
+<rect x="687" y="116" width="149" height="153" rx="18" fill="url(#plate)" stroke="#537D98" stroke-width="1.5"/>
+<rect x="713" y="144" width="88" height="9" rx="4.5" fill="#8BA9C9"/>
+<rect x="713" y="166" width="71" height="7" rx="3.5" fill="#627F9E"/>
+<rect x="713" y="184" width="86" height="7" rx="3.5" fill="#627F9E"/>
+<path d="m718 215 10 10 19-23" fill="none" stroke="#78E2CB" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="761" y="293" font-size="14" font-weight="700" fill="#BFD3E8">DEFINE</text>
+</g>
+<g>
+<rect x="875" y="116" width="149" height="153" rx="18" fill="url(#plate)" stroke="#537D98" stroke-width="1.5"/>
+<circle cx="950" cy="191" r="38" stroke="#79BDFC" stroke-width="4" fill="none"/>
+<path d="m929 191 14 15 28-33" fill="none" stroke="#77E3C9" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="950" y="293" font-size="14" font-weight="700" fill="#BFD3E8">EXECUTE</text>
+</g>
+<g>
+<rect x="1063" y="116" width="149" height="153" rx="18" fill="url(#plate)" stroke="#537D98" stroke-width="1.5"/>
+<path d="m1137 147 36 17v27c0 31-19 49-36 57-18-8-36-26-36-57v-27z" fill="#194A51" stroke="#70D7CA" stroke-width="3"/>
+<path d="m1118 196 14 14 25-30" fill="none" stroke="#B7FFE7" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="1137" y="293" font-size="14" font-weight="700" fill="#BFD3E8">VERIFY</text>
+</g>
+<path d="M838 193h35m-9-9 9 9-9 9M1025 193h36m-9-9 9 9-9 9" stroke="#75D8D0" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</svg>
