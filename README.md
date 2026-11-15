@@ -7,7 +7,7 @@
 **From requirements to verifiable test results—without black-box approvals.**  
 A local-first toolkit for deterministic synthetic testing, traceability, review-ready evidence, and conservative change-impact analysis.
 
-[**Get started**](#quick-start) · [**Explore capabilities**](#what-you-can-do) · [**Browse documentation**](docs/DOCUMENTATION_INDEX.md) · [**Try the guided evaluation**](docs/EVALUATION_GUIDE.md)
+[**Get started**](#quick-start) · [**Explore capabilities**](#what-you-can-do) · [**Browse documentation**](docs/README.md) · [**Try the guided evaluation**](docs/EVALUATION_GUIDE.md)
 
 ![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-3975A9?style=flat-square) ![License Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-50708E?style=flat-square) ![Developer alpha](https://img.shields.io/badge/Status-Developer%20alpha-7756A8?style=flat-square) ![Synthetic data only](https://img.shields.io/badge/Data-Synthetic%20only-16846F?style=flat-square) ![AI optional](https://img.shields.io/badge/AI-Optional-386F82?style=flat-square)
 
@@ -155,7 +155,7 @@ A **single-user, loopback-only local dashboard** is also available on `127.0.0.1
 
 ### Looking for a specific guide?
 
-**[📚 Open the complete documentation center →](docs/DOCUMENTATION_INDEX.md)**
+**[📚 Open the complete documentation center →](docs/README.md)**
 
 </div>
 
@@ -184,7 +184,7 @@ HealthQualify welcomes reproducible bug reports, documentation improvements, syn
 
 **A clearer path from what you intended to test to what you can actually verify.**
 
-[**🚀 Run your first test**](docs/GETTING_STARTED.md) · [**🧭 Browse all docs**](docs/DOCUMENTATION_INDEX.md) · [**↗ Why HealthQualify**](#why-healthqualify)
+[**🚀 Run your first test**](docs/GETTING_STARTED.md) · [**🧭 Browse all docs**](docs/README.md) · [**↗ Why HealthQualify**](#why-healthqualify)
 
 <sub>Local first · AI optional · Synthetic only · Human-reviewed quality decisions</sub>
 

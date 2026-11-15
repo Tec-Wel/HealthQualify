@@ -19,12 +19,12 @@ GUIDES = [
     "docs/VERSIONING_POLICY.md", "README.md", "SECURITY.md",
     "SUPPORT.md", "CHANGELOG.md",
 ]
-PATTERN = re.compile(r"(?<!!)\[[^\]]+\]\(([^)]+)\)")
+PATTERN = re.compile(r"!?\[[^\]]+\]\(([^)]+)\)")
 
 
 class DocumentationContracts(unittest.TestCase):
     def test_local_links_exist(self):
-        for filename in GUIDES:
+        for filename in sorted(set(GUIDES + [str(p.relative_to(ROOT)) for p in (ROOT / "docs").glob("*.md")])):
             path = ROOT / filename
             self.assertTrue(path.is_file(), filename)
             for target in PATTERN.findall(path.read_text(encoding="utf-8")):
