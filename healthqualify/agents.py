@@ -21,11 +21,11 @@ AGENTS = ("release-impact", "gap-hunter", "failure-investigation",
 MAX_BYTES = 1024 * 1024
 MAX_COMPONENTS = 1000
 LLM_ROLES = {
-    "release-impact": "requirements",
-    "gap-hunter": "requirements",
-    "failure-investigation": "deviation",
-    "qa-readiness": "requirements",
-    "dependency-investigator": "requirements",
+    "release-impact": "release-impact",
+    "gap-hunter": "gap-hunter",
+    "failure-investigation": "failure-investigation",
+    "qa-readiness": "qa-readiness",
+    "dependency-investigator": "dependency-investigator",
 }
 
 
