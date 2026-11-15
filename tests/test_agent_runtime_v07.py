@@ -10,6 +10,8 @@ from healthqualify.security import AuthenticationError
 from healthqualify.agent_eval_v07 import evaluate
 from healthqualify.agent_tools_v07 import AgentToolbox
 from healthqualify.agent_model_probe_v07 import probe
+from healthqualify.agent_ci_v07 import run_ci
+import subprocess
 from unittest.mock import patch
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -158,6 +160,16 @@ class EvaluationTests(unittest.TestCase):
         self.assertIsNone(report["model_grounding_score"])
         self.assertTrue(report["human_review_required"])
         self.assertFalse(report["qualification_approved"])
+
+    @patch("healthqualify.agent_ci_v07.subprocess.run")
+    def test_main_push_all_five_agents_draft_only(self,run):
+        run.return_value=subprocess.CompletedProcess([],0,
+                 "healthqualify/healthcare.py\\n","")
+        result=run_ci()
+        self.assertEqual(result["state"],"DRAFT_ONLY")
+        self.assertEqual(len(result["jobs"]),5)
+        self.assertTrue(all(x["state"]=="DRAFT" for x in result["jobs"]))
+        self.assertFalse(result["qualification_approved"])
 
     def test_thirty_explicit_gold_label_scenarios(self):
         report=evaluate()
