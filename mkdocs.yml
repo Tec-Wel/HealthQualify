@@ -18,6 +18,9 @@ nav:
       - Healthcare use cases: HEALTHCARE_USE_CASES.md
       - Methodology: QUALIFICATION_METHODOLOGY.md
       - Templates: VALIDATION_TEMPLATES.md
+  - Local AI agents:
+      - Five agent guide: AI_AGENTS_GUIDE.md
+      - Local dashboard: AI_AGENT_DASHBOARD.md
   - Developers:
       - CLI: CLI_REFERENCE.md
       - API: API_REFERENCE.md
