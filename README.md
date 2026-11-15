@@ -184,7 +184,7 @@ HealthQualify welcomes reproducible bug reports, documentation improvements, syn
 
 **A clearer path from what you intended to test to what you can actually verify.**
 
-[**🚀 Run your first test**](docs/GETTING_STARTED.md) · [**🧭 Browse all docs**](docs/DOCUMENTATION_INDEX.md) · [**⬆ Back to top**](#open-source-healthcare-software-qualification--technical-evidence)
+[**🚀 Run your first test**](docs/GETTING_STARTED.md) · [**🧭 Browse all docs**](docs/DOCUMENTATION_INDEX.md) · [**↗ Why HealthQualify**](#why-healthqualify)
 
 <sub>Local first · AI optional · Synthetic only · Human-reviewed quality decisions</sub>
 
