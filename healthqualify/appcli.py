@@ -15,6 +15,11 @@ from .modelqual import score_classifier
 from .secure_api import serve_secure
 from .security import IdentityStore
 from .interop import check_local_fhir
+from .fhir_secure import fetch_fhir, assert_fhir_field
+from .dicom_device import inspect_dicom_file, inspect_equipment_snapshot
+from .hl7_mllp import analyze_message
+from .protected_export import protect_export, verify_export
+import base64
 from .evidence import seal_export, verify_seal
 from .regwatch import RegulationWatch
 
@@ -51,6 +56,16 @@ def main(argv=None):
     cmd("regulation-diff","before_file","after_file")
     cmd("modelqual","rows_file")
     cmd("agents")
+    approved=cmd("fhir-check-approved","url","field","expected_json")
+    approved.add_argument("--authorize-read-only",action="store_true")
+    dicom=cmd("dicom-synthetic","file")
+    dicom.add_argument("--authorize-synthetic",action="store_true")
+    h=cmd("hl7-mllp-inspect","file")
+    h.add_argument("--authorize-synthetic",action="store_true")
+    device=cmd("device-snapshot","file")
+    device.add_argument("--authorize-synthetic",action="store_true")
+    cmd("protect-export","source","destination")
+    cmd("verify-protected","directory")
     testfhir=cmd("fhir-check-local","url","path","expected_json")
     testfhir.add_argument("--allow-local-http",action="store_true")
     cmd("regwatch-capture","framework","text_file")
@@ -64,6 +79,36 @@ def main(argv=None):
     args=parser.parse_args(argv)
     store=None
     try:
+        if args.command=="fhir-check-approved":
+            origin=os.environ.get("HEALTHQUALIFY_FHIR_ORIGIN","")
+            token=os.environ.get("HEALTHQUALIFY_FHIR_BEARER","")
+            data=fetch_fhir(args.url,approved_origin=origin,bearer_token=token,
+                            consent=args.authorize_read_only)
+            result=assert_fhir_field(data,args.field,json.loads(args.expected_json))
+            print(json.dumps(result,indent=2))
+            return 0 if result["status"]=="PASS" else 1
+        if args.command=="dicom-synthetic":
+            print(json.dumps(inspect_dicom_file(args.file,synthetic_only=args.authorize_synthetic),indent=2))
+            return 0
+        if args.command=="hl7-mllp-inspect":
+            if not args.authorize_synthetic: raise ValueError("Synthetic-data authorization required")
+            data=Path(args.file).read_bytes()
+            print(json.dumps(analyze_message(data),indent=2))
+            return 0
+        if args.command=="device-snapshot":
+            print(json.dumps(inspect_equipment_snapshot(read_json(args.file),
+                authorized=args.authorize_synthetic),indent=2))
+            return 0
+        if args.command=="protect-export":
+            key=base64.b64decode(os.environ.get("HEALTHQUALIFY_AES_KEY_B64",""),validate=True)
+            seed=base64.b64decode(os.environ.get("HEALTHQUALIFY_SIGN_SEED_B64",""),validate=True)
+            print(json.dumps(protect_export(Path(args.source),Path(args.destination),key,seed),indent=2))
+            return 0
+        if args.command=="verify-protected":
+            public=base64.b64decode(os.environ.get("HEALTHQUALIFY_PUBLIC_KEY_B64",""),validate=True)
+            ok=verify_export(Path(args.directory),public)
+            print(json.dumps({"verified":ok}))
+            return 0 if ok else 1
         if args.command=="fhir-check-local":
             expected=json.loads(args.expected_json)
             result=check_local_fhir(args.url,args.path,expected,authorized=args.allow_local_http)
