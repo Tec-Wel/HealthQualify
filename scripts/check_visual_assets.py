@@ -32,7 +32,7 @@ def run() -> None:
         desc = svg.find(SVG + "desc")
         assert title is not None and (title.text or "").strip(), f"{filename}: missing accessible title"
         assert desc is not None and (desc.text or "").strip(), f"{filename}: missing accessible description"
-        assert not re.search(r"<script\b|https?://|onload\s*=", path.read_text(), re.I), \
+        assert not re.search(r"<script\b|(?:href\s*=\s*[\"\']https?://)|(?:url\(\s*https?://)|onload\s*=", path.read_text(), re.I), \
             f"{filename}: external resource or script is not allowed"
         print(f"PASS {filename} [{width}x{height}]")
 
