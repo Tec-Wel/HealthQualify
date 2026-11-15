@@ -13,6 +13,7 @@ from .studio import draft_urs, risk_plan
 from .ai import available_roles, local_draft
 from .modelqual import score_classifier
 from .api import serve
+from .interop import check_local_fhir
 from .evidence import seal_export, verify_seal
 from .regwatch import RegulationWatch
 
@@ -47,6 +48,8 @@ def main(argv=None):
     cmd("regulation-diff","before_file","after_file")
     cmd("modelqual","rows_file")
     cmd("agents")
+    testfhir=cmd("fhir-check-local","url","path","expected_json")
+    testfhir.add_argument("--allow-local-http",action="store_true")
     cmd("regwatch-capture","framework","text_file")
     cmd("seal","directory")
     cmd("verify-seal","directory")
@@ -58,6 +61,11 @@ def main(argv=None):
     args=parser.parse_args(argv)
     store=None
     try:
+        if args.command=="fhir-check-local":
+            expected=json.loads(args.expected_json)
+            result=check_local_fhir(args.url,args.path,expected,authorized=args.allow_local_http)
+            print(json.dumps(result,indent=2))
+            return 0 if result["status"]=="PASS" else 1
         if args.command in {"seal","verify-seal"}:
             secret=os.getenv("HEALTHQUALIFY_EVIDENCE_KEY","").encode("utf-8")
             if args.command=="seal":
