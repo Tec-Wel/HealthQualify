@@ -18,6 +18,18 @@ jobs:
           python-version: '3.12'
       - name: Evaluate all five deterministic agents on 30 labeled scenarios
         run: python -m healthqualify.agent_eval_v07 --out agent-evaluation.json
+      - name: Run all five synthetic investigators against main source changes
+        if: github.event_name == 'push'
+        env:
+          HQ_AGENT_ADVISORY_OUT: agent-main-advisories.json
+        run: python -m healthqualify.agent_ci_v07
+      - name: Publish main-change advisory
+        if: github.event_name == 'push'
+        uses: actions/upload-artifact@v4
+        with:
+          name: healthqualify-five-agent-main-advisory
+          path: agent-main-advisories.json
+          retention-days: 30
       - name: Publish unsigned evaluation report
         uses: actions/upload-artifact@v4
         with:
