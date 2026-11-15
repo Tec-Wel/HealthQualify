@@ -61,4 +61,4 @@ The reviewer compares requirements, acceptance basis, test definitions, system m
 6. Validate the tool itself under the intended quality-system process before regulated operational reliance.
 
 ## Independent development
-Implementation is original HealthQualify code informed by general functionality of ParaQualis and medtest-traceability. Neither upstream codebase is forked or copied.
+HealthQualify components are independently implemented. The qualification engine runs deterministic checks and records technical evidence without relying on an AI model.

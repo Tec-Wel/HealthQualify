@@ -14,7 +14,7 @@
 | #6 Change impact | Version-aware conservative component paths -> tests, unknown changes trigger all current tests and human review. | CI webhook integration, dependency discovery, manual disposition, release orchestration |
 | #7 Optional AI | Provider-neutral draft interface with strict no-approval/no-evidence contract, disabled default, local Ollama adapter; existing offline ModelQual metrics. | vLLM and hosted provider adapters, security benchmarking, model governance |
 | #8 Deployment/governance | Consistent SQLite backup, integrity and trusted checksum validation; existing RBAC/secure loopback service and encrypted exports. | Cloud deployment with PostgreSQL, TLS, SSO/MFA, restore drills, WORM evidence, pentest |
-| #9 Benchmarks | Reproducible internal seeded-LIS benchmark harness with wall time and outcomes and explicit *comparison not run*. | Equal-input external baselines with ParaQualis, medtest-traceability and pytest; repeat trials and publish measured comparisons |
+| #9 Benchmarks | Reproducible internal seeded-LIS benchmark harness with wall time and outcomes and explicit *comparison not run*. | Equal-input external baselines with conventional qualification scripts, traceability tools and pytest; repeat trials and publish measured comparisons |
 
 **All nine original issues remain open unless their full original acceptance criteria are independently met. A CI success does not mean they are completed.**
 
