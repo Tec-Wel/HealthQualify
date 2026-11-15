@@ -19,21 +19,40 @@ PAGE = """<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>HealthQualify · Local AI Agents</title>
 <style>
-:root{font:15px system-ui,Segoe UI,Arial,sans-serif;color:#172944;background:#f3f7fa}
-*{box-sizing:border-box}body{max-width:1160px;margin:0 auto;padding:30px}
-header{display:flex;align-items:center;justify-content:space-between;gap:12px}
-h1{margin:0;font-size:28px}small,.muted{color:#64748b}.pill{border-radius:24px;padding:7px 12px;background:#d9f3ed;color:#075f53;font-weight:700}
-.panel{background:white;border:1px solid #dce5ed;border-radius:14px;padding:22px;margin-top:20px;box-shadow:0 6px 20px #0f27430b}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
-.agent{border:1px solid #dce5ed;border-radius:12px;padding:18px;background:#fff}
-.agent h3{margin:6px 0;font-size:17px}.agent p{color:#475569;min-height:50px}
-button{background:#0d766b;border:0;color:white;padding:11px 17px;border-radius:8px;cursor:pointer;font-weight:650}
-button:hover{background:#09594f}button:disabled{opacity:.5;cursor:wait}
-input{padding:11px;border:1px solid #bccad8;border-radius:8px;max-width:100%;width:360px}
-#result{white-space:pre-wrap;overflow-wrap:anywhere;max-height:480px;overflow:auto;background:#10253f;color:#e8f7ff;padding:20px;border-radius:10px}
-table{border-collapse:collapse;width:100%}td,th{padding:11px;text-align:left;border-bottom:1px solid #e5edf3}
-.notice{padding:13px;background:#fff7e6;border-left:4px solid #d09b32;border-radius:6px}
-@media(max-width:620px){body{padding:12px}header{display:block}table{font-size:12px}}
+:root{font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:#102B45;background:#F5F8FC;--border:#DAE7ED;--teal:#0C8579;--text:#102B45;--muted:#5F7383;--surface:#fff;--focus:#075B9A}
+*{box-sizing:border-box}
+body{max-width:1260px;margin:0 auto;padding:34px 28px 80px}
+header{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:33px 36px;background:linear-gradient(120deg,#102B45,#184B5A);border-radius:22px;box-shadow:0 14px 38px #102b451d}
+header h1{font-size:34px;font-weight:800;letter-spacing:-.045em;color:#fff;line-height:1.2}
+header h1 span{color:#76E3D0!important}
+header p{color:#CFDFE6!important;margin-bottom:0}
+h1,h2,h3{line-height:1.28}
+h2{font-size:20px;letter-spacing:-.02em;margin:0 0 12px}
+h3{font-weight:750}
+small,.muted{color:var(--muted)}
+header .pill{background:#245465;color:#A4F1E1;border:1px solid #448780}
+.pill{border-radius:999px;padding:8px 13px;font-size:11px;letter-spacing:.055em;font-weight:800;white-space:nowrap}
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:28px;margin-top:22px;box-shadow:0 8px 25px #0f27430b}
+.panel>p:first-of-type{margin:0 0 18px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.agent{border:1px solid var(--border);border-radius:14px;padding:22px;background:#FAFCFE;display:flex;flex-direction:column;transition:border-color .15s,box-shadow .15s}
+.agent:hover{border-color:#3EA998;box-shadow:0 10px 25px #0d776b12}
+.agent h3{margin:0 0 8px;font-size:17px}
+.agent p{color:#55697A;min-height:54px;margin:0 0 18px;flex:1;font-size:14px}
+button{background:var(--teal);border:1px solid var(--teal);color:white;padding:11px 18px;border-radius:9px;cursor:pointer;font:inherit;font-size:14px;font-weight:750;transition:background .15s}
+button:hover{background:#086B61}
+button:focus-visible,input:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+button:disabled{opacity:.55;cursor:wait}
+input[type=password]{padding:12px 14px;border:1px solid #B6C8D1;border-radius:9px;width:min(420px,100%);font:inherit}
+input[type=checkbox]{accent-color:var(--teal);width:18px;height:18px;vertical-align:middle}
+label{display:inline-flex;align-items:center;gap:9px;max-width:100%;margin-top:8px;color:#365364}
+#result{white-space:pre-wrap;overflow-wrap:anywhere;max-height:530px;overflow:auto;background:#0D253B;color:#CFEDE9;padding:22px;border-radius:12px;border:1px solid #174C5A;font:13px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace}
+table{border-collapse:collapse;width:100%;font-size:13px}
+td,th{padding:13px;text-align:left;border-bottom:1px solid #E1EAF0;overflow-wrap:anywhere}
+th{background:#F0F7F8;color:#335768;font-size:12px}
+.notice{padding:16px 19px;background:#FFF7E8;border-left:4px solid #C68C32;border-radius:9px;margin-top:20px;color:#604A20}
+@media(max-width:680px){body{padding:16px 12px 48px}header{display:block;padding:24px}header h1{font-size:27px}.pill{display:inline-block;margin-top:14px}.panel{padding:19px}.grid{grid-template-columns:1fr}table{display:block;overflow:auto}input[type=password]{margin-bottom:10px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style></head><body>
 <header><div><h1>HealthQualify <span style="color:#0d766b">AI Agents</span></h1><p class="muted">Five offline qualification investigators · synthetic developer alpha</p></div><div class="pill">LOCAL · DRAFT ONLY</div></header>
 <div class="notice"><strong>Not a regulated approval system.</strong> Findings are advisory, model explanations are unverified, and QA release authorization is not supported.</div>
