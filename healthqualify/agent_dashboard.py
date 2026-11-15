@@ -154,6 +154,8 @@ def make_handler(history, token, protocol, registry, changed, evidence_dir=None,
                 return self.reply(200, data)
             except (ValueError, KeyError, TypeError, OSError, json.JSONDecodeError) as exc:
                 return self.reply(400, {"error": str(exc)[:200]})
+            except Exception:
+                return self.reply(503, {"error": "Agent execution failed; inspect local job history"})
     return Handler
 
 
