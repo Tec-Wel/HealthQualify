@@ -51,6 +51,33 @@ This requires Ollama locally at 127.0.0.1:11434 and an installed model. No AI is
 ## Cloud deployment
 The Docker image is portable, but the provided Compose profile is explicitly **local-only**. AWS EC2, GCP and Azure VM, and hospital on-prem deployment require a secured ingress, RBAC, TLS, encrypted storage, backups, monitoring, threat model and appropriate validation work. The same container can be used in those environments; no production configuration is claimed to be implemented.
 
+## Local interoperability and integrity prototypes
+
+Explicitly authorized, read-only synthetic FHIR endpoint check on loopback:
+
+```bash
+python -m healthqualify.appcli fhir-check-local \
+  http://127.0.0.1:8000/fhir/Observation/1 resourceType '"Observation"' --allow-local-http
+```
+
+A synthetic FHIR fixture server must be started separately; the unit tests mock it without network use. Public/clinical URLs are rejected.
+
+Regulatory snapshots from operator-supplied text, not automatically verified official versions:
+
+```bash
+python -m healthqualify.appcli --db /tmp/hq-demo.db regwatch-capture us-part-11 supplied-text.txt
+```
+
+Optional shared-secret integrity receipt after exporting a report:
+
+```bash
+export HEALTHQUALIFY_EVIDENCE_KEY="$(python -c 'import secrets;print(secrets.token_urlsafe(48))')"
+python -m healthqualify.appcli seal /tmp/hq-report
+python -m healthqualify.appcli verify-seal /tmp/hq-report
+```
+
+Neither the local baseline event nor the receipt is a qualified electronic signature. See [release scope and gaps](RELEASE_STATUS.md).
+
 ## Gaps to full product
 Real FHIR/HL7 authenticated adapters against approved environments; React UI; FastAPI service; PostgreSQL and object storage; role-based access and true approval workflow; durable signed evidence with trusted timestamps; privacy and security testing; real regulatory version tracking; physician/QA reviewed qualification packs; automated source-code change impact; and self-assurance of HealthQualify itself.
 
