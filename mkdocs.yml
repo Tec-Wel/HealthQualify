@@ -1,42 +1,108 @@
-site_name: HealthQualify Documentation
-site_description: Developer-alpha healthcare software qualification tooling — synthetic data only
+site_name: HealthQualify
+site_description: Local-first software qualification, evidence, and AI investigation — synthetic developer alpha
+site_url: https://Tec-Wel.github.io/HealthQualify/
+repo_name: Tec-Wel/HealthQualify
 repo_url: https://github.com/Tec-Wel/HealthQualify
+edit_uri: edit/main/docs/
 docs_dir: docs
+use_directory_urls: true
+
 theme:
-  name: mkdocs
+  name: material
+  language: en
+  logo: null
+  favicon: null
+  icon:
+    repo: fontawesome/brands/github
+  features:
+    - navigation.instant
+    - navigation.tabs
+    - navigation.sections
+    - navigation.indexes
+    - navigation.top
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.tabs.link
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  font: false
+
+plugins:
+  - search:
+      lang: en
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+
+extra_css:
+  - stylesheets/extra.css
+
 nav:
-  - Home: DOCUMENTATION_INDEX.md
-  - Get started:
+  - Home: index.md
+  - Start Here:
+      - Get started: GETTING_STARTED.md
       - Installation: INSTALLATION.md
-      - First run: GETTING_STARTED.md
       - Evaluation: EVALUATION_GUIDE.md
-  - User workflows:
-      - User guide: USER_GUIDE.md
-      - End-to-end: END_TO_END_WORKFLOW.md
-      - Examples: EXAMPLES.md
-      - Verification: VERIFICATION_GUIDE.md
-      - Healthcare use cases: HEALTHCARE_USE_CASES.md
-      - Methodology: QUALIFICATION_METHODOLOGY.md
-      - Templates: VALIDATION_TEMPLATES.md
-  - Local AI agents:
-      - Five agent guide: AI_AGENTS_GUIDE.md
+      - All guides: DOCUMENTATION_INDEX.md
+  - AI Agents:
+      - Five investigators: AI_AGENTS_GUIDE.md
       - Local dashboard: AI_AGENT_DASHBOARD.md
-  - Developers:
-      - CLI: CLI_REFERENCE.md
-      - API: API_REFERENCE.md
-      - Config: CONFIGURATION.md
+  - Qualification:
+      - User guide: USER_GUIDE.md
+      - End-to-end workflow: END_TO_END_WORKFLOW.md
+      - Examples: EXAMPLES.md
+      - Evidence verification: VERIFICATION_GUIDE.md
+      - Healthcare use cases: HEALTHCARE_USE_CASES.md
+      - Qualification methodology: QUALIFICATION_METHODOLOGY.md
+      - Templates: VALIDATION_TEMPLATES.md
+  - Developer:
+      - CLI reference: CLI_REFERENCE.md
+      - API reference: API_REFERENCE.md
+      - Configuration: CONFIGURATION.md
       - Architecture: DEVELOPER_ARCHITECTURE.md
-      - Extending: CUSTOM_ADAPTER_GUIDE.md
+      - Custom adapters: CUSTOM_ADAPTER_GUIDE.md
       - Integrations: INTEGRATION_GUIDE.md
-      - Testing: TESTING_AND_CI.md
-  - Evaluate & operate:
-      - Capabilities: FEATURE_MATRIX.md
-      - Migration: MIGRATION_GUIDE.md
-      - Security: SECURITY_MODEL.md
-      - Production gates: PRODUCTION_READINESS_CHECKLIST.md
+      - Tests & CI: TESTING_AND_CI.md
+  - Security & Operations:
+      - Feature matrix: FEATURE_MATRIX.md
+      - Security model: SECURITY_MODEL.md
+      - Production-readiness gates: PRODUCTION_READINESS_CHECKLIST.md
       - Deployment: DEPLOYMENT_GUIDE.md
       - Operations: OPERATIONS_RUNBOOK.md
-      - FAQ: FAQ.md
       - Troubleshooting: TROUBLESHOOTING.md
-      - Versioning: VERSIONING_POLICY.md
+      - FAQ: FAQ.md
       - Regulatory mapping: REGULATORY_MAPPING.md
+      - Site setup & costs: DOCS_SITE_SETUP.md
+  - Contributing:
+      - Migration guide: MIGRATION_GUIDE.md
+      - Versioning policy: VERSIONING_POLICY.md
