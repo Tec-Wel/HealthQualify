@@ -1,0 +1,32 @@
+name: Visual preview — optional local-demo screenshots
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  synthetic-visual-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install optional Playwright
+        run: |
+          python -m pip install 'playwright>=1.49,<2'
+          python -m playwright install --with-deps chromium
+      - name: Capture real synthetic dashboard (no Qwen)
+        run: python scripts/capture_agent_dashboard.py --output-dir .healthqualify/screenshots
+      - name: Upload reviewed-later synthetic captures
+        uses: actions/upload-artifact@v4
+        with:
+          name: healthqualify-synthetic-dashboard-screenshots
+          path: .healthqualify/screenshots/*.png
+          retention-days: 7
+      # This manually triggered workflow is not required for CI and does not
+      # publish screenshots on a website or commit them to main.

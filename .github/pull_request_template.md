@@ -15,5 +15,11 @@ What problem does this solve? Link related issue.
 - [ ] No automatic release/qualification approval introduced
 - [ ] Conservative UNKNOWN_IMPACT behavior retained
 
+## Visual UX review (when applicable)
+- [ ] Before/after captures come from real synthetic demo or are clearly labeled concepts
+- [ ] Desktop/mobile layouts and keyboard focus checked
+- [ ] SVG assets have descriptive alternative text and no remote resources
+- [ ] `python scripts/check_visual_assets.py` passes
+
 ## Evidence
 Paste sanitized results and exact source SHA; do not include regulated production data.

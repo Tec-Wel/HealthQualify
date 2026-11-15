@@ -106,5 +106,9 @@ nav:
       - Regulatory mapping: REGULATORY_MAPPING.md
       - Site setup & costs: DOCS_SITE_SETUP.md
   - Contributing:
+      - Visual contribution guide: CONTRIBUTOR_VISUAL_GUIDE.md
+      - Design system: DESIGN_GUIDELINES.md
+      - Screenshot guide: VISUAL_ASSETS_GUIDE.md
+      - Release presentation: RELEASE_PRESENTATION_TEMPLATE.md
       - Migration guide: MIGRATION_GUIDE.md
       - Versioning policy: VERSIONING_POLICY.md
