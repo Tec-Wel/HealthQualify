@@ -1,0 +1,5 @@
+# Optional documentation-only development dependencies.
+# No paid services, analytics, or hosted search are required.
+# Review and update pins through a verified dependency workflow.
+mkdocs>=1.6,<2
+mkdocs-material>=9.6,<10

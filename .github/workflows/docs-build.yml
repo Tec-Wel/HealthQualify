@@ -1,0 +1,44 @@
+name: Documentation site — build only
+
+on:
+  pull_request:
+    paths:
+      - 'docs/**'
+      - 'mkdocs.yml'
+      - 'requirements-docs.txt'
+      - '.github/workflows/docs-build.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'docs/**'
+      - 'mkdocs.yml'
+      - 'requirements-docs.txt'
+      - '.github/workflows/docs-build.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: requirements-docs.txt
+      - name: Install free docs dependencies
+        run: python -m pip install -r requirements-docs.txt
+      - name: Build documentation without publishing
+        run: python -m mkdocs build --site-dir /tmp/healthqualify-site
+      - name: Confirm key generated pages
+        run: |
+          test -f /tmp/healthqualify-site/index.html
+          test -f /tmp/healthqualify-site/AI_AGENTS_GUIDE/index.html
+          test -f /tmp/healthqualify-site/AI_AGENT_DASHBOARD/index.html
+      # Deliberately NO pages:write permission, NO deploy action,
+      # NO site artifact upload: private docs stay in this repository.
