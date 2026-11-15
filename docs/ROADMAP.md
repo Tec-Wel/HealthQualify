@@ -36,6 +36,6 @@
 - Validation/assurance of HealthQualify itself for regulated use.
 
 ## Measurement
-Compare the same synthetic LIS requirements and defects with ParaQualis + execution tooling, medtest-traceability + CI and baseline pytest. Track setup time, coverage of seeded defects, false positives, reproducibility, artifact integrity, maintenance and affected-test impact accuracy.
+Compare the same synthetic LIS requirements and seeded defects with standalone scripting, traceability tooling and baseline pytest. Track setup time, coverage of seeded defects, false positives, reproducibility, artifact integrity, maintenance and affected-test impact accuracy.
 
 All milestones are planned, not completed product claims.
