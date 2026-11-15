@@ -46,6 +46,7 @@ async function init(){
 async function enterApp(){
  $("auth").hidden=true;$("app").style.display="block";
  $("userLabel").textContent=user.username+" · "+user.role;
+ $("manageQA").hidden=user.role!=="admin";
  await refresh();
 }
 async function refresh(){
@@ -53,7 +54,7 @@ async function refresh(){
  $("numSystems").textContent=overview.systems.length;
  $("numRuns").textContent=overview.runs.length;
  $("numDeviations").textContent=overview.deviations.filter(d=>d.status!=="RESOLVED").length;
- for(const id of ["runsTable","deviationsTable","systemSelect","traceability"])clear(id);
+ for(const id of ["runsTable","deviationsTable","systemSelect","qaSystem","traceability"])clear(id);
  for(const r of overview.runs){
   const s=r.summary;
   addRow("runsTable",[safeShort(r.id,12),s.PASS||0,s.FAIL||0,s.ERROR||0,s.NOT_RUN||0,"NO"]);
@@ -80,6 +81,8 @@ async function refresh(){
  for(const s of overview.systems){
   const opt=document.createElement("option");opt.value=s.id;opt.textContent=s.name+" · "+safeShort(s.id,8);
   $("systemSelect").append(opt);
+  const copy=document.createElement("option");copy.value=s.id;copy.textContent=s.name+" · "+safeShort(s.id,8);
+  $("qaSystem").append(copy);
  }
 }
 const agentNames=[
@@ -179,6 +182,20 @@ $("explainAgent").onclick=async()=>{
  }catch(e){showMessage("Optional model unavailable: "+e.message,true);}
  finally{button.disabled=false;}
 };
+$("qaForm").addEventListener("submit",async event=>{
+ event.preventDefault();
+ const username=$("qaUsername").value,password=$("qaPassword").value,
+       system_id=$("qaSystem").value;
+ if(!system_id)return showMessage("Run the synthetic demo before creating a QA grant.",true);
+ const submit=$("qaForm").querySelector("button");submit.disabled=true;
+ try{
+  await api("/api/users",{username,password,role:"qa"});
+  await api("/api/grants",{username,system_id});
+  $("qaPassword").value="";
+  showMessage("QA account created and assigned. Sign out, then log in as "+username+" to review the draft.");
+ }catch(e){showMessage("QA setup failed: "+e.message,true);}
+ finally{submit.disabled=false;}
+});
 $("refreshReviews").onclick=loadReviews;
 $("checkModel").onclick=async()=>{
  try{const m=await api("/api/model-check",{});
