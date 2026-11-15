@@ -8,15 +8,13 @@ from __future__ import annotations
 import ipaddress
 import json
 from urllib.parse import urlsplit
-from urllib.request import Request, build_opener, HTTPHandler
+from urllib.request import Request, build_opener, HTTPRedirectHandler
 from urllib.error import URLError, HTTPError
 
 
-class _NoRedirect(HTTPHandler):
-    def http_error_302(self, req, fp, code, msg, headers):
+class _NoRedirect(HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
         raise ValueError("Redirects are not allowed")
-
-    http_error_301 = http_error_303 = http_error_307 = http_error_308 = http_error_302
 
 
 def check_local_json(url: str, field: str, expected, authorized: bool = False):
