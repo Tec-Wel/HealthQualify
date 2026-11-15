@@ -47,7 +47,7 @@ def check(path: Path, heading: str, hero: str, links: list[str]):
     html = path.read_text(encoding="utf-8")
     p = PageInspector()
     p.feed(html)
-    if heading not in p.headings:
+    if heading not in [x.removesuffix("¶").strip() for x in p.headings]:
         raise AssertionError(f"Unrendered page heading in {path}: {p.headings!r}")
     if hero not in p.images:
         raise AssertionError(f"Hero image Markdown did not render in {path}")
