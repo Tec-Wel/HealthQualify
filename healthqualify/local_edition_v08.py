@@ -264,6 +264,25 @@ class LocalHandler(BaseHTTPRequestHandler):
                 finally:store.close()
                 return self.response(200,{"logged_out":True},extra={
                     "Set-Cookie":"hq_session=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0"})
+            if path=="/api/users":
+                if set(data)!={"username","password","role"}:
+                    raise ValueError("Username, password and role required")
+                store=IdentityStore(self.server.database)
+                try:
+                    store.authorize(principal,"users")
+                    result=store.create_user(principal,data["username"],
+                                             data["password"],data["role"])
+                finally:store.close()
+                return self.response(201,result)
+            if path=="/api/grants":
+                if set(data)!={"username","system_id"}:
+                    raise ValueError("Username and system required")
+                runtime=ScopedAgentRuntime(self.server.database)
+                try:
+                    result=runtime.grant_system(self.cookie_token(),
+                                                data["username"],data["system_id"])
+                    return self.response(201,result)
+                finally:runtime.close()
             if path=="/api/demo":
                 if data not in ({},):
                     raise ValueError("Demo requires empty JSON")
