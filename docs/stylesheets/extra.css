@@ -72,3 +72,69 @@
 @media screen and (max-width: 44.9375em) {
   .md-typeset table:not([class]) { display: block; overflow-x: auto; }
 }
+
+
+/* Wider, calmer responsive landing page rather than default plain tables. */
+.md-content__inner { max-width: 70rem; }
+.md-typeset h1 { color: #10324a; }
+[data-md-color-scheme="slate"] .md-typeset h1 { color: #d9f6f4; }
+.md-typeset > p:first-of-type > img:first-child {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 1rem;
+  margin: 0 auto 1.1rem;
+  box-shadow: 0 16px 42px rgba(10, 43, 61, .16);
+}
+.md-typeset > p:first-of-type { margin-top: .35rem; }
+.md-typeset > h1:first-of-type {
+  font-size: clamp(1.9rem, 3.5vw, 3rem);
+  margin-top: .6rem;
+  margin-bottom: .55rem;
+}
+.md-typeset > h1:first-of-type + p {
+  color: var(--md-default-fg-color--light);
+  font-size: 1.04rem;
+  line-height: 1.75;
+}
+.md-typeset > h2 { color: var(--md-default-fg-color); }
+.md-typeset table:not([class]) {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+  box-shadow: 0 5px 20px rgba(14, 50, 68, .035);
+}
+.md-typeset table:not([class]) th {
+  background: rgba(17, 126, 118, .095);
+  color: var(--md-default-fg-color);
+  font-size: .78rem;
+}
+.md-typeset table:not([class]) tbody tr:hover {
+  background: rgba(17, 126, 118, .04);
+}
+.md-typeset .admonition {
+  border-radius: .6rem;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(9, 41, 64, .04);
+}
+.md-typeset .admonition p { line-height: 1.65; }
+.md-typeset .admonition.warning,
+.md-typeset .admonition.important {
+  border-color: #c78d37;
+}
+.md-typeset .admonition.warning > .admonition-title,
+.md-typeset .admonition.important > .admonition-title {
+  background: rgba(197, 141, 55, .10);
+}
+.md-typeset .tabbed-set,
+.md-typeset details { margin-top: 1rem; }
+.md-typeset .mermaid { margin: 1.1rem 0; }
+.md-footer { margin-top: 2.8rem; }
+@media (min-width: 76.25em) {
+ .md-content__inner { padding: 1rem 1.7rem 1.5rem; }
+}
+@media (max-width: 45em) {
+ .md-typeset > h1:first-of-type { font-size: 1.85rem; }
+ .md-content__inner { padding-left: .2rem; padding-right: .2rem; }
+ .md-typeset table:not([class]) { box-shadow: none; }
+}
