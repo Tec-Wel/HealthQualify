@@ -88,7 +88,9 @@ def create_handler(workspace: Workspace, token: str):
 
 def serve(database: str, host="127.0.0.1",port=8765, token=None):
     if host not in {"127.0.0.1","::1","localhost"}:
-        raise ValueError("Development server must bind only to loopback")
+        if host != "0.0.0.0" or os.environ.get("HEALTHQUALIFY_CONTAINER_ONLY") != "1":
+            raise ValueError("Non-loopback bind requires explicit local-container opt-in")
+        # NOT safe for production: only use with host-loopback port publishing.
     if not token or len(token)<24:
         raise ValueError("Set HEALTHQUALIFY_API_TOKEN with at least 24 random characters")
     workspace=Workspace(database)
