@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="350" viewBox="0 0 1200 350" role="img" aria-labelledby="title desc">
+<title id="title">HealthQualify Documentation</title><desc id="desc">An abstract evidence and verification pipeline drawn as connected luminous modules on a deep navy background.</desc>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0b1224"/><stop offset=".6" stop-color="#112245"/><stop offset="1" stop-color="#122b37"/></linearGradient>
+  <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#65e5c7"/><stop offset="1" stop-color="#65b6fa"/></linearGradient>
+  <linearGradient id="tile" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#243859"/><stop offset="1" stop-color="#172740"/></linearGradient>
+  <filter id="glow"><feGaussianBlur stdDeviation="18"/></filter>
+</defs>
+<rect width="1200" height="350" rx="23" fill="url(#bg)"/>
+<circle cx="1010" cy="-20" r="220" fill="#3f97d1" opacity=".08"/><circle cx="810" cy="360" r="225" fill="#59ddbf" opacity=".045"/>
+<g opacity=".20" stroke="#8fc4ec" stroke-width="1"><path d="M650 45H1160 M650 91H1160 M650 137H1160 M650 183H1160 M650 229H1160 M650 275H1160"/><path d="M690 20V330 M760 20V330 M830 20V330 M900 20V330 M970 20V330 M1040 20V330 M1110 20V330"/></g>
+<g font-family="Arial,Helvetica,sans-serif">
+<rect x="54" y="51" width="192" height="30" rx="15" fill="#1f394a" stroke="#4aa5a7" stroke-opacity=".6"/>
+<circle cx="71" cy="66" r="4.5" fill="#6ceacb"/><text x="84" y="71" fill="#a3f0dd" font-size="12" font-weight="700" letter-spacing="1.5">DEVELOPER ALPHA</text>
+<text x="54" y="146" font-size="52" font-weight="700" letter-spacing="-1.5" fill="#ffffff">HealthQualify</text>
+<text x="54" y="193" font-size="27" font-weight="500" fill="#a8c5dd">Documentation &amp; learning center</text>
+<text x="54" y="233" font-size="17" fill="#c1cedd">From your first synthetic run to verifiable evidence.</text>
+<text x="54" y="262" font-size="17" fill="#c1cedd">Clear workflows. Traceable results. Safer decisions.</text>
+</g>
+<g stroke="url(#accent)" stroke-width="3" fill="none" stroke-linecap="round" opacity=".9"><path d="M767 155H823"/><path d="M944 155H990"/><path d="M804 155l-9-8m9 8-9 8"/><path d="M978 155l-9-8m9 8-9 8"/></g>
+<g>
+<rect x="671" y="94" width="118" height="119" rx="18" fill="url(#tile)" stroke="#5282a4" stroke-opacity=".8"/>
+<path d="M701 129h30m-30 15h57m-57 15h48m-48 15h38" stroke="#93b8d5" stroke-width="5" stroke-linecap="round"/>
+<rect x="718" y="116" width="22" height="3" rx="1.5" fill="#64d9c3"/>
+<rect x="831" y="94" width="118" height="119" rx="18" fill="url(#tile)" stroke="#5282a4" stroke-opacity=".8"/>
+<circle cx="890" cy="151" r="30" fill="none" stroke="#88bae6" stroke-width="4"/>
+<path d="M873 151l13 13 23-27" fill="none" stroke="#64dfc7" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="995" y="94" width="118" height="119" rx="18" fill="url(#tile)" stroke="#5282a4" stroke-opacity=".8"/>
+<path d="M1054 121l27 14v22c0 19-13 34-27 40-14-6-27-21-27-40v-22z" fill="#1a3e53" stroke="#68d6c9" stroke-width="3"/>
+<path d="M1042 157l10 10 17-22" fill="none" stroke="#a0f7df" stroke-width="5" stroke-linecap="round"/>
+</g>
+<g fill="#aac1d9" font-size="13" font-family="Arial,Helvetica,sans-serif" text-anchor="middle">
+<text x="730" y="240">DEFINE</text><text x="890" y="240">EXECUTE</text><text x="1054" y="240">VERIFY</text>
+</g>
+<path d="M54 305H1146" stroke="#52718e" stroke-opacity=".45"/>
+<text x="54" y="329" fill="#94afc8" font-family="Arial,Helvetica,sans-serif" font-size="12" letter-spacing="1.2">OPEN SOURCE   /   SYNTHETIC-FIRST   /   HUMAN-REVIEWED</text>
+</svg>
