@@ -87,7 +87,7 @@ python -m healthqualify.v05cli run examples/synthetic_lis_v3/protocol.json --out
 | **[🧾 Ready-to-Edit Templates](VALIDATION_TEMPLATES.md)** | Synthetic requirements, risk, traceability, deviations, review forms |
 | **[⚖️ Regulatory Mapping](REGULATORY_MAPPING.md)** | Scope and applicability guidance—not a conformity claim |
 
-### </> Build & integrate
+### 🛠️ Build & integrate
 
 *Reference material for people extending and maintaining the software.*
 
