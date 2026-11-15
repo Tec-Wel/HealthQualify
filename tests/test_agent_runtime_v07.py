@@ -8,6 +8,9 @@ from pathlib import Path
 from healthqualify.agent_runtime_v07 import ScopedAgentRuntime
 from healthqualify.security import AuthenticationError
 from healthqualify.agent_eval_v07 import evaluate
+from healthqualify.agent_tools_v07 import AgentToolbox
+from healthqualify.agent_model_probe_v07 import probe
+from unittest.mock import patch
 
 ROOT=Path(__file__).resolve().parents[1]
 V2=json.loads((ROOT/"examples"/"synthetic_lis_v2"/"protocol.json").read_text())
@@ -123,6 +126,18 @@ class ScopedAgentRuntimeTests(unittest.TestCase):
                                        (event["id"],)).fetchone()[0]
         self.assertEqual(state,"FAILED")
 
+    def test_read_only_tools_do_not_expose_fixtures(self):
+        toolbox=AgentToolbox(self.runtime,self.validator,self.system["id"])
+        requirements=toolbox.call("requirement_index")
+        self.assertEqual(len(requirements["requirements"]),7)
+        self.assertFalse(requirements["raw_acceptance_values_exported"])
+        self.assertNotIn("P999",json.dumps(toolbox.call("recent_runs")))
+        self.assertGreater(len(toolbox.call("compare_latest_runs")["historical_findings"]),0)
+        with self.assertRaises(ValueError):
+            toolbox.call("execute_shell")
+        with self.assertRaises(AuthenticationError):
+            AgentToolbox(self.runtime,self.outsider,self.system["id"])
+
     def test_grant_revoke(self):
         self.runtime.grant_system(self.admin,"outsider",self.system["id"])
         self.assertEqual(self.runtime.system_context(self.outsider,self.system["id"])["system"]["id"],
@@ -132,6 +147,18 @@ class ScopedAgentRuntimeTests(unittest.TestCase):
             self.runtime.system_context(self.outsider,self.system["id"])
 
 class EvaluationTests(unittest.TestCase):
+    def test_real_model_probe_is_opt_in_and_cannot_change_findings(self):
+        with self.assertRaises(ValueError):
+            probe("qwen3:8b",consent=False,max_cases=1)
+        with patch("healthqualify.agent_model_probe_v07.local_draft",
+                   return_value={"text":"Unverified local explanation.","status":"DRAFT_UNVERIFIED"}):
+            report=probe("qwen3:8b",consent=True,max_cases=2)
+        self.assertEqual(report["cases_requested"],2)
+        self.assertEqual(report["model_errors"],0)
+        self.assertIsNone(report["model_grounding_score"])
+        self.assertTrue(report["human_review_required"])
+        self.assertFalse(report["qualification_approved"])
+
     def test_thirty_explicit_gold_label_scenarios(self):
         report=evaluate()
         self.assertEqual(report["evaluation_cases"],30)
