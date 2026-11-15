@@ -1,4 +1,14 @@
+![Trust & operations documentation](assets/category-trust.svg)
+
+[← **Documentation home**](README.md) &nbsp; / &nbsp; **Trust & operations**
+
 # Deployment guide: local now, enterprise designs later
+
+> **What you'll learn:** Distinguish what runs locally today from future enterprise deployment reference designs.
+
+**On this page:** [What is deployed today?](#what-is-deployed-today) · [Local evaluation topology](#local-evaluation-topology) · [Proposed future enterprise reference architectures — NOT IMPLEMENTED](#proposed-future-enterprise-reference-architectures-not-implemented) · [Architecture controls required before any expansion](#architecture-controls-required-before-any-expansion)
+
+---
 
 **Current product status:** developer alpha, not a production or clinical deployment. This document separates **working local procedures** from **future reference architectures** for AWS, Azure, GCP and on-premises environments.
 
@@ -60,3 +70,9 @@ Avoid pointing the alpha API at a public host; `serve_secure` explicitly rejects
 ## Operational next steps
 
 For evaluation, follow [Installation](INSTALLATION.md) and [Evaluation](EVALUATION_GUIDE.md). For enterprise planning, use [Production readiness checklist](PRODUCTION_READINESS_CHECKLIST.md), [Security model](SECURITY_MODEL.md) and [Operations runbook](OPERATIONS_RUNBOOK.md) as a gap assessment, not a deployment authorization.
+
+---
+
+### Continue exploring
+
+[security model](SECURITY_MODEL.md) · [verification guide](VERIFICATION_GUIDE.md) · [All guides](README.md) · [Project homepage](../README.md)

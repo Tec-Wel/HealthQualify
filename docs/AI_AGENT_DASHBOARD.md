@@ -1,4 +1,14 @@
+![AI investigators documentation](assets/category-agents.svg)
+
+[← **Documentation home**](README.md) &nbsp; / &nbsp; **AI investigators**
+
 # HealthQualify — Local Five-Agent Dashboard and Orchestration
+
+> **What you'll learn:** Configure the single-user loopback dashboard and understand agent orchestration and its safety boundaries.
+
+**On this page:** [What is included](#what-is-included) · [Quick start — without an AI model](#quick-start-without-an-ai-model) · [Local dashboard](#local-dashboard) · [Architecture](#architecture)
+
+---
 
 > **Developer alpha only.** All five investigators operate on approved local synthetic v0.3 protocol inputs. These workflows are not production-qualified GxP software or electronic records/signatures. No PHI or production systems. No agent can approve a protocol or modify PASS/FAIL.
 
@@ -127,3 +137,9 @@ CI can verify agent logic without Ollama. Real inference requires an Ollama runt
 7. Retain redacted outputs and system diagnostics for engineering review.
 
 Do not record this test as passed until someone actually completes it on approved hardware.
+
+---
+
+### Continue exploring
+
+[ai agents guide](AI_AGENTS_GUIDE.md) · [feature matrix](FEATURE_MATRIX.md) · [All guides](README.md) · [Project homepage](../README.md)

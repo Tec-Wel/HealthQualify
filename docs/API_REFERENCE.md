@@ -1,4 +1,14 @@
+![Build & extend documentation](assets/category-build.svg)
+
+[← **Documentation home**](README.md) &nbsp; / &nbsp; **Build & extend**
+
 # HTTP API reference — local secure alpha
+
+> **What you'll learn:** Authenticate against the local alpha API, inspect available endpoints, and understand role permissions.
+
+**On this page:** [Start and authenticate](#start-and-authenticate) · [Endpoint catalog (from implementation)](#endpoint-catalog-from-implementation) · [Practical example: register a synthetic system](#practical-example-register-a-synthetic-system) · [Error behavior and boundaries](#error-behavior-and-boundaries)
+
+---
 
 **Status:** implemented local developer-alpha interface in `healthqualify/secure_api.py`. Base URL: `http://127.0.0.1:8877`. Not public, multi-tenant, production, HIPAA-ready, or a regulated approval service.
 
@@ -70,3 +80,9 @@ The returned system ID is a UUID. For protocol creation, copy `examples/syntheti
 The service has `Cache-Control: no-store`, `X-Content-Type-Options: nosniff`, and restrictive CSP headers. It does **not** provide TLS, rate limiting, SSO/MFA, protected operational storage, or tenant isolation. Don't expose it to a network or send real PHI. API errors are not evidence of clinical system failure.
 
 See [Integration](INTEGRATION_GUIDE.md), [Security model](SECURITY_MODEL.md), and [CLI reference](CLI_REFERENCE.md).
+
+---
+
+### Continue exploring
+
+[developer architecture](DEVELOPER_ARCHITECTURE.md) · [cli reference](CLI_REFERENCE.md) · [All guides](README.md) · [Project homepage](../README.md)

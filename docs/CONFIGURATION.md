@@ -1,4 +1,14 @@
+![Build & extend documentation](assets/category-build.svg)
+
+[← **Documentation home**](README.md) &nbsp; / &nbsp; **Build & extend**
+
 # Configuration and protocol authoring
+
+> **What you'll learn:** Author strict v0.3 protocol JSON and keep local settings, secrets, and schema versions separate.
+
+**On this page:** [No hidden global config for the core runner](#no-hidden-global-config-for-the-core-runner) · [Strict v0.3 protocol structure](#strict-v03-protocol-structure) · [Command and environment configuration](#command-and-environment-configuration) · [Workspace compatibility](#workspace-compatibility)
+
+---
 
 ## No hidden global config for the core runner
 
@@ -89,3 +99,9 @@ The v0.3 validator delegates detailed allowable `check`, `phase`, `risk`, and fi
 ## Project hygiene
 
 Commit reviewed template protocols and documentation; avoid committing `.healthqualify/` generated evidence, credentials, report archives or local SQLite DB files. Store trusted digests independently. For deployment and data boundaries, see [Security & limitations](SECURITY_AND_LIMITATIONS.md).
+
+---
+
+### Continue exploring
+
+[developer architecture](DEVELOPER_ARCHITECTURE.md) · [cli reference](CLI_REFERENCE.md) · [All guides](README.md) · [Project homepage](../README.md)

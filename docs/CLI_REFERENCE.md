@@ -1,4 +1,14 @@
+![Build & extend documentation](assets/category-build.svg)
+
+[← **Documentation home**](README.md) &nbsp; / &nbsp; **Build & extend**
+
 # CLI reference (developer alpha)
+
+> **What you'll learn:** Find the exact synthetic runner, workspace, and quality commands with their inputs and exit behavior.
+
+**On this page:** [v0.5 synthetic and assurance CLI](#v05-synthetic-and-assurance-cli) · [Workspace CLI](#workspace-cli) · [Legacy standalone synthetic CLI](#legacy-standalone-synthetic-cli) · [Exit conventions and safety](#exit-conventions-and-safety)
+
+---
 
 Run from the repository root with Python 3.10+; `python -m MODULE --help` and `python -m MODULE COMMAND --help` are authoritative for flags on your checked-out commit.
 
@@ -65,3 +75,9 @@ Prefix with `python -m healthqualify.cli`:
 For synthetic runners: **0** generally indicates all relevant checks passed, **1** indicates failed/incomplete assertions or verification mismatch, **2** input/runtime errors. Some helper commands return 0 after producing an advisory, not approval. The `appcli readiness` command deliberately returns 1 while release gates remain unmet. Always inspect JSON, not merely process exit status.
 
 For payload/schema detail see [Configuration](CONFIGURATION.md), [Integration](INTEGRATION_GUIDE.md), and [Verification](VERIFICATION_GUIDE.md).
+
+---
+
+### Continue exploring
+
+[developer architecture](DEVELOPER_ARCHITECTURE.md) · [testing and ci](TESTING_AND_CI.md) · [All guides](README.md) · [Project homepage](../README.md)

@@ -1,4 +1,14 @@
+![AI investigators documentation](assets/category-agents.svg)
+
+[← **Documentation home**](README.md) &nbsp; / &nbsp; **AI investigators**
+
 # HealthQualify — Five Local Advisory Agents
+
+> **What you'll learn:** Explore the five local advisory investigators, run a synthetic analysis, and understand where AI cannot decide outcomes.
+
+**On this page:** [Quick start (Python 3.10+)](#quick-start-python-310) · [Verify actual synthetic test evidence](#verify-actual-synthetic-test-evidence) · [Agent details](#agent-details) · [Optional local Qwen via Ollama](#optional-local-qwen-via-ollama)
+
+---
 
 **Status:** Developer-alpha feature; synthetic v0.3 protocols only. **Not** a validated GxP application, FDA certification, Part 11 electronic signature, protected audit trail, or release approval mechanism.
 
@@ -117,3 +127,9 @@ python -m unittest discover -s tests -v
 ```
 
 Tests cover all agents, mapped and unknown changes, missing evidence, invalid hashes, duplicate systems, path traversal, AI default-off behavior, and the inability of a mocked LLM to change readiness. Passing tests confirms developer behavior, **not** production qualification or FDA compliance.
+
+---
+
+### Continue exploring
+
+[ai agent dashboard](AI_AGENT_DASHBOARD.md) · [feature matrix](FEATURE_MATRIX.md) · [All guides](README.md) · [Project homepage](../README.md)
