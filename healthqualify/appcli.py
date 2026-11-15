@@ -20,6 +20,7 @@ from .dicom_device import inspect_dicom_file, inspect_equipment_snapshot
 from .hl7_mllp import analyze_message
 from .protected_export import protect_export, verify_export
 from .attestations import attest_protocol
+from .privacy import release_readiness
 import base64
 from .evidence import seal_export, verify_seal
 from .regwatch import RegulationWatch
@@ -57,6 +58,7 @@ def main(argv=None):
     cmd("regulation-diff","before_file","after_file")
     cmd("modelqual","rows_file")
     cmd("agents")
+    cmd("readiness")
     approved=cmd("fhir-check-approved","url","field","expected_json")
     approved.add_argument("--authorize-read-only",action="store_true")
     dicom=cmd("dicom-synthetic","file")
@@ -81,6 +83,9 @@ def main(argv=None):
     args=parser.parse_args(argv)
     store=None
     try:
+        if args.command=="readiness":
+            print(json.dumps(release_readiness(),indent=2))
+            return 1
         if args.command=="review-attest":
             import getpass
             password=getpass.getpass("Re-enter reviewer password: ")
