@@ -1,0 +1,269 @@
+[
+  {
+    "id": "REL-1",
+    "agent": "release-impact",
+    "changed_files": [
+      "healthqualify/healthcare.py"
+    ],
+    "expected_codes": [
+      "IMPACT_REVIEW"
+    ]
+  },
+  {
+    "id": "REL-2",
+    "agent": "release-impact",
+    "changed_files": [
+      "unmapped/eval-1.py"
+    ],
+    "expected_codes": [
+      "IMPACT_REVIEW",
+      "UNKNOWN_IMPACT"
+    ]
+  },
+  {
+    "id": "REL-3",
+    "agent": "release-impact",
+    "changed_files": [
+      "healthqualify/healthcare.py"
+    ],
+    "expected_codes": [
+      "IMPACT_REVIEW"
+    ]
+  },
+  {
+    "id": "REL-4",
+    "agent": "release-impact",
+    "changed_files": [
+      "unmapped/eval-3.py"
+    ],
+    "expected_codes": [
+      "IMPACT_REVIEW",
+      "UNKNOWN_IMPACT"
+    ]
+  },
+  {
+    "id": "REL-5",
+    "agent": "release-impact",
+    "changed_files": [
+      "healthqualify/healthcare.py"
+    ],
+    "expected_codes": [
+      "IMPACT_REVIEW"
+    ]
+  },
+  {
+    "id": "REL-6",
+    "agent": "release-impact",
+    "changed_files": [
+      "unmapped/eval-5.py"
+    ],
+    "expected_codes": [
+      "IMPACT_REVIEW",
+      "UNKNOWN_IMPACT"
+    ]
+  },
+  {
+    "id": "GAP-1",
+    "agent": "gap-hunter",
+    "add_uncovered_requirement": false,
+    "expected_codes": [
+      "NO_VERIFIED_EXECUTION"
+    ]
+  },
+  {
+    "id": "GAP-2",
+    "agent": "gap-hunter",
+    "add_uncovered_requirement": true,
+    "expected_codes": [
+      "UNCOVERED",
+      "NO_VERIFIED_EXECUTION"
+    ]
+  },
+  {
+    "id": "GAP-3",
+    "agent": "gap-hunter",
+    "add_uncovered_requirement": false,
+    "expected_codes": [
+      "NO_VERIFIED_EXECUTION"
+    ]
+  },
+  {
+    "id": "GAP-4",
+    "agent": "gap-hunter",
+    "add_uncovered_requirement": true,
+    "expected_codes": [
+      "UNCOVERED",
+      "NO_VERIFIED_EXECUTION"
+    ]
+  },
+  {
+    "id": "GAP-5",
+    "agent": "gap-hunter",
+    "add_uncovered_requirement": false,
+    "expected_codes": [
+      "NO_VERIFIED_EXECUTION"
+    ]
+  },
+  {
+    "id": "GAP-6",
+    "agent": "gap-hunter",
+    "add_uncovered_requirement": true,
+    "expected_codes": [
+      "UNCOVERED",
+      "NO_VERIFIED_EXECUTION"
+    ]
+  },
+  {
+    "id": "FAIL-1",
+    "agent": "failure-investigation",
+    "expected_codes": [
+      "NO_VERIFIED_EXECUTION"
+    ]
+  },
+  {
+    "id": "FAIL-2",
+    "agent": "failure-investigation",
+    "expected_codes": [
+      "NO_VERIFIED_EXECUTION"
+    ]
+  },
+  {
+    "id": "FAIL-3",
+    "agent": "failure-investigation",
+    "expected_codes": [
+      "NO_VERIFIED_EXECUTION"
+    ]
+  },
+  {
+    "id": "FAIL-4",
+    "agent": "failure-investigation",
+    "expected_codes": [
+      "NO_VERIFIED_EXECUTION"
+    ]
+  },
+  {
+    "id": "FAIL-5",
+    "agent": "failure-investigation",
+    "expected_codes": [
+      "NO_VERIFIED_EXECUTION"
+    ]
+  },
+  {
+    "id": "FAIL-6",
+    "agent": "failure-investigation",
+    "expected_codes": [
+      "NO_VERIFIED_EXECUTION"
+    ]
+  },
+  {
+    "id": "QA-1",
+    "agent": "qa-readiness",
+    "add_uncovered_requirement": false,
+    "expected_codes": [
+      "NO_VERIFIED_EXECUTION"
+    ]
+  },
+  {
+    "id": "QA-2",
+    "agent": "qa-readiness",
+    "add_uncovered_requirement": true,
+    "expected_codes": [
+      "UNCOVERED",
+      "NO_VERIFIED_EXECUTION"
+    ]
+  },
+  {
+    "id": "QA-3",
+    "agent": "qa-readiness",
+    "add_uncovered_requirement": false,
+    "expected_codes": [
+      "NO_VERIFIED_EXECUTION"
+    ]
+  },
+  {
+    "id": "QA-4",
+    "agent": "qa-readiness",
+    "add_uncovered_requirement": true,
+    "expected_codes": [
+      "UNCOVERED",
+      "NO_VERIFIED_EXECUTION"
+    ]
+  },
+  {
+    "id": "QA-5",
+    "agent": "qa-readiness",
+    "add_uncovered_requirement": false,
+    "expected_codes": [
+      "NO_VERIFIED_EXECUTION"
+    ]
+  },
+  {
+    "id": "QA-6",
+    "agent": "qa-readiness",
+    "add_uncovered_requirement": true,
+    "expected_codes": [
+      "UNCOVERED",
+      "NO_VERIFIED_EXECUTION"
+    ]
+  },
+  {
+    "id": "DEP-1",
+    "agent": "dependency-investigator",
+    "changed_files": [
+      "healthqualify/healthcare.py"
+    ],
+    "expected_codes": [
+      "SYSTEM_IMPACT"
+    ]
+  },
+  {
+    "id": "DEP-2",
+    "agent": "dependency-investigator",
+    "changed_files": [
+      "unknown/eval-1.py"
+    ],
+    "expected_codes": [
+      "UNKNOWN_DEPENDENCY"
+    ]
+  },
+  {
+    "id": "DEP-3",
+    "agent": "dependency-investigator",
+    "changed_files": [
+      "healthqualify/healthcare.py"
+    ],
+    "expected_codes": [
+      "SYSTEM_IMPACT"
+    ]
+  },
+  {
+    "id": "DEP-4",
+    "agent": "dependency-investigator",
+    "changed_files": [
+      "unknown/eval-3.py"
+    ],
+    "expected_codes": [
+      "UNKNOWN_DEPENDENCY"
+    ]
+  },
+  {
+    "id": "DEP-5",
+    "agent": "dependency-investigator",
+    "changed_files": [
+      "healthqualify/healthcare.py"
+    ],
+    "expected_codes": [
+      "SYSTEM_IMPACT"
+    ]
+  },
+  {
+    "id": "DEP-6",
+    "agent": "dependency-investigator",
+    "changed_files": [
+      "unknown/eval-5.py"
+    ],
+    "expected_codes": [
+      "UNKNOWN_DEPENDENCY"
+    ]
+  }
+]
