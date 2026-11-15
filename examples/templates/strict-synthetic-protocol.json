@@ -1,0 +1,44 @@
+{
+  "schema_version": "0.3",
+  "qualification_state": "draft",
+  "system": {
+    "id": "SYNTH-BOOK-001",
+    "version": "1.0",
+    "intended_use": "Offline synthetic appointment scheduler contract fixture",
+    "environment": "synthetic",
+    "build_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "requirements": [
+    {
+      "id": "URS-001",
+      "risk": "low",
+      "acceptance_basis": "Fictional system spec: the version must equal 1.0",
+      "source_id": "SYNTH-BOOK-1"
+    }
+  ],
+  "fixtures": {
+    "runtime_version": "1.0"
+  },
+  "tests": [
+    {
+      "id": "IQ-001",
+      "phase": "IQ",
+      "requirement_ids": ["URS-001"],
+      "check": "equals",
+      "fixture": "runtime_version",
+      "expected": "1.0",
+      "component_paths": ["src/version.py"]
+    }
+  ],
+  "execution_policy": {
+    "network": false,
+    "destructive": false,
+    "allow_ai": false,
+    "data_classification": "synthetic",
+    "runner_version": "0.5.0a0"
+  },
+  "source_references": {
+    "SYNTH-BOOK-1": "Fictional version specification, for training only"
+  },
+  "approval_reference": null
+}
