@@ -8,7 +8,7 @@ import hmac
 import json
 import os
 from html import escape
-from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from http.server import BaseHTTPRequestHandler, HTTPServer
 from urllib.parse import urlparse
 from .workspace import Workspace
 from .regulatory import list_controls
@@ -94,7 +94,7 @@ def serve(database: str, host="127.0.0.1",port=8765, token=None):
     if not token or len(token)<24:
         raise ValueError("Set HEALTHQUALIFY_API_TOKEN with at least 24 random characters")
     workspace=Workspace(database)
-    server=ThreadingHTTPServer((host,port),create_handler(workspace,token))
+    server=HTTPServer((host,port),create_handler(workspace,token))
     try:
         print(f"HealthQualify local development API: http://{host}:{port}")
         server.serve_forever()
