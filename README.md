@@ -4,7 +4,7 @@
 
 > From approved requirements to executable tests, verifiable evidence, human review, and release-aware requalification — without an AI dependency.
 
-**Status: pre-alpha foundation.** The initial CLI is a deterministic, synthetic-data demonstration. It is **not** a qualified system, a compliance certification, or a substitute for an organization's quality management system.
+**Status: v0.3 local developer alpha (not production validated).** The initial CLI is a deterministic, synthetic-data demonstration. It is **not** a qualified system, a compliance certification, or a substitute for an organization's quality management system.
 
 ## What HealthQualify will do
 
@@ -18,6 +18,45 @@ HealthQualify combines the *capability categories* of regulatory guidance, quali
 6. **Requalify** — change-impact mapping, release-related test recommendations, regulatory-change review and repeatable verification.
 
 Optional AI assistants may draft requirements and protocols or explain failed tests, but cannot approve protocols or write authoritative PASS/FAIL results.
+
+## Local product alpha: v0.3
+
+The existing v0.1 and v0.2 synthetic engines remain available. The new workspace CLI connects the product modules behind a SQLite-backed local development workflow:
+
+```bash
+python -m unittest discover -s tests -v
+python -m healthqualify.appcli --db healthqualify.db init
+python -m healthqualify.appcli --db healthqualify.db system-add "LIS Demo" "Synthetic lab interoperability" "Engineer"
+python -m healthqualify.appcli frameworks
+python -m healthqualify.appcli agents
+```
+
+See **[v0.3 Product and Developer Guide](docs/PLATFORM_V03.md)** for the complete draft-protocol → baseline review → execution → deviations → evidence-report workflow, local dashboard and restricted REST API. The developer baseline is not a Part 11 electronic signature. Actual live HL7/FHIR integration testing and clinical use are **not** enabled.
+
+Supported v0.3 concepts:
+
+- **System Registry** — SQLite systems, intended use, owners
+- **Requirements / Risk Studio** — URS drafts and proportional assurance-plan suggestions
+- **Protocol Studio** — stored versioned v0.2 synthetic protocols, separate author/reviewer baseline events
+- **Qualification Runner** — deterministic IQ/OQ/PQ fixture assertions and findings
+- **Evidence Vault** — HTML/JSON report export, hashes, opt-in HMAC receipt
+- **DeviationFlow** — recorded findings, evidence-linked retest requirement for resolution
+- **Regulatory Studio / RegWatch** — source-linked catalog, explicit applicability decisions, operator-supplied text comparisons and snapshots
+- **Continuous Qualification** — conservative protocol-to-protocol impact review via `review-v2`
+- **ModelQual** — offline metrics on supplied prediction sets
+- **Optional AI** — opt-in local Ollama draft assistants; never authoritative
+- **Dashboard / API** — local-only HTML dashboard and bearer-token-gated write endpoints
+- **Container** — local Docker Compose profile, bound to localhost only
+
+### Local dashboard
+
+```bash
+export HEALTHQUALIFY_API_TOKEN="$(python -c 'import secrets;print(secrets.token_urlsafe(32))')"
+python -m healthqualify.appcli --db healthqualify.db serve
+# Visit http://127.0.0.1:8765
+```
+
+The portable image can be deployed on EC2/GCP/Azure/on-prem after appropriate security engineering; the provided Compose file is for local development only. No PHI, regulated production connection, protected audit trail or legal qualification approval is supported.
 
 ## First usable developer experience
 
