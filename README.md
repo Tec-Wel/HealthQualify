@@ -146,10 +146,8 @@ See [healthcare foundation instructions](docs/HEALTHCARE_V02.md).
 
 **Core technology:** Python, local filesystem/SQLite (planned), later FastAPI, React, PostgreSQL and Docker. The same containers should run on EC2, GCP Compute Engine, Azure VMs or on-premises. Local SLM/LLM and hosted AI integrations remain opt-in.
 
-## Inspirations and differentiation
+## Engineering approach
 
-- [ParaQualis GxP](https://github.com/paraqualis/paraqualis-gxp) — regulatory assistance, draft qualification packages, executable scripts and Claude Code workflows (MIT). HealthQualify is a separately developed **execution and evidence lifecycle** platform.
-- [medtest-traceability](https://github.com/INNERLUXES/medtest-traceability) — requirement-to-test coverage and CI gaps (MIT). HealthQualify targets requirement-to-**executed-evidence** traceability.
 - Other established test frameworks (pytest, Playwright, Locust, Inferno, etc.) should be integrated rather than rewritten.
 
 Do not copy third-party code or regulated standards text without reviewing licenses and attribution.
