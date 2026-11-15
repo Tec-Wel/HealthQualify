@@ -1,7 +1,5 @@
 ![HealthQualify — Qualify with evidence, not assumptions](docs/assets/healthqualify-home.svg)
 
-<div align="center">
-
 ### Open-source software qualification & local AI investigations
 
 **Trace requirements → run synthetic checks → verify evidence → investigate what changed.**
@@ -9,8 +7,6 @@
 [**🚀 Get started**](#start-in-minutes) · [**📚 Documentation**](docs/index.md) · [**🤖 Five AI agents**](#meet-the-five-local-investigators) · [**🧪 Guided evaluation**](docs/EVALUATION_GUIDE.md)
 
 ![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-3975A9?style=flat-square) ![Apache 2.0](https://img.shields.io/badge/License-Apache--2.0-50708E?style=flat-square) ![Developer alpha](https://img.shields.io/badge/Status-Developer%20alpha-7756A8?style=flat-square) ![Local first](https://img.shields.io/badge/Privacy-Local%20first-16846F?style=flat-square)
-
-</div>
 
 > [!IMPORTANT]
 > **Synthetic developer alpha.** Not FDA certification, validated GxP software, Part 11 electronic signatures, medical-device control, or production clinical use. No PHI. AI findings are advisory and never grant qualification approval. [Read the security boundaries](docs/SECURITY_AND_LIMITATIONS.md).
@@ -99,10 +95,6 @@ We welcome documentation improvements, accessible UI contributions, reproducible
 
 ---
 
-<div align="center">
-
 **Evidence first · Local AI optional · Synthetic inputs · Human accountability**
 
 [Documentation](docs/index.md) · [Changelog](CHANGELOG.md) · [License](LICENSE) · [Visual design guidelines](docs/DESIGN_GUIDELINES.md)
-
-</div>
