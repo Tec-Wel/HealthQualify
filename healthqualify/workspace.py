@@ -11,6 +11,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 from .assurance import encode, digest, assess_v2, validate_v2
+from .privacy import minimize_result
 
 def now() -> str:
     return datetime.now(timezone.utc).isoformat()
@@ -123,7 +124,7 @@ class Workspace:
             raise ValueError("Actor required")
         if digest(encode(protocol["payload"])) != protocol["digest"]:
             raise ValueError("Protocol digest mismatch")
-        result=assess_v2(protocol["payload"])
+        result=minimize_result(assess_v2(protocol["payload"]))
         rid=key()
         encoded=encode(result).decode()
         with self.conn:
