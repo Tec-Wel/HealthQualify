@@ -96,6 +96,33 @@ class ScopedAgentRuntimeTests(unittest.TestCase):
             self.runtime.trigger(self.qa,self.system["id"],"COVERAGE_GAP",
                                  "case-"+"c"*16,{"source_ref":"synthetic"})
 
+    def test_trigger_to_review_queue_and_metrics(self):
+        event=self.runtime.trigger(self.validator,self.system["id"],"RELEASE_CHANGED",
+                                   "commit-"+"f"*40,{"source_sha":"f"*40})
+        done=self.runtime.process_trigger(self.validator,event["id"],self.protocol,
+                                          changed_files=["unmapped/new.py"])
+        self.assertEqual(done["state"],"DRAFT_READY")
+        self.assertFalse(done["qualification_approved"])
+        self.assertEqual(len(self.runtime.review_queue(self.qa,self.system["id"])),1)
+        overview=self.runtime.metrics(self.validator,self.system["id"])
+        self.assertEqual(overview["completed_drafts"],1)
+        self.assertEqual(overview["model_invocations"],0)
+        with self.assertRaises(ValueError):
+            self.runtime.process_trigger(self.validator,event["id"],self.protocol,
+                                         changed_files=["unmapped/new.py"])
+        review=self.runtime.review(self.qa,done["observation_id"],"ACKNOWLEDGED",
+                                   "Source-mapped investigation reviewed")
+        self.assertFalse(review["qualification_approved"])
+
+    def test_trigger_failure_stays_visible(self):
+        event=self.runtime.trigger(self.validator,self.system["id"],"RELEASE_CHANGED",
+                                   "release-"+"e"*16,{"source_sha":"e"*40})
+        with self.assertRaises(ValueError):
+            self.runtime.process_trigger(self.validator,event["id"],self.protocol)
+        state=self.runtime.conn.execute("SELECT state FROM agent_triggers WHERE id=?",
+                                       (event["id"],)).fetchone()[0]
+        self.assertEqual(state,"FAILED")
+
     def test_grant_revoke(self):
         self.runtime.grant_system(self.admin,"outsider",self.system["id"])
         self.assertEqual(self.runtime.system_context(self.outsider,self.system["id"])["system"]["id"],
