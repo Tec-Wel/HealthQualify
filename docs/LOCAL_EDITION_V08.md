@@ -14,7 +14,9 @@ python -m healthqualify.local_edition_v08
 
 The app opens at `http://127.0.0.1:8899` and saves its local SQLite data under `~/.healthqualify/local-edition.db`. Create an administrator name and password on first launch; after that, the browser uses HttpOnly session cookies and CSRF-protected requests. **No manually generated dashboard token** is required. Back up the database securely before upgrading.
 
-The `Local Edition — standalone desktop bundles` GitHub Actions workflow can build OS-specific PyInstaller executables on demand. These binaries are **development artifacts**, not signed/notarized installers or independently security-assessed commercial packages. No verified downloadable binary is guaranteed until that build has run successfully on each OS.
+The **[Local Edition standalone build](https://github.com/Tec-Wel/HealthQualify/actions/runs/43690197548)** has succeeded on Windows 2025, macOS 15 and Ubuntu 24.04. Each job created a platform-specific PyInstaller executable, ran its `--help` startup smoke test, and published a downloadable artifact for 30 days. Use the workflow page's **Artifacts** section to download the appropriate OS bundle. GitHub may require signing in to download Actions artifacts; cloning the source does not require a cloud account.
+
+These are **unsigned development binaries**, not certified, notarized or independently security-assessed installers. Actual first-run desktop UI behavior still needs manual verification on each target OS; a successful `--help` test is not equivalent to a validated installer. For users who need a completely account-free binary download, a public GitHub Release asset or equivalent open download is still a distribution task.
 
 ## Guided synthetic workflow
 
