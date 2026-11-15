@@ -9,6 +9,7 @@ from pathlib import Path
 
 from .assurance import save_v2, verify_v2, validate_v2
 from .engine import save_run, verify_run
+from .review import compare_protocols
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -29,8 +30,17 @@ def main(argv: list[str] | None = None) -> int:
     plan = commands.add_parser("validate-v2", help="validate v0.2 protocol without executing checks")
     plan.add_argument("protocol", type=Path)
 
+    review = commands.add_parser("review-v2", help="identify protocol drift and conservative requalification scope")
+    review.add_argument("before", type=Path)
+    review.add_argument("after", type=Path)
     args = parser.parse_args(argv)
     try:
+        if args.command == "review-v2":
+            before = json.loads(args.before.read_text(encoding="utf-8"))
+            after = json.loads(args.after.read_text(encoding="utf-8"))
+            review_result = compare_protocols(before, after)
+            print(json.dumps(review_result, indent=2))
+            return 1 if review_result["human_review_required"] else 0
         if args.command == "verify":
             ok = verify_run(args.run_dir)
             print("Evidence hash check:", "MATCH" if ok else "MISMATCH")
