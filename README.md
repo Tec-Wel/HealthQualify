@@ -31,6 +31,24 @@ python -m unittest discover -s tests -v
 
 The bundled synthetic LIS protocol contains deliberately failing checks, demonstrating that failures cannot be silently promoted to success. Exit codes: 0 = checks passed; 1 = failed/incomplete; 2 = malformed input or execution error.
 
+## New: v0.2 healthcare qualification (feature branch)
+
+Run the seven-case synthetic HL7/FHIR laboratory profile using the independent, no-AI engine:
+
+```bash
+python -m healthqualify.cli validate-v2 examples/synthetic_lis_v2/protocol.json
+python -m healthqualify.cli run-v2 examples/synthetic_lis_v2/protocol.json --out .healthqualify/v2-run
+python -m healthqualify.cli verify-v2 .healthqualify/v2-run
+```
+
+The demonstration intentionally reports **5 FAIL and 2 PASS**, so `run-v2` exits 1. It detects synthetic patient-ID mismatch, unit mismatch, missing critical notification, unauthorized cross-tenant access, and missing audit events. These assertions operate on **embedded synthetic fixtures**, not a live HL7 network or production healthcare environment.
+
+`run-v2` prints the SHA-256 of its manifest. Save this digest outside the exported bundle, then pass it to `verify-v2 --trusted-manifest-sha256 <digest>` to identify substituted manifests. This is an integrity demonstration, not a signed/immutable evidence system.
+
+Each v0.2 requirement declares a risk and acceptance basis. The CLI accepts draft protocols only: it cannot implement regulated approvals. A requirement without a linked executed test is reported as UNCOVERED / NOT_RUN rather than PASS.
+
+See [healthcare foundation instructions](docs/HEALTHCARE_V02.md).
+
 ## Scope and boundaries
 
 - **Target:** healthcare software, LIS/LIMS/EHR integrations, hospital IT, controlled software interfaces and eventually healthcare AI and equipment-connected systems.
