@@ -55,5 +55,5 @@ Synthetic LIS integration. Seed cases include patient/sample mismatch, incorrect
 - Claims of being FDA-approved, GxP-certified, or universally validated.
 
 ## Competitive advantage to validate
-Against ParaQualis + manually run scripts; medtest-traceability + CI; raw pytest + GitHub Actions:
+Against equivalent standalone scripts, requirements coverage tooling, and standard pytest + GitHub Actions workflows:
 measure setup time, seeded failure detection, false results, evidence verifiability, repeatability, maintenance burden, and correct requalification impact. No performance superiority claims until benchmarks are run.
