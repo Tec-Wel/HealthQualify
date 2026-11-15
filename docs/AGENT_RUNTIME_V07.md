@@ -95,6 +95,10 @@ python -m healthqualify.agent_model_probe_v07 \
 
 This script does **not** download a model. Set up a reviewed Ollama instance on loopback and protect network egress independently. Each model response is tagged `DRAFT_UNVERIFIED`; failures remain `MODEL_ERROR`. The deterministic finding digest is checked before and after every call, but a real model's grounding and factuality are **not** automatically scored. The output explicitly contains `model_grounding_score: null` and `human_grounding_review: PENDING`. GitHub CI uses mocks for this pathway, not live Qwen inference.
 
+## Main-branch automated investigations
+
+The additional `.github/workflows/agent-evaluation.yml` runs on every push to `main`. It evaluates 30 gold-label synthetic scenarios and executes all five investigators against the actual `HEAD^..HEAD` file changes. It uploads two draft-only artifacts: `healthqualify-agent-deterministic-evaluation` and `healthqualify-five-agent-main-advisory`. The latter runs on the synthetic LIS fixture with no customer data, secrets, or LLM. It is an automatic developer CI advisory, **not** a real enterprise scheduled monitoring service or release authorization.
+
 ## Event and observability boundaries
 
 `agent_triggers` records deduplicated synthetic events; `process-trigger` executes one controlled advisory investigation, never a deployment or test mutation. Admins grant/revoke system scope; QA receives a one-time review decision queue. `metrics` reports local draft count and observed execution latency but not a verified model cost or validated quality score. Enterprise event ingestion, workers and end-to-end monitoring are still separate work.
