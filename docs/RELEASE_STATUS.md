@@ -47,7 +47,7 @@ python -m healthqualify.appcli verify-seal /tmp/hq-report
 Keep the key external to the report directory. This verifies against a shared secret; it is **not** a digital signature, Part 11 electronic signature, or proof of regulatory approval.
 
 ## Development and compliance boundaries
-- No code from ParaQualis was copied; its MIT repository supplied product inspiration only.
+- HealthQualify code is independently developed; third-party license obligations must be reviewed before reusing external code.
 - No copyrighted GAMP 5 text is redistributed.
 - Every authoritative qualification decision is human-controlled under a separately established quality process.
 - Hashes and shared-secret receipts do not alone create immutable regulated records.
