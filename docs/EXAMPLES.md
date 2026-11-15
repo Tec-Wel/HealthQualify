@@ -29,10 +29,10 @@ python -m healthqualify.v05cli run examples/synthetic_lis_v3/protocol.json --out
 For a **locally running, synthetic and explicitly authorized** JSON service:
 
 ```bash
-python -m healthqualify.v05cli rest-check-local http://127.0.0.1:8000/example status '"ready"' --authorize-synthetic
+python -m healthqualify.v05cli rest-check-local http://127.0.0.1:8000/test/example status '"ready"' --authorize-synthetic
 ```
 
-This is an illustrative invocation; it will fail unless **you already started** a matching local server returning JSON such as `{"status":"ready"}`. This command is a bounded **one-off assertion**, not a full protocol-run integration or arbitrary network scanner. See [Integration](INTEGRATION_GUIDE.md).
+This is an illustrative invocation; it will fail unless **you already started** a matching local server at a `/test/` URL returning JSON such as `{"status":"ready"}`. This command is a bounded **one-off assertion**, not a full protocol-run integration or arbitrary network scanner. See [Integration](INTEGRATION_GUIDE.md).
 
 ## C. FHIR Observation staged read
 
