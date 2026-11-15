@@ -1,6 +1,13 @@
 name: Local Edition — standalone desktop bundles
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/local-edition-build.yml'
+      - 'healthqualify/local_edition_v08.py'
+      - 'healthqualify/local_ui_v08.*'
+      - 'scripts/local_entry_v08.py'
 permissions:
   contents: read
 jobs:
