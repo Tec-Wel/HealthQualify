@@ -36,6 +36,9 @@ class CAPA:
             raise ValueError("Cannot open CAPA for resolved deviation")
         if not isinstance(owner,str) or not owner.strip() or risk not in ("low","medium","high","critical") or not actor:
             raise ValueError("Owner, valid risk and actor required")
+        existing=self.conn.execute("SELECT 1 FROM capa_cases WHERE deviation_id=? AND status != 'CLOSED'",(deviation_id,)).fetchone()
+        if existing:
+            raise ValueError("An active CAPA already exists for this deviation")
         ident=str(uuid.uuid4())
         with self.conn:
             self.conn.execute("""INSERT INTO capa_cases
@@ -97,6 +100,10 @@ class CAPA:
         with self.conn:
             self.conn.execute("""UPDATE capa_cases SET status='CLOSED',reviewer=?,
                 retest_run_id=?,closed_at=? WHERE id=?""",(reviewer,retest_run_id,utcnow(),case_id))
+            self.conn.execute("""UPDATE deviations SET status='RESOLVED',disposition=?,
+                retest_run_id=?,updated_at=? WHERE id=? AND status != 'RESOLVED'""",
+                ("CAPA "+case_id+" reviewed: "+effectiveness_evidence,
+                 retest_run_id,utcnow(),record["deviation_id"]))
             self.work._audit(reviewer,"capa.closed",case_id,
                              {"retest_run_id":retest_run_id,"effectiveness_evidence_ref":effectiveness_evidence})
         return self.case(case_id)
