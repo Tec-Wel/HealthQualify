@@ -36,4 +36,33 @@ def on_page_markdown(markdown, **_kwargs):
             body.append(item[1:] if item.startswith(" ") else item)
             i += 1
         output.extend(["!!! " + kind, *["    " + line if line else "" for line in body], ""])
-    return "\n".join(output)
+
+    site_markdown = "\\n".join(output)
+    # Most guides were authored for GitHub, where repository-root links use
+    # ../README.md. MkDocs has its own docs/index.md root and cannot serve files
+    # from outside docs/. Rewrite only recognized local Markdown link targets.
+    site_markdown = re.sub(
+        r"(?<=\\])\\((?:README\\.md)(#[^)]*)?\\)",
+        lambda m: "(index.md" + (m.group(1) or "") + ")",
+        site_markdown,
+    )
+    root_links = {
+        "README.md": "README.md",
+        "CONTRIBUTING.md": "CONTRIBUTING.md",
+        "SECURITY.md": "SECURITY.md",
+        "SUPPORT.md": "SUPPORT.md",
+        "CHANGELOG.md": "CHANGELOG.md",
+    }
+    for name, target in root_links.items():
+        site_markdown = site_markdown.replace(
+            "](../" + name + ")",
+            "](https://github.com/Tec-Wel/HealthQualify/blob/main/" + target + ")",
+        )
+    # Protocol templates live outside docs_dir and should link to the actual
+    # GitHub source rather than generating broken MkDocs document links.
+    site_markdown = re.sub(
+        r"(?<=\\])\\(\\.\\./examples/templates/([^)]*)\\)",
+        lambda m: "](https://github.com/Tec-Wel/HealthQualify/blob/main/examples/templates/" + m.group(1) + ")",
+        site_markdown,
+    )
+    return site_markdown
