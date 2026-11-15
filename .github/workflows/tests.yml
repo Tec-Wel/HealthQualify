@@ -9,6 +9,8 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -55,3 +57,9 @@ jobs:
           python -m healthqualify.v05cli verify /tmp/hq-v05-ci --trusted-manifest-sha256 "$digest"
           python -m healthqualify.v05cli impact examples/synthetic_lis_v3/protocol.json healthqualify/healthcare.py
           python -m healthqualify.v05cli benchmark examples/synthetic_lis_v2/protocol.json
+      - name: PR qualification change-impact advisory
+        if: github.event_name == 'pull_request'
+        env:
+          HQ_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HQ_PROTOCOL: examples/synthetic_lis_v3/protocol.json
+        run: python -m healthqualify.ci_impact
