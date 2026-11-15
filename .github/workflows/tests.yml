@@ -23,3 +23,21 @@ jobs:
           set -e
           test "$code" -eq 1
           python -m healthqualify.cli verify /tmp/healthqualify-ci
+      - name: Healthcare v0.2 synthetic qualification (five expected defects)
+        shell: bash
+        run: |
+          python -m healthqualify.cli validate-v2 examples/synthetic_lis_v2/protocol.json
+          set +e
+          python -m healthqualify.cli run-v2 examples/synthetic_lis_v2/protocol.json --out /tmp/healthqualify-v2-ci
+          code=$?
+          set -e
+          test "$code" -eq 1
+          python -m healthqualify.cli verify-v2 /tmp/healthqualify-v2-ci
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          result = json.loads(Path("/tmp/healthqualify-v2-ci/results.json").read_text())
+          assert result["summary"]["FAIL"] == 5
+          assert result["summary"]["PASS"] == 2
+          assert result["qualification_approved"] is False
+          PY

@@ -1,0 +1,135 @@
+{
+  "schema_version": "0.2",
+  "qualification_state": "draft",
+  "system": {
+    "id": "LIS-SYNTHETIC-V2",
+    "version": "0.2",
+    "intended_use": "Demonstrate synthetic LIS/EHR integration qualification evidence; never a clinical assertion",
+    "environment": "synthetic"
+  },
+  "requirements": [
+    {
+      "id": "URS-001",
+      "risk": "low",
+      "acceptance_basis": "Approved synthetic demonstration specification: runtime version is 1.4.2"
+    },
+    {
+      "id": "URS-002",
+      "risk": "high",
+      "acceptance_basis": "Synthetic identity contract: PID-3 must equal P123"
+    },
+    {
+      "id": "URS-003",
+      "risk": "high",
+      "acceptance_basis": "Synthetic unit mapping contract: OBX-6 must equal mmol/L"
+    },
+    {
+      "id": "URS-004",
+      "risk": "critical",
+      "acceptance_basis": "Synthetic notification contract: critical event is acknowledged"
+    },
+    {
+      "id": "URS-005",
+      "risk": "critical",
+      "acceptance_basis": "Synthetic authorization contract: cross-tenant access denied"
+    },
+    {
+      "id": "URS-006",
+      "risk": "high",
+      "acceptance_basis": "Synthetic audit contract: event must exist"
+    },
+    {
+      "id": "URS-007",
+      "risk": "medium",
+      "acceptance_basis": "Synthetic FHIR contract: resourceType is Observation"
+    }
+  ],
+  "fixtures": {
+    "runtime_version": "1.4.2",
+    "hl7_oru": "MSH|^~\\&|LAB|HOSP|EHR|HOSP|202611150400||ORU^R01|MSG001|P|2.5\rPID|1||P999^^^HOSP^MR||Synthetic^Patient\rOBR|1||SPEC001|GLU^Glucose\rOBX|1|NM|GLU^Glucose||4.2|mg/dL",
+    "critical_notification": false,
+    "cross_tenant_access": {
+      "allowed": true
+    },
+    "audit_event": null,
+    "fhir_observation": {
+      "resourceType": "Observation",
+      "id": "synthetic-1"
+    }
+  },
+  "tests": [
+    {
+      "id": "IQ-001",
+      "phase": "IQ",
+      "requirement_ids": [
+        "URS-001"
+      ],
+      "check": "equals",
+      "fixture": "runtime_version",
+      "expected": "1.4.2"
+    },
+    {
+      "id": "OQ-001",
+      "phase": "OQ",
+      "requirement_ids": [
+        "URS-002"
+      ],
+      "check": "hl7_field_equals",
+      "fixture": "hl7_oru",
+      "segment": "PID",
+      "field_index": 3,
+      "expected": "P123^^^HOSP^MR"
+    },
+    {
+      "id": "OQ-002",
+      "phase": "OQ",
+      "requirement_ids": [
+        "URS-003"
+      ],
+      "check": "hl7_field_equals",
+      "fixture": "hl7_oru",
+      "segment": "OBX",
+      "field_index": 6,
+      "expected": "mmol/L"
+    },
+    {
+      "id": "OQ-003",
+      "phase": "OQ",
+      "requirement_ids": [
+        "URS-004"
+      ],
+      "check": "equals",
+      "fixture": "critical_notification",
+      "expected": true
+    },
+    {
+      "id": "OQ-004",
+      "phase": "OQ",
+      "requirement_ids": [
+        "URS-005"
+      ],
+      "check": "role_denied",
+      "fixture": "cross_tenant_access"
+    },
+    {
+      "id": "PQ-001",
+      "phase": "PQ",
+      "requirement_ids": [
+        "URS-006"
+      ],
+      "check": "present",
+      "fixture": "audit_event"
+    },
+    {
+      "id": "OQ-005",
+      "phase": "OQ",
+      "requirement_ids": [
+        "URS-007"
+      ],
+      "check": "fhir_field_equals",
+      "fixture": "fhir_observation",
+      "path": "resourceType",
+      "expected": "Observation"
+    }
+  ]
+}
