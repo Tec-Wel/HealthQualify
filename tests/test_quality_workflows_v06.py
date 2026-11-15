@@ -52,6 +52,13 @@ class ReviewTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 review.submit("qa_user","quality-review-password",self.deviation["id"],
                               "RETEST_REQUIRED","Failed criterion","hq-run:forged/test/OQ-001")
+            # Even an authentic PASS from the same run cannot justify an
+            # unrelated failed deviation.
+            unrelated=next(t["evidence_ref"] for t in self.run["results"]["results"]
+                           if t["id"]=="IQ-001")
+            with self.assertRaises(ValueError):
+                review.submit("qa_user","quality-review-password",self.deviation["id"],
+                              "RETEST_REQUIRED","Incorrect evidence target",unrelated)
             receipt=review.submit("qa_user","quality-review-password",self.deviation["id"],
                                   "RETEST_REQUIRED","Recheck the laboratory identity contract",ref)
             self.assertEqual(receipt["record"]["qualification_approved"],False)
