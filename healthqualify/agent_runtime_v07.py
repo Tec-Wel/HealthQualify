@@ -58,6 +58,9 @@ class ScopedAgentRuntime:
             UNIQUE(system_id,event_type,event_key));
           CREATE INDEX IF NOT EXISTS agent_observations_by_system
             ON agent_observations(system_id,created_at);
+          CREATE TABLE IF NOT EXISTS agent_trigger_observations(
+            trigger_id TEXT PRIMARY KEY REFERENCES agent_triggers(id),
+            observation_id TEXT NOT NULL REFERENCES agent_observations(id));
         """)
         self.conn.commit()
 
@@ -269,3 +272,64 @@ class ScopedAgentRuntime:
             self.workspace._audit(principal["username"],"agent.trigger_recorded",
                                   uid,{"type":event_type,"system_id":system_id})
         return {"id":uid,"state":"REVIEW_PENDING","duplicate":False}
+
+    def process_trigger(self, token, trigger_id, protocol, *, changed_files=None, registry=None):
+        """Run one bounded advisory investigation for a recorded local event.
+
+        No autonomous agent tool loop, no source edits, no qualification approval.
+        Failed execution leaves a visible FAILED trigger; no silent retries.
+        """
+        row=self.conn.execute("SELECT * FROM agent_triggers WHERE id=?",(trigger_id,)).fetchone()
+        if not row:
+            raise KeyError("Unknown trigger")
+        actor=self._principal(token,row["system_id"],"execute")
+        if row["state"]!="REVIEW_PENDING":
+            raise ValueError("Trigger has already been processed")
+        agent={"RELEASE_CHANGED":"release-impact",
+               "QUALIFICATION_FAILED":"failure-investigation",
+               "COVERAGE_GAP":"gap-hunter"}[row["event_type"]]
+        try:
+            if row["event_type"]=="RELEASE_CHANGED" and not changed_files:
+                raise ValueError("Explicit changed paths required")
+            result=self.analyze(token,row["system_id"],protocol,agent,
+                                changed_files=changed_files,registry=registry)
+        except Exception:
+            with self.conn:
+                self.conn.execute("UPDATE agent_triggers SET state='FAILED' WHERE id=? AND state='REVIEW_PENDING'",
+                                  (trigger_id,))
+                self.workspace._audit(actor["username"],"agent.trigger_failed",trigger_id,
+                                      {"agent":agent})
+            raise
+        with self.conn:
+            self.conn.execute("INSERT INTO agent_trigger_observations VALUES(?,?)",
+                              (trigger_id,result["id"]))
+            self.conn.execute("UPDATE agent_triggers SET state='DRAFT_READY' WHERE id=?",
+                              (trigger_id,))
+            self.workspace._audit(actor["username"],"agent.trigger_processed",trigger_id,
+                                  {"observation_id":result["id"]})
+        return {"trigger_id":trigger_id,"observation_id":result["id"],
+                "state":"DRAFT_READY","qualification_approved":False}
+
+    def review_queue(self, token, system_id, limit=30):
+        self._principal(token,system_id,"baseline")
+        if type(limit) is not int or not 1<=limit<=READ_LIMIT:
+            raise ValueError("Invalid review page limit")
+        rows=self.conn.execute("""
+          SELECT o.id,o.agent,o.actor,o.created_at,o.elapsed_ms,q.disposition
+          FROM agent_observations o JOIN agent_review_queue q
+          ON o.id=q.observation_id
+          WHERE o.system_id=? ORDER BY o.created_at DESC,o.rowid DESC LIMIT ?""",
+          (system_id,limit)).fetchall()
+        return [dict(x) for x in rows]
+
+    def metrics(self, token, system_id):
+        self._principal(token,system_id,"read")
+        rows=self.conn.execute("""SELECT agent,status,elapsed_ms,model FROM agent_observations
+                                   WHERE system_id=?""",(system_id,)).fetchall()
+        from statistics import median
+        return {"system_id":system_id,"completed_drafts":sum(r["status"]=="DRAFT" for r in rows),
+                "agents":{a:sum(r["agent"]==a for r in rows) for a in AGENTS},
+                "median_duration_ms":round(median([r["elapsed_ms"] for r in rows]),3) if rows else None,
+                "model_invocations":sum(r["model"]!="none" for r in rows),
+                "model_validation_performed":False,
+                "regulated_evidence":False}
