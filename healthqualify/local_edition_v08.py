@@ -293,6 +293,37 @@ class LocalHandler(BaseHTTPRequestHandler):
                                           data["decision"],data["rationale"])
                     return self.response(200,result)
                 finally:runtime.close()
+            if path=="/api/model-explain":
+                # Explicit user click and server opt-in required. Only existing
+                # redacted findings are sent to the local pinned Ollama endpoint.
+                if not self.server.allow_model:
+                    raise PermissionError("Local Qwen disabled by server policy")
+                if set(data)!={"observation_id"} or not isinstance(data["observation_id"],str):
+                    raise ValueError("Existing observation ID required")
+                runtime=ScopedAgentRuntime(self.server.database)
+                try:
+                    row=runtime.conn.execute("""SELECT system_id,agent,report,report_digest
+                        FROM agent_observations WHERE id=?""",
+                        (data["observation_id"],)).fetchone()
+                    if not row:
+                        raise ValueError("Unknown observation")
+                    runtime._principal(self.cookie_token(),row["system_id"],"read")
+                    if digest(row["report"].encode())!=row["report_digest"]:
+                        raise ValueError("Stored observation integrity failed")
+                    report=json.loads(row["report"])
+                    explanation_input=json.dumps({
+                        "agent":row["agent"],"summary":report["summary"],
+                        "findings":report["findings"]},sort_keys=True)
+                    if len(explanation_input)>11000:
+                        raise ValueError("Agent context is too large")
+                    from .ai import local_draft
+                    narrative=local_draft(row["agent"],explanation_input,MODEL,consent=True)
+                    return self.response(200,{"observation_id":data["observation_id"],
+                        "model":MODEL,"text":narrative["text"],
+                        "status":"DRAFT_UNVERIFIED","human_review_required":True,
+                        "qualification_approved":False,
+                        "deterministic_report_sha256":row["report_digest"]})
+                finally:runtime.close()
             if path=="/api/model-check":
                 if data not in ({},):
                     raise ValueError("Unexpected input")
