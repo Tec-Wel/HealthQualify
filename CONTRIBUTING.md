@@ -1,4 +1,6 @@
-# Contributing to HealthQualify
+# Contributing
+
+**New to this repository?** [Follow the visual first-contribution guide](docs/CONTRIBUTOR_VISUAL_GUIDE.md) or [review the reusable design system](docs/DESIGN_GUIDELINES.md) before proposing README, docs, or dashboard styling changes. to HealthQualify
 
 Thank you for helping build transparent, reproducible open-source healthcare software assurance tooling.
 
