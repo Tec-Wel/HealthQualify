@@ -1,5 +1,5 @@
 "use strict";
-let csrf="",user=null,needsSetup=false,overview={systems:[],runs:[],deviations:[],protocols:[]};
+let csrf="",user=null,needsSetup=false,lastObservation=null,overview={systems:[],runs:[],deviations:[],protocols:[]};
 const $=id=>document.getElementById(id);
 function showMessage(message, bad=false){$("notification").textContent=message||"";$("notification").style.color=bad?"#9b2d2d":"#087f75";}
 function safeShort(s,n=18){return String(s||"").slice(0,n);}
@@ -101,6 +101,8 @@ for(const [name,title,description] of agentNames){
   try{
    const report=await api("/api/agent",{system_id,agent:name});
    $("agentResult").textContent=JSON.stringify(report.report,null,2);
+   lastObservation=report.id;$("explainAgent").disabled=false;
+   $("explanationResult").hidden=true;
    showMessage(title+" draft investigation generated. Not qualification approval.");
   }catch(e){showMessage(e.message,true);}finally{button.disabled=false;}
  };
@@ -165,6 +167,17 @@ $("runDemo").onclick=async()=>{
   await refresh();showMessage("Synthetic run recorded with evidence refs. View Qualification & evidence.");
   navigate("qualification");
  }catch(e){showMessage(e.message,true);}finally{button.disabled=false;}
+};
+$("explainAgent").onclick=async()=>{
+ if(!lastObservation)return;
+ const button=$("explainAgent");button.disabled=true;
+ try{
+  const result=await api("/api/model-explain",{observation_id:lastObservation});
+  $("explanationResult").hidden=false;
+  $("explanationResult").textContent=result.text+"\\n\\nUnverified model draft. Human review required.";
+  showMessage("Local Qwen explanation generated; original findings unchanged.");
+ }catch(e){showMessage("Optional model unavailable: "+e.message,true);}
+ finally{button.disabled=false;}
 };
 $("refreshReviews").onclick=loadReviews;
 $("checkModel").onclick=async()=>{
