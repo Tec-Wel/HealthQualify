@@ -43,3 +43,15 @@ jobs:
           assert result["summary"]["PASS"] == 2
           assert result["qualification_approved"] is False
           PY
+      - name: v0.5 strict protocol and evidence receipt
+        shell: bash
+        run: |
+          set +e
+          python -m healthqualify.v05cli run examples/synthetic_lis_v3/protocol.json --out /tmp/hq-v05-ci
+          code=$?
+          set -e
+          test "$code" -eq 1
+          digest="$(python -c 'import hashlib; from pathlib import Path; print(hashlib.sha256(Path("/tmp/hq-v05-ci/manifest.json").read_bytes()).hexdigest())')"
+          python -m healthqualify.v05cli verify /tmp/hq-v05-ci --trusted-manifest-sha256 "$digest"
+          python -m healthqualify.v05cli impact examples/synthetic_lis_v3/protocol.json healthqualify/healthcare.py
+          python -m healthqualify.v05cli benchmark examples/synthetic_lis_v2/protocol.json
