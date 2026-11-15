@@ -32,6 +32,7 @@ jobs:
               10:("feature/qualification-foundation-v02","ef7ba6344696600c8990617dbb13855c84d6c2c8"),
               11:("feature/full-platform-alpha-v03","8f930f9cde5b9c40d0664d4ffdf707a29dccba00"),
               12:("feature/security-interop-v04","eb579c8267a93604176926a023da7c53df3c5960"),
+              13:("feature/v05-assurance-backlog-convergence","47df12a2823779ee0e24ea7a7a5a139644b60445"),
           }
           def request(path,method="GET"):
               req=urllib.request.Request(base+path,method=method,headers={
