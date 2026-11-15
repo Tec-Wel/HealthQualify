@@ -19,6 +19,7 @@ from .fhir_secure import fetch_fhir, assert_fhir_field
 from .dicom_device import inspect_dicom_file, inspect_equipment_snapshot
 from .hl7_mllp import analyze_message
 from .protected_export import protect_export, verify_export
+from .attestations import attest_protocol
 import base64
 from .evidence import seal_export, verify_seal
 from .regwatch import RegulationWatch
@@ -66,6 +67,7 @@ def main(argv=None):
     device.add_argument("--authorize-synthetic",action="store_true")
     cmd("protect-export","source","destination")
     cmd("verify-protected","directory")
+    cmd("review-attest","username","protocol_id","meaning","rationale")
     testfhir=cmd("fhir-check-local","url","path","expected_json")
     testfhir.add_argument("--allow-local-http",action="store_true")
     cmd("regwatch-capture","framework","text_file")
@@ -79,6 +81,14 @@ def main(argv=None):
     args=parser.parse_args(argv)
     store=None
     try:
+        if args.command=="review-attest":
+            import getpass
+            password=getpass.getpass("Re-enter reviewer password: ")
+            seed=base64.b64decode(os.environ.get("HEALTHQUALIFY_SIGN_SEED_B64",""),validate=True)
+            data=attest_protocol(args.db,args.username,password,args.protocol_id,
+                                 args.meaning,args.rationale,seed)
+            print(json.dumps(data,indent=2))
+            return 0
         if args.command=="fhir-check-approved":
             origin=os.environ.get("HEALTHQUALIFY_FHIR_ORIGIN","")
             token=os.environ.get("HEALTHQUALIFY_FHIR_BEARER","")
