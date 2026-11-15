@@ -138,3 +138,29 @@
  .md-content__inner { padding-left: .2rem; padding-right: .2rem; }
  .md-typeset table:not([class]) { box-shadow: none; }
 }
+
+/* Branded, responsive visual galleries: no JavaScript, remote fonts, or paid theme. */
+.md-typeset table:not([class]) img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border-radius: .65rem;
+}
+.md-typeset table:not([class]) td {
+  line-height: 1.55;
+}
+.md-typeset table:not([class]) td a img {
+  transition: filter .12s ease;
+}
+.md-typeset table:not([class]) td a:hover img,
+.md-typeset table:not([class]) td a:focus-visible img {
+  filter: brightness(1.08);
+}
+.md-typeset a:focus-visible {
+  outline: 3px solid #0C8579;
+  outline-offset: 4px;
+  border-radius: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .md-typeset table:not([class]) td a img { transition: none; }
+}
