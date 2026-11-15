@@ -1,4 +1,4 @@
-<div align="center">
+
 
 ![Five HealthQualify local AI agents](assets/ai-agents-hero.svg)
 
@@ -13,7 +13,7 @@
 ![AI](https://img.shields.io/badge/AI-Optional%20Ollama%20%2B%20Qwen-138778?style=flat-square)
 ![Data](https://img.shields.io/badge/Data-Synthetic%20only-16846F?style=flat-square)
 
-</div>
+
 
 > [!IMPORTANT]
 > **Developer alpha — synthetic v0.3 protocols only.** These are *advisory investigators*, not FDA validation approvals, production GxP systems, qualified electronic signatures, or clinical tools. Use only synthetic/public nonsensitive inputs. Never send PHI or connect the demonstration to live systems.
@@ -76,7 +76,7 @@ flowchart LR
 
 ### Run any agent from the CLI
 
-<details>
+<details markdown="1">
 <summary><strong>🔀 Agent 01 — Release Impact Investigator</strong></summary>
 
 Find impacted synthetic tests when a mapped repository component changes:
@@ -95,7 +95,7 @@ python -m healthqualify.agentcli release-impact examples/synthetic_lis_v3/protoc
 
 </details>
 
-<details>
+<details markdown="1">
 <summary><strong>🔎 Agent 02 — Qualification Gap Hunter</strong></summary>
 
 ```bash
@@ -106,7 +106,7 @@ python -m healthqualify.agentcli gap-hunter examples/synthetic_lis_v3/protocol.j
 
 </details>
 
-<details>
+<details markdown="1">
 <summary><strong>🧩 Agent 03 — Failure Investigation Copilot</strong></summary>
 
 ```bash
@@ -117,7 +117,7 @@ python -m healthqualify.agentcli failure-investigation examples/synthetic_lis_v3
 
 </details>
 
-<details>
+<details markdown="1">
 <summary><strong>📋 Agent 04 — QA Evidence Readiness</strong></summary>
 
 ```bash
@@ -128,7 +128,7 @@ python -m healthqualify.agentcli qa-readiness examples/synthetic_lis_v3/protocol
 
 </details>
 
-<details>
+<details markdown="1">
 <summary><strong>🌐 Agent 05 — Cross-System Dependency Investigator</strong></summary>
 
 ```bash
@@ -249,7 +249,7 @@ python -m unittest discover -s tests -v
 
 The tests exercise unknown changes, absent/invalid evidence, default-off inference, blocked approvals, path validation, and five-agent job execution. Passing them demonstrates developer behavior, not regulatory qualification.
 
-<details>
+<details markdown="1">
 <summary><strong>Common questions and troubleshooting</strong></summary>
 
 **Why is readiness always blocked?** The current synthetic protocol has no formal qualified-approval pathway.
@@ -266,12 +266,12 @@ The tests exercise unknown changes, absent/invalid evidence, default-off inferen
 
 ---
 
-<div align="center">
+
 
 ### Continue your HealthQualify journey
 
 [**🖥️ Launch the local dashboard →**](AI_AGENT_DASHBOARD.md) · [**📚 Documentation home →**](DOCUMENTATION_INDEX.md) · [**🔐 Review security boundaries →**](SECURITY_MODEL.md)
 
-<sub>Local first · AI optional · Evidence-aware · Human-reviewed</sub>
+*Local first · AI optional · Evidence-aware · Human-reviewed*
 
-</div>
+
