@@ -1,119 +1,277 @@
-# HealthQualify — Five Local Advisory Agents
+<div align="center">
 
-**Status:** Developer-alpha feature; synthetic v0.3 protocols only. **Not** a validated GxP application, FDA certification, Part 11 electronic signature, protected audit trail, or release approval mechanism.
+![Five HealthQualify local AI agents](assets/ai-agents-hero.svg)
 
-The agents are **read-only investigators**. They do not execute qualification tests, change authoritative PASS/FAIL, approve protocols, resolve CAPAs, sign releases, or connect to clinical systems. By default they invoke **no LLM** and make **no network calls**. An optional local Ollama model can explain the same fixed deterministic findings.
+# Meet the five local AI agents
 
-## Quick start (Python 3.10+)
+**Investigate qualification changes with repeatable findings—not black-box approvals.**
 
-From the repository root:
+[**🚀 Try your first agent**](#1-your-first-agent-in-60-seconds) · [**🧭 Explore the five agents**](#2-choose-the-right-agent) · [**🧪 Verify test evidence**](#3-work-with-verified-evidence) · [**🖥️ Open the dashboard guide**](AI_AGENT_DASHBOARD.md)
+
+![Status](https://img.shields.io/badge/Status-Developer%20alpha-6757A3?style=flat-square)
+![Runtime](https://img.shields.io/badge/Runtime-Local%20Python-245A7C?style=flat-square)
+![AI](https://img.shields.io/badge/AI-Optional%20Ollama%20%2B%20Qwen-138778?style=flat-square)
+![Data](https://img.shields.io/badge/Data-Synthetic%20only-16846F?style=flat-square)
+
+</div>
+
+> [!IMPORTANT]
+> **Developer alpha — synthetic v0.3 protocols only.** These are *advisory investigators*, not FDA validation approvals, production GxP systems, qualified electronic signatures, or clinical tools. Use only synthetic/public nonsensitive inputs. Never send PHI or connect the demonstration to live systems.
+
+## Find your path
+
+| **🌱 New to agents** | **🧪 I have test results** | **🖥️ I prefer a UI** |
+| :--- | :--- | :--- |
+| Run a deterministic investigation with no LLM and no API key. | Verify the evidence bundle using an independently saved digest, then investigate failures. | Use the loopback dashboard to run agents and inspect local history. |
+| **[Run the quickstart ↓](#1-your-first-agent-in-60-seconds)** | **[Verify evidence ↓](#3-work-with-verified-evidence)** | **[Launch the dashboard →](AI_AGENT_DASHBOARD.md)** |
+
+---
+
+## 1. Your first agent in 60 seconds
+
+**Requirements:** Python 3.10+ and Git. No cloud credentials, Ollama install, or model download needed for the initial deterministic analysis.
 
 ```bash
-python -m unittest discover -s tests -v
-python -m healthqualify.agentcli release-impact examples/synthetic_lis_v3/protocol.json --changed healthqualify/healthcare.py
+git clone https://github.com/Tec-Wel/HealthQualify.git
+cd HealthQualify
+python -m unittest tests.test_agents tests.test_agent_orchestrator -v
+```
+
+Now ask the **Qualification Gap Hunter** to examine the built-in synthetic LIS project:
+
+```bash
 python -m healthqualify.agentcli gap-hunter examples/synthetic_lis_v3/protocol.json
-python -m healthqualify.agentcli qa-readiness examples/synthetic_lis_v3/protocol.json
+```
+
+**What to look for:** JSON with `"agent": "gap-hunter"`, `"status": "DRAFT_UNVERIFIED"`, `"qualification_approved": false`, a `summary` object, and source-linked `findings`. Without separately verified execution evidence, the agent explicitly reports `NO_VERIFIED_EXECUTION`.
+
+> [!TIP]
+> Start with deterministic analysis. The AI model is an **optional explanation layer**—the verification and traceability functions are useful without it.
+
+## 2. Choose the right agent
+
+| | **Agent** | **Question answered** | **What it actually checks today** |
+| :---: | :--- | :--- | :--- |
+| 🔀 | **01 · Release Impact Investigator** | *What should we review after this code change?* | Mapped paths → tests; unknown changes → `UNKNOWN_IMPACT` |
+| 🔎 | **02 · Qualification Gap Hunter** | *What is untested or missing?* | Uncovered requirements, missing/non-PASS verified execution |
+| 🧩 | **03 · Failure Investigation Copilot** | *Which failures need attention?* | Non-PASS synthetic tests, linked requirements, unverified investigation prompts |
+| 📋 | **04 · QA Evidence Readiness** | *What prevents a complete review package?* | Evidence gaps and blockers; alpha stays `REVIEW_BLOCKED` |
+| 🌐 | **05 · Cross-System Dependency Investigator** | *Which registered systems could be affected?* | Changed components → locally declared system dependencies; unknown mappings |
+
+### The complete workflow at a glance
+
+```mermaid
+flowchart LR
+  A["Local code changes"] --> B["01 · Release impact"]
+  B --> C["02 · Gap hunter"]
+  C --> D["Controlled synthetic tests"]
+  D --> E["03 · Failure investigation"]
+  E --> F["04 · Evidence readiness"]
+  B --> G["05 · Dependencies"]
+  F --> H["Human review"]
+  G --> H
+  classDef agent fill:#e5f7f5,stroke:#259889,color:#0a4945
+  class B,C,E,F,G agent
+```
+
+### Run any agent from the CLI
+
+<details>
+<summary><strong>🔀 Agent 01 — Release Impact Investigator</strong></summary>
+
+Find impacted synthetic tests when a mapped repository component changes:
+
+```bash
+python -m healthqualify.agentcli release-impact examples/synthetic_lis_v3/protocol.json --changed healthqualify/healthcare.py
+```
+
+Try an intentionally unknown component to see the conservative safety behavior:
+
+```bash
+python -m healthqualify.agentcli release-impact examples/synthetic_lis_v3/protocol.json --changed new/unmapped_component.py
+```
+
+**Expect:** `REVIEW_REQUIRED` for known mappings; `UNKNOWN_IMPACT` and a broad rerun recommendation when mappings are incomplete. This is not a qualified release decision.
+
+</details>
+
+<details>
+<summary><strong>🔎 Agent 02 — Qualification Gap Hunter</strong></summary>
+
+```bash
+python -m healthqualify.agentcli gap-hunter examples/synthetic_lis_v3/protocol.json
+```
+
+**Expect:** requirement coverage findings and an explicit warning when verified execution is missing. Negative-test coverage classification and historical baseline staleness are **not** independently proven by the alpha schema.
+
+</details>
+
+<details>
+<summary><strong>🧩 Agent 03 — Failure Investigation Copilot</strong></summary>
+
+```bash
 python -m healthqualify.agentcli failure-investigation examples/synthetic_lis_v3/protocol.json
+```
+
+**Expect:** a request for independently verified results. The evidence-based investigation command appears in [Step 3](#3-work-with-verified-evidence). A suspected cause is **not** a confirmed root cause.
+
+</details>
+
+<details>
+<summary><strong>📋 Agent 04 — QA Evidence Readiness</strong></summary>
+
+```bash
+python -m healthqualify.agentcli qa-readiness examples/synthetic_lis_v3/protocol.json
+```
+
+**Expect:** `REVIEW_BLOCKED`, because this synthetic alpha does not implement formal QA approval, even if technical fixtures pass.
+
+</details>
+
+<details>
+<summary><strong>🌐 Agent 05 — Cross-System Dependency Investigator</strong></summary>
+
+```bash
 python -m healthqualify.agentcli dependency-investigator examples/synthetic_lis_v3/protocol.json --registry examples/agents/dependencies.json --changed healthqualify/healthcare.py
 ```
 
-These commands analyze **source-linked synthetic data**. No model installation is needed for deterministic findings. They do not require secrets or cloud credentials.
+**Expect:** declared affected systems and unmapped paths. The local registry is an explicit input, not automatic discovery of all real organization systems.
 
-## Verify actual synthetic test evidence
+</details>
 
-Generate a separate v0.3 synthetic evidence directory:
+---
+
+## 3. Work with verified evidence
+
+The built-in protocol deliberately contains seeded defects. Run it through the **separate deterministic runner**:
 
 ```bash
 python -m healthqualify.v05cli run examples/synthetic_lis_v3/protocol.json --out .healthqualify/demo-run
 ```
 
-This deliberately contains seeded FAIL results, so an exit code of **1 is expected**. The output reports `manifest_sha256`; copy its exact value into the following command using a trusted copy **stored outside the evidence directory**:
+> [!NOTE]
+> **Expected: 2 PASS, 5 FAIL, exit code 1.** This is the demonstration's intended outcome. The output folder must not already exist. The printed `manifest_sha256` is your evidence-verification reference.
+
+**Save the printed digest outside the evidence directory**, in a location you independently control. Then verify the bundle:
+
+```bash
+python -m healthqualify.v05cli verify .healthqualify/demo-run --trusted-manifest-sha256 YOUR_TRUSTED_SHA256
+```
+
+Use exactly that separately preserved digest for the failure investigation:
 
 ```bash
 python -m healthqualify.agentcli failure-investigation examples/synthetic_lis_v3/protocol.json --evidence-dir .healthqualify/demo-run --trusted-manifest-sha256 YOUR_TRUSTED_SHA256
-python -m healthqualify.agentcli qa-readiness examples/synthetic_lis_v3/protocol.json --evidence-dir .healthqualify/demo-run --trusted-manifest-sha256 YOUR_TRUSTED_SHA256
-python -m healthqualify.agentcli gap-hunter examples/synthetic_lis_v3/protocol.json --evidence-dir .healthqualify/demo-run --trusted-manifest-sha256 YOUR_TRUSTED_SHA256
 ```
 
-A missing or mismatched trusted digest **stops** analysis. Without verified evidence, gap and readiness agents explicitly report that execution cannot be established.
+The same `--evidence-dir` and `--trusted-manifest-sha256` flags also work with `gap-hunter` and `qa-readiness`. A missing or mismatched trusted hash stops evidence-based analysis. A local hash alone is not a qualified immutable record.
 
-## Agent details
+### What gets produced?
 
-| Agent | Required input | Deterministic output | Boundaries |
-|---|---|---|---|
-| `release-impact` | v0.3 protocol, explicit changed paths | Existing conservative change-to-test graph, unknown paths | Cannot declare release qualified |
-| `gap-hunter` | v0.3 protocol, optional verified evidence | Uncovered requirements, missing/non-PASS execution | Does not infer unspecified negative-test coverage |
-| `failure-investigation` | v0.3 protocol and preferably verified evidence | Non-PASS test IDs with evidence references | No root-cause determination or CAPA closure |
-| `qa-readiness` | v0.3 protocol, optional verified evidence | Blockers and missing records | Always REVIEW_BLOCKED for this synthetic developer alpha |
-| `dependency-investigator` | v0.3 protocol, explicit changed paths, local registry | Mapped systems and unknown components | Registry completeness is a human responsibility |
+```text
+Local synthetic protocol
+      │
+      ├── Deterministic analysis ───> source-linked draft findings
+      │
+      └── Explicit separate runner ─> protocol.json
+                                    ├> results.json
+                                    └> manifest.json
+                                             │
+                     Independently saved SHA-256
+                                             │
+                                Verified agent investigation
+```
 
-**Important:** The alpha protocol has no formally approved negative-test classification, time-aware execution-baseline registry, or qualified approval/e-signature implementation. Agents must not claim to detect what the underlying data cannot establish. Extend schemas and authorization after independent review before regulated use.
+## 4. Optional: add Qwen explanations with Ollama
 
-## Optional local Qwen via Ollama
-
-Install Ollama locally and fetch your reviewed model while connected:
+**Ollama does not train a model** here—it serves a locally installed Qwen model to explain the deterministic findings.
 
 ```bash
 ollama pull qwen3:8b
 ollama list
-```
-
-Start Ollama listening only on `127.0.0.1:11434`. Disable Ollama cloud capabilities and block unapproved outbound traffic using host firewall or VM isolation. Then, **only with synthetic inputs**:
-
-```bash
 python -m healthqualify.agentcli gap-hunter examples/synthetic_lis_v3/protocol.json --ollama --model qwen3:8b
 ```
 
-The model adds `model_explanation` and **cannot rewrite** `summary`, `findings`, `qualification_approved`, or `evidence`. It sees the bounded list of deterministic findings, not raw fixtures or patient data. Ollama invocation uses the existing `healthqualify.ai.local_draft` allowlisted loopback endpoint. A model failure returns a CLI error; it is never treated as passing qualification. The provider request is explicitly opt-in and default-off.
+Keep Ollama bound to `127.0.0.1:11434`; disable cloud features and independently block unapproved outbound traffic. Only synthetic data summaries are permitted in this alpha. The model cannot alter `findings`, `summary`, `qualification_approved`, or `evidence`.
 
-## Output contract
+| **AI off (default)** | **AI on (explicit `--ollama`)** |
+| :--- | :--- |
+| Purely deterministic local findings | Same deterministic findings plus `model_explanation` |
+| No model download or inference | Requires running local Ollama and Qwen |
+| No model availability dependency | Model outage returns an error, **not** a PASS |
 
-`HQ-AGENT-DRAFT-0.1` JSON reports contain `agent`, `system_id`, `protocol_sha256`, `status=DRAFT_UNVERIFIED`, `qualification_approved=false`, `evidence=false`, `human_review_required=true`, `summary`, `findings`, and optional `model_explanation`. Findings carry `code`, `severity`, `message`, and `source_refs`.
+Real Qwen inference is a separate hardware acceptance test; successful automated CI does **not** prove a Qwen model was exercised.
 
-To write a **new** report file without overwriting one:
+## 5. Save and interpret a report
+
+Save a new draft report without overwriting an existing file:
 
 ```bash
 python -m healthqualify.agentcli gap-hunter examples/synthetic_lis_v3/protocol.json --out draft-gaps.json
 ```
 
-The CLI errors if the output file already exists. Store copies and their hashes according to your organization's approved record controls. These agent reports are **not** authoritative qualification evidence.
+The schema `HQ-AGENT-DRAFT-0.1` records the selected agent, source system, protocol hash, deterministic `summary`, `findings` with source references, and optional unverified model narrative.
 
-## Dependency registry schema
+| **Output** | **How to interpret it** |
+| :--- | :--- |
+| `DRAFT_UNVERIFIED` | Advisory result requiring human review |
+| `UNKNOWN_IMPACT` | Mapping insufficient: do not assume the change is safe |
+| `NO_VERIFIED_EXECUTION` | Test coverage cannot prove actual execution |
+| `REVIEW_BLOCKED` | No formal approval readiness claim |
+| `qualification_approved: false` | No regulatory or release approval was issued |
 
-`examples/agents/dependencies.json` illustrates a registry:
+### Dependency-registry example
 
 ```json
-{"systems":[{"id":"LIS","components":["healthqualify/healthcare.py"]}]}
+{
+  "systems": [
+    {
+      "id": "LIS",
+      "components": ["healthqualify/healthcare.py"]
+    }
+  ]
+}
 ```
 
-Components are repository-relative path prefixes. Missing components are reported as `UNKNOWN_DEPENDENCY`; do not treat an incomplete registry as proof of no other impacts.
+The key is a **reviewed local mapping**, not a scanner capable of inferring every system dependency.
 
-## User workflow
+---
 
-1. **Choose a synthetic protocol** and check version, source references, component links, and expected behavior.
-2. **Run release-impact** on explicit local Git change paths (a GitHub connection is not required).
-3. **Run gap-hunter** to identify unmapped requirements and note any missing verified execution.
-4. **Execute a separate, controlled synthetic protocol** with `healthqualify.v05cli run`.
-5. **Independently retain the manifest digest**, then run the failure and readiness agents against verified evidence.
-6. **Run dependency-investigator** using an approved local system registry.
-7. **Review each finding** with qualified personnel. Draft explanations do not alter deterministic results.
-8. **Retain the report** under organizational policies; do not use this alpha as a system of regulated record.
+## 6. Safety, testing & next steps
 
-## Security and limitations
-
-- Input protocol is bounded to a 1 MiB file and strictly validated as synthetic v0.3.
-- No arbitrary model tool calling, shell execution, test execution, file edits, cloud APIs or remote URLs.
-- LLM prompt contains only summary findings; source documents are **not trusted instructions**.
-- Filesystem permissions, endpoint isolation, backup protection, identity and audit control remain the deployer's responsibility.
-- Trusted evidence SHA-256 must be independently stored. A self-consistent artifact with no external trust anchor is not proof of authenticity.
-- This first release is a CLI, **not yet integrated into the authenticated UI/API**. For multiuser usage, authentication, per-system authorization, rate limits, retention and append-only audit controls must be implemented first.
-- Time-aware comparison against historical qualified baselines, predictive root-cause investigation, approvals and live integration are future features.
-
-## Acceptance tests
+> [!WARNING]
+> **Do not use these developer-alpha agents as a regulated system of record.** They do not perform FDA approval, qualified signatures, CAPA closure, live clinical execution, model-driven shell commands, or validated enterprise audit/retention. Input protocols are bounded to 1 MiB and synthetic v0.3.
 
 ```bash
-python -m unittest tests.test_agents -v
+python -m unittest tests.test_agents tests.test_agent_orchestrator -v
 python -m unittest discover -s tests -v
 ```
 
-Tests cover all agents, mapped and unknown changes, missing evidence, invalid hashes, duplicate systems, path traversal, AI default-off behavior, and the inability of a mocked LLM to change readiness. Passing tests confirms developer behavior, **not** production qualification or FDA compliance.
+The tests exercise unknown changes, absent/invalid evidence, default-off inference, blocked approvals, path validation, and five-agent job execution. Passing them demonstrates developer behavior, not regulatory qualification.
+
+<details>
+<summary><strong>Common questions and troubleshooting</strong></summary>
+
+**Why is readiness always blocked?** The current synthetic protocol has no formal qualified-approval pathway.
+
+**Why does the example exit with code 1?** It contains five deliberately failing checks.
+
+**Why does the evidence agent reject my directory?** Supply both the directory and the independently preserved, exact `manifest_sha256` output from the run.
+
+**Why does Qwen fail?** Check `ollama list`, confirm the Ollama service is running on `127.0.0.1:11434`, and use the exact installed model name.
+
+**Can this process patient records or automatically validate my device?** No; synthetic or public nonsensitive inputs only, and no regulated production qualification claim.
+
+</details>
+
+---
+
+<div align="center">
+
+### Continue your HealthQualify journey
+
+[**🖥️ Launch the local dashboard →**](AI_AGENT_DASHBOARD.md) · [**📚 Documentation home →**](DOCUMENTATION_INDEX.md) · [**🔐 Review security boundaries →**](SECURITY_MODEL.md)
+
+<sub>Local first · AI optional · Evidence-aware · Human-reviewed</sub>
+
+</div>

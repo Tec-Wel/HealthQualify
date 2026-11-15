@@ -16,6 +16,7 @@ GUIDES = [
     "docs/SECURITY_MODEL.md", "docs/PRODUCTION_READINESS_CHECKLIST.md",
     "docs/EVALUATION_GUIDE.md", "docs/MIGRATION_GUIDE.md",
     "docs/FAQ.md", "docs/FEATURE_MATRIX.md", "docs/DOCUMENTATION_INDEX.md",
+    "docs/AI_AGENTS_GUIDE.md", "docs/AI_AGENT_DASHBOARD.md",
     "docs/VERSIONING_POLICY.md", "README.md", "SECURITY.md",
     "SUPPORT.md", "CHANGELOG.md",
 ]

@@ -61,6 +61,20 @@ python -m healthqualify.v05cli run examples/synthetic_lis_v3/protocol.json --out
 
 ---
 
+## 🤖 Explore the local AI agents
+
+Two guided experiences help you move from your first investigation to a complete local dashboard workflow.
+
+| **🧠 Five-Agent Field Guide** | **🖥️ Local Dashboard & Orchestration** |
+| :--- | :--- |
+| Learn what each agent checks, run copy-ready commands, and inspect verified synthetic evidence. | Launch the loopback-only dashboard, run all five agents, inspect SQLite history, and opt into local Qwen. |
+| **[Explore the five agents →](AI_AGENTS_GUIDE.md)** | **[Launch your dashboard →](AI_AGENT_DASHBOARD.md)** |
+
+> [!NOTE]
+> Both experiences are developer-alpha and synthetic-only. Agent findings are advisory, and Qwen is optional; neither offers FDA approval or qualified electronic signatures.
+
+---
+
 ## Browse the documentation
 
 ### 📖 Learn & use
