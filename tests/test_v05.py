@@ -72,6 +72,24 @@ class ContractV3Tests(unittest.TestCase):
             (root/"results.json").write_text("{}")
             self.assertFalse(verify_v3(root,trusted))
 
+    def test_replay_rejects_forged_pass_even_with_rehashed_manifest(self):
+        from healthqualify.assurance import encode, digest
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)/"run"
+            export_v3(DEMO.read_bytes(),root)
+            report=json.loads((root/"results.json").read_bytes())
+            report["results"][1]["status"]="PASS"
+            report["summary"]["FAIL"]-=1
+            report["summary"]["PASS"]+=1
+            tampered=encode(report)
+            (root/"results.json").write_bytes(tampered)
+            manifest=json.loads((root/"manifest.json").read_bytes())
+            manifest["files"]["results.json"]=digest(tampered)
+            (root/"manifest.json").write_bytes(encode(manifest))
+            # Even if an attacker replaces the trusted digest, deterministic replay
+            # catches semantic evidence changes. A malicious runner is out of scope.
+            self.assertFalse(verify_v3(root,digest((root/"manifest.json").read_bytes())))
+
     def test_profiles_never_autocertify(self):
         selected=plan({"intended_use":"Synthetic LIS"},
                       {"us-part-11":"UNDETERMINED"},"CSA")

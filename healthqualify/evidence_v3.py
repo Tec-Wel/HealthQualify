@@ -58,6 +58,20 @@ def verify_v3(path: Path, trusted_manifest_sha256: str):
         doc=json.loads(protocol_bytes)
         validate_v3(doc)
         results=json.loads((path/"results.json").read_bytes())
+        # Hash verification alone cannot identify a self-consistent forged run when
+        # the attacker also controls the manifest. For synthetic-only protocols we
+        # can independently replay the allowlisted deterministic assertions and
+        # compare all material evidence except the execution timestamp.
+        replayed=execute_v3(doc)
+        observed=dict(results)
+        observed.pop("executed_at_utc",None)
+        replayed.pop("executed_at_utc",None)
+        if observed != replayed:
+            return False
+        if manifest.get("environment") != doc["system"]["environment"]:
+            return False
+        if manifest.get("generated_at") != results.get("executed_at_utc"):
+            return False
         return (manifest["source_protocol_sha256"]==digest(protocol_bytes)
                 and manifest["canonical_protocol_sha256"]==digest(encode(doc))
                 and manifest["build_sha"]==doc["system"]["build_sha"]
