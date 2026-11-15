@@ -55,6 +55,12 @@ Expect `{"verified": true}` if the artifacts and trusted digest match and determ
 
 The product roadmap and nine development issues remain separate from completion claims. See [Release status](docs/RELEASE_STATUS.md), [Backlog](docs/V05_BACKLOG_CONVERGENCE.md), and [Open issues](https://github.com/Tec-Wel/HealthQualify/issues).
 
+## v0.6 quality, release and benchmarking workflows
+
+[QA review, release impact and equal-input benchmark guide](docs/QUALITY_RELEASE_BENCHMARK_V06.md) covers credential-verified deviation reviews, offline QMS handoff, evidence-retention inventory, release-triggered test recommendations, human review decisions and measured synthetic benchmarks.
+
+These are **developer-alpha controls only**, not legally valid electronic signatures, verified WORM retention, hospital integrations or automatic qualification decisions.
+
 ## Documentation
 
 **Start here:** [Getting started](docs/GETTING_STARTED.md) · [Installation by OS](docs/INSTALLATION.md) · [User guide](docs/USER_GUIDE.md)
