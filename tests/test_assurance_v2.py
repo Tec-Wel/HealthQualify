@@ -7,6 +7,7 @@ from pathlib import Path
 
 from healthqualify.assurance import assess_v2, save_v2, validate_v2, verify_v2, digest
 from healthqualify.healthcare import parse_hl7
+from healthqualify.review import compare_protocols
 
 EXAMPLE = Path(__file__).resolve().parents[1] / "examples" / "synthetic_lis_v2" / "protocol.json"
 
@@ -67,6 +68,26 @@ class AssuranceV2Tests(unittest.TestCase):
         self.assertEqual(result["traceability"][-1]["status"], "NOT_RUN")
         self.assertEqual(result["gaps"][-1]["kind"], "FAIL")
         self.assertTrue(any(g.get("kind") == "UNCOVERED" for g in result["gaps"]))
+
+    def test_review_detects_requirement_change(self):
+        before = copy.deepcopy(self.doc)
+        self.doc["requirements"][1]["acceptance_basis"] += " revised"
+        result = compare_protocols(before, self.doc)
+        self.assertIn("OQ-001", result["recommended_test_ids"])
+        self.assertEqual(result["impact"], "REVIEW_REQUIRED")
+        self.assertTrue(result["human_review_required"])
+
+    def test_review_unknown_impact_when_version_changes(self):
+        before = copy.deepcopy(self.doc)
+        self.doc["system"]["version"] = "0.3"
+        result = compare_protocols(before, self.doc)
+        self.assertEqual(result["impact"], "UNKNOWN_IMPACT")
+        self.assertEqual(len(result["recommended_test_ids"]), len(self.doc["tests"]))
+
+    def test_review_no_declared_change_not_regulatory_approval(self):
+        result = compare_protocols(self.doc, copy.deepcopy(self.doc))
+        self.assertEqual(result["impact"], "NO_DECLARED_CHANGE")
+        self.assertFalse(result["qualification_approved"])
 
     def test_manifest_and_tamper(self):
         with tempfile.TemporaryDirectory() as directory:
