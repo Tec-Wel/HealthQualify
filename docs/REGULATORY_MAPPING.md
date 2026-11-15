@@ -1,4 +1,15 @@
+![Healthcare QA documentation](assets/category-health.svg)
+
+[← **Documentation home**](README.md) &nbsp; / &nbsp; **Healthcare QA**
+
 # Regulatory and standards mapping — applicability, not a compliance claim
+
+> **What you'll learn:** Understand applicability of major healthcare and quality frameworks without making compliance claims.
+
+**On this page:** [Framework map](#framework-map) · [Evidence-to-obligation analysis worksheet](#evidence-to-obligation-analysis-worksheet) · [Official starting points](#official-starting-points)
+
+---
+
 
 **Warning:** HealthQualify does not automatically establish applicability, regulatory approval, FDA certification, e-signature validity or conformity to these frameworks. This is a learning/index document; verify the current official text, jurisdiction, product classification and institutional SOPs before use.
 
@@ -44,3 +55,9 @@ The synthetic `source_references` registry checks only that each `source_id` exi
 These references are navigation aids only. Some standards are copyrighted/licensed, and a tool-generated draft must not be represented as a definitive legal determination.
 
 See [Security & limitations](SECURITY_AND_LIMITATIONS.md), [Qualification](QUALIFICATION_METHODOLOGY.md).
+
+---
+
+### Continue exploring
+
+[healthcare use cases](HEALTHCARE_USE_CASES.md) · [qualification methodology](QUALIFICATION_METHODOLOGY.md) · [All guides](README.md) · [Project homepage](../README.md)

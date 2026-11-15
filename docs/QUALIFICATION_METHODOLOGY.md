@@ -1,4 +1,15 @@
+![Healthcare QA documentation](assets/category-health.svg)
+
+[← **Documentation home**](README.md) &nbsp; / &nbsp; **Healthcare QA**
+
 # Qualification methodology: risk-based and evidence-led
+
+> **What you'll learn:** Apply risk-based requirements, protocols, execution evidence, deviations and human review.
+
+**On this page:** [Eight-stage method](#eight-stage-method) · [Traceability example (entirely fictional)](#traceability-example-entirely-fictional) · [Core evidence pack](#core-evidence-pack) · [Present implementation mapping](#present-implementation-mapping)
+
+---
+
 
 This guide explains a disciplined technical workflow, **not** professional legal/regulatory advice or certification. Determine the applicable framework by intended use, jurisdiction, regulated role and quality system. IQ/OQ/PQ and CSA are alternative/complementary techniques **where justified**, not labels to apply blindly.
 
@@ -52,3 +63,9 @@ Use versioned baselines, changed-file mapping and conservative `UNKNOWN_IMPACT` 
 **Standalone v0.5:** strict offline v0.3 protocol, deterministic fixture execution, manifest verification and source impact. **SQLite workspace:** v0.2 baseline and run records, deviations/audit. **v0.6:** QA deviation review, QMS handoff, retention metadata, release advisory. These tracks are not automatically one continuous regulated workflow.
 
 See [End-to-end workflow](END_TO_END_WORKFLOW.md), [Templates](VALIDATION_TEMPLATES.md), and [Regulatory mapping](REGULATORY_MAPPING.md).
+
+---
+
+### Continue exploring
+
+[healthcare use cases](HEALTHCARE_USE_CASES.md) · [validation templates](VALIDATION_TEMPLATES.md) · [All guides](README.md) · [Project homepage](../README.md)

@@ -1,4 +1,15 @@
+![Project reference documentation](assets/category-reference.svg)
+
+[← **Documentation home**](README.md) &nbsp; / &nbsp; **Project reference**
+
 # HealthQualify — implementation status (v0.4 security/interoperability alpha)
+
+> **What you'll learn:** Review the historical implementation status, smoke tests and remaining compliance boundaries.
+
+**On this page:** [Smoke tests](#smoke-tests) · [Local FHIR demo connector](#local-fhir-demo-connector) · [Integrity receipt](#integrity-receipt) · [Development and compliance boundaries](#development-and-compliance-boundaries)
+
+---
+
 
 **v0.4 additions:** PBKDF2 identity, role-gated short-lived sessions, authenticated local API, technical QA review attestations, AES-256-GCM encrypted exports, Ed25519 integrity signatures, opt-in approved-origin HTTPS FHIR checks, bounded MLLP framing, offline DICOM metadata and passive device snapshot inspections, minimized persisted observations, and fail-closed regulated release gates. See [Security & Interoperability v0.4](SECURITY_INTEROP_V04.md). **Important:** This release is not a complete regulated-production platform. All features below are independently authored HealthQualify proof-of-concepts and developer tools. Do not use on PHI or for a regulated approval decision.
 
@@ -53,3 +64,9 @@ Keep the key external to the report directory. This verifies against a shared se
 - Hashes and shared-secret receipts do not alone create immutable regulated records.
 - Regulatory applicability depends on actual jurisdiction and intended use.
 - Cloud portability of the container does not mean secure cloud production readiness.
+
+---
+
+### Continue exploring
+
+[roadmap](ROADMAP.md) · [product](PRODUCT.md) · [All guides](README.md) · [Project homepage](../README.md)

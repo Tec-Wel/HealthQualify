@@ -1,4 +1,15 @@
+![Project reference documentation](assets/category-reference.svg)
+
+[← **Documentation home**](README.md) &nbsp; / &nbsp; **Project reference**
+
 # HealthQualify v0.3 local platform foundation
+
+> **What you'll learn:** Explore the development history of the local workspace, database, API and integration prototypes.
+
+**On this page:** [Status and scope](#status-and-scope) · [Installation](#installation) · [Local dashboard and API](#local-dashboard-and-api) · [Draft-only regulatory and AI](#draft-only-regulatory-and-ai)
+
+---
+
 
 ## Status and scope
 This is a working **local developer alpha**, not a production healthcare validation product. It is a first integrated product slice covering system registry, risk/URS helpers, draft protocol versioning, baseline review, synthetic execution, findings, audit events, reporting, regulatory references, optional local AI drafts, model evaluation, and a basic dashboard. It has **no regulatory electronic signatures, regulated-grade record protection, licensed quality system, PHI processing, or clinical data connectivity**.
@@ -83,3 +94,9 @@ Real FHIR/HL7 authenticated adapters against approved environments; React UI; Fa
 
 ## Roadmap truth in labeling
 Implemented means **demonstration functional**. It does not mean regulatory-ready or production-ready. IQ/OQ/PQ tests and CSA records should be selected according to intended use and an authorized quality review.
+
+---
+
+### Continue exploring
+
+[release status](RELEASE_STATUS.md) · [roadmap](ROADMAP.md) · [All guides](README.md) · [Project homepage](../README.md)
