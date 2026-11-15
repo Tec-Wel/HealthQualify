@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HealthQualify Local Edition</title>
+<link rel="stylesheet" href="/local-ui.css"></head><body>
+<div id="auth">
+<div class="auth-card">
+<div class="logo"><span class="mark">H</span> HealthQualify <span class="pill">LOCAL</span></div>
+<p class="muted">Private, offline-first healthcare software qualification.</p>
+<h1 id="authTitle">Welcome back</h1><p class="muted" id="authDescription">Sign in to your local workspace.</p>
+<form id="authForm">
+<label for="username">Username</label><input id="username" autocomplete="username" required minlength="3" maxlength="64">
+<label for="password">Password</label><input id="password" type="password" autocomplete="current-password" required minlength="12">
+<button class="primary" id="authButton" type="submit">Sign in</button>
+</form>
+<p id="authError" role="alert"></p>
+<p class="muted" style="font-size:12px">No cloud account · No purchased API key · No mandatory LLM</p>
+</div></div>
+<div id="app">
+<aside>
+<div class="logo"><span class="mark">H</span>HealthQualify</div>
+<nav aria-label="Product navigation">
+<button data-section="overview" aria-current="page">Overview</button>
+<button data-section="journey">Guided workflow</button>
+<button data-section="qualification">Qualification & evidence</button>
+<button data-section="agents">Five AI agents</button>
+<button data-section="reviews">QA review queue</button>
+<button data-section="localai">Local Qwen</button>
+</nav>
+<footer>Developer alpha · Synthetic examples only · No regulated approval</footer>
+</aside>
+<main>
+<div class="top"><div><div class="eyebrow">Local Edition v0.8</div><h1 id="pageTitle">Workspace overview</h1></div><div class="row"><span id="userLabel"></span><button class="secondary" id="logout">Sign out</button></div></div>
+<div id="notification" role="status" aria-live="polite"></div>
+<section class="content active" id="overview">
+<div class="hero"><span class="eyebrow" style="color:#83e6d6">Your qualification workspace</span><h2>From requirements to reviewable evidence.</h2><p>Launch a realistic synthetic LIS scenario, investigate five seeded failures, and explore traceability without a cloud account or AI subscription.</p><button id="heroStart" class="primary">Start guided qualification</button></div>
+<div class="grid"><div class="card"><div class="eyebrow">Systems</div><div class="metric" id="numSystems">0</div><p>Local synthetic systems</p></div><div class="card"><div class="eyebrow">Runs</div><div class="metric" id="numRuns">0</div><p>Qualification executions</p></div><div class="card"><div class="eyebrow">Deviations</div><div class="metric" id="numDeviations">0</div><p>Findings requiring review</p></div></div>
+<div class="warning">The demonstration is developer-alpha technical evidence, not regulated approval, clinical validation, or electronic signing.</div>
+</section>
+<section class="content" id="journey">
+<div class="steps"><div class="step"><b>01 · Requirements</b>Seven source-linked synthetic LIS requirements.</div><div class="step"><b>02 · Execute</b>Predefined synthetic IQ/OQ/PQ tests.</div><div class="step"><b>03 · Inspect</b>Two expected passes, five seeded defects.</div><div class="step"><b>04 · Review</b>Evidence links, deviations and agent drafts.</div></div>
+<div class="card"><h2>Run the sample qualification</h2><p>Creates a new fictional system and a DRAFT protocol, performs an explicitly marked draft technical execution, and stores evidence references. No QA baseline or approval is issued.</p><button class="primary" id="runDemo">Run synthetic example</button><p id="demoResult"></p></div>
+</section>
+<section class="content" id="qualification">
+<div class="card"><h2>Qualification runs</h2><div style="overflow-x:auto"><table><thead><tr><th>Run</th><th>PASS</th><th>FAIL</th><th>ERROR</th><th>NOT RUN</th><th>Technical approval</th></tr></thead><tbody id="runsTable"></tbody></table></div></div>
+<div class="card"><h2>Traceability and evidence</h2><div id="traceability" class="muted">Run the synthetic demonstration to inspect requirement-to-test references.</div></div>
+<div class="card"><h2>Recorded deviations</h2><div style="overflow-x:auto"><table><thead><tr><th>Test</th><th>Finding</th><th>State</th><th>Run reference</th></tr></thead><tbody id="deviationsTable"></tbody></table></div></div>
+</section>
+<section class="content" id="agents"><p class="muted">Five source-linked draft investigators. Deterministic analysis requires no LLM. Each investigation is recorded for QA review.</p><label for="systemSelect">Authorized system</label><select id="systemSelect"></select><div id="agentCards" class="grid"></div><div class="card"><h3>Latest investigation</h3><pre id="agentResult">Select a system and run an agent.</pre><button class="secondary" id="explainAgent" disabled>Explain with local Qwen (optional)</button><p class="muted" style="font-size:12px">Requires server opt-in and separately installed Qwen. Model explanations are drafts, not qualification evidence.</p><pre id="explanationResult" hidden></pre></div></section>
+<section class="content" id="reviews">
+<div class="card" id="manageQA" hidden><h2>Create a local QA reviewer</h2><p class="muted">Admin-only. A separate reviewer is required for draft findings. No paid tokens, subscriptions, or cloud account.</p>
+<form id="qaForm" class="grid" style="align-items:end">
+<div><label for="qaUsername">Username</label><input id="qaUsername" required minlength="3" maxlength="64" autocomplete="off"></div>
+<div><label for="qaPassword">Local password</label><input id="qaPassword" type="password" required minlength="12" autocomplete="new-password"></div>
+<div><label for="qaSystem">System access</label><select id="qaSystem"></select></div>
+<div><button type="submit" class="primary">Create QA account & grant access</button></div>
+</form><p class="muted">Sign out and sign in as the new QA reviewer to review an investigation created by a different account.</p></div>
+<div class="card"><h2>QA draft review queue</h2><p class="muted">QA or admin users can review recommendations they did not author. These decisions never qualify software.</p><button class="secondary" id="refreshReviews">Refresh review queue</button><div style="overflow-x:auto"><table><thead><tr><th>Agent</th><th>Author</th><th>State</th><th>Observation</th><th>Action</th></tr></thead><tbody id="reviewsTable"></tbody></table></div></div></section>
+<section class="content" id="localai">
+<div class="card"><h2>Optional local Qwen</h2><p>The qualification engine and all five agents work without installing an LLM. Qwen can optionally explain fixed findings, but cannot change a test result or QA decision.</p><div id="modelStatus" class="warning">Local model disabled by default.</div><button class="secondary" id="checkModel">Check locally installed Qwen</button><p class="muted">This check contacts only Ollama at 127.0.0.1:11434 when the server was started with --allow-local-qwen. It does not download a model or validate inference quality.</p><pre>ollama pull qwen3:8b
+python -m healthqualify.local_edition_v08 --allow-local-qwen</pre></div>
+</section>
+</main>
+</div>
+<script src="/local-ui.js" defer></script>
+</body></html>
