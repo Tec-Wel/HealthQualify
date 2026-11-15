@@ -19,6 +19,18 @@ HealthQualify combines the *capability categories* of regulatory guidance, quali
 
 Optional AI assistants may draft requirements and protocols or explain failed tests, but cannot approve protocols or write authoritative PASS/FAIL results.
 
+## v0.6: Quality workflows, release-impact reviews and equal-input benchmarks
+
+[Quality, release and benchmark operator guide](docs/QUALITY_RELEASE_BENCHMARK_V06.md) documents QA-controlled deviation review, offline QMS exchange, retention inventory, GitHub Release-triggered qualification-impact advisory, credential-verified release review and reproducible synthetic benchmark workflows.
+
+```bash
+python -m pip install 'pytest>=8,<10'
+python -m unittest discover -s tests -v
+python -m benchmarks.compare --repetitions 3 --out benchmark-results.json
+```
+
+No code claims validated electronic signatures, regulated record retention, complete dependency coverage or clinical qualification.
+
 ## v0.5 Backlog convergence
 
 **[Read the v0.5 implementation and nine-issue matrix](docs/V05_BACKLOG_CONVERGENCE.md).** New independent tools provide an offline-only strict v0.3 protocol, acceptance-source registry, conservative source-to-test impact analysis, versioned engineering evidence manifests, controlled CAPA investigation and retest, explicit risk-based CSA/IQ-OQ-PQ draft profiles, optional AI-provider abstraction, consistent SQLite backup/restore integrity checks, and an internal benchmark harness.
