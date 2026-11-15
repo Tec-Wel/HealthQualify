@@ -38,12 +38,15 @@ class CAPATests(unittest.TestCase):
                 closed=db.close_case(case["id"],"QA",rerun["id"],"RETEST-RUN-2")
                 self.assertEqual(closed["status"],"CLOSED")
                 self.assertEqual(closed["retest_run_id"],rerun["id"])
+                self.assertEqual(db.work.one("deviations",failure["id"])["status"],"RESOLVED")
                 altered=copy.deepcopy(corrected)
-                next(x for x in altered["tests"] if x["id"]=="OQ-001")["expected"]="different"
+                next(x for x in altered["tests"] if x["id"]=="OQ-002")["expected"]="mg/dL"
                 changed=db.work.draft_protocol(s["id"],altered,"Author")
                 db.work.baseline(changed["id"],"QA","Test criteria changed")
                 third=db.work.execute(changed["id"],"Author")
-                second_case=db.open_case(failure["id"],"Engineer","high","Engineer")
+                other=next(x for x in db.work.list("deviations")
+                           if x["run_id"]==first["id"] and x["test_id"]=="OQ-002")
+                second_case=db.open_case(other["id"],"Engineer","high","Engineer")
                 db.investigate(second_case["id"],"Mismatch","Fix","Proof","Engineer")
                 with self.assertRaises(ValueError):
                     db.close_case(second_case["id"],"QA",third["id"],"RETEST-3")
