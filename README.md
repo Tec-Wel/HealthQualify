@@ -61,15 +61,59 @@ The product roadmap and nine development issues remain separate from completion 
 
 These are **developer-alpha controls only**, not legally valid electronic signatures, verified WORM retention, hospital integrations or automatic qualification decisions.
 
-## Documentation
+## 📚 Documentation
 
-**Start here:** [Getting started](docs/GETTING_STARTED.md) · [Installation by OS](docs/INSTALLATION.md) · [User guide](docs/USER_GUIDE.md)
+> **New to HealthQualify?** Follow the guided path below. Already building? Jump straight to the developer resources. All examples use **synthetic data**; this project is a developer alpha, not a validated clinical or regulated system.
 
-**Learn by doing:** [End-to-end workflow](docs/END_TO_END_WORKFLOW.md) · [Examples](docs/EXAMPLES.md) · [Verification guide](docs/VERIFICATION_GUIDE.md)
+<div align="center">
 
-**Reference:** [CLI reference](docs/CLI_REFERENCE.md) · [Configuration](docs/CONFIGURATION.md) · [Integration guide](docs/INTEGRATION_GUIDE.md) · [Architecture](docs/ARCHITECTURE.md) · [Troubleshooting](docs/TROUBLESHOOTING.md)
+### Find your starting point
 
-**Trust and project:** [Security & limitations](docs/SECURITY_AND_LIMITATIONS.md) · [Contributing](CONTRIBUTING.md) · [License](LICENSE)
+| 🌱 **I'm new here** | 🧪 **I want to try it** | 🛠️ **I'm building with it** |
+| :---: | :---: | :---: |
+| Understand what HealthQualify does and install it on your machine. | Run the synthetic LIS example and inspect the evidence yourself. | Integrate an adapter, extend the engine, or contribute code. |
+| **[🚀 Start the guided tour](docs/GETTING_STARTED.md)** | **[▶️ Run the full workflow](docs/END_TO_END_WORKFLOW.md)** | **[⌘ Explore developer docs](docs/DEVELOPER_ARCHITECTURE.md)** |
+| [Installation](docs/INSTALLATION.md) · [User guide](docs/USER_GUIDE.md) | [Examples](docs/EXAMPLES.md) · [Verify results](docs/VERIFICATION_GUIDE.md) | [API reference](docs/API_REFERENCE.md) · [Contribute](CONTRIBUTING.md) |
+
+</div>
+
+### 🧭 Your first successful qualification
+
+| Step | What you'll accomplish | Guide |
+| :--- | :--- | :--- |
+| **01 · Set up** | Install Python, clone the repository and run the checks. | [Installation by OS →](docs/INSTALLATION.md) |
+| **02 · Run** | Execute a synthetic qualification with **2 expected passes / 5 seeded failures**. | [Hands-on examples →](docs/EXAMPLES.md) |
+| **03 · Verify** | Inspect results, traceability and a manifest checked against a separately saved digest. | [Evidence verification →](docs/VERIFICATION_GUIDE.md) |
+| **04 · Understand** | Follow the requirements → execution → evidence → review lifecycle. | [End-to-end walkthrough →](docs/END_TO_END_WORKFLOW.md) |
+
+### 🗂️ Explore by topic
+
+| | |
+| :--- | :--- |
+| **📖 Learn & use**<br>Build confidence with the fundamentals.<br><br>[User guide](docs/USER_GUIDE.md) · [FAQ](docs/FAQ.md)<br>[CLI commands](docs/CLI_REFERENCE.md) · [Configuration](docs/CONFIGURATION.md)<br>[Troubleshooting](docs/TROUBLESHOOTING.md) | **🔌 Build & integrate**<br>Extend HealthQualify for your own workflows.<br><br>[API reference](docs/API_REFERENCE.md) · [Architecture](docs/ARCHITECTURE.md)<br>[Integration guide](docs/INTEGRATION_GUIDE.md) · [Custom adapters](docs/CUSTOM_ADAPTER_GUIDE.md)<br>[Testing & CI](docs/TESTING_AND_CI.md) |
+| **🏥 Healthcare qualification**<br>Explore the intended-use, risk and test methodology.<br><br>[Healthcare use cases](docs/HEALTHCARE_USE_CASES.md) · [Qualification methodology](docs/QUALIFICATION_METHODOLOGY.md)<br>[Regulatory mapping](docs/REGULATORY_MAPPING.md) · [Validation templates](docs/VALIDATION_TEMPLATES.md) | **🛡️ Security & operations**<br>Know the boundaries before deployment.<br><br>[Security & limitations](docs/SECURITY_AND_LIMITATIONS.md) · [Security model](docs/SECURITY_MODEL.md)<br>[Deployment guide](docs/DEPLOYMENT_GUIDE.md) · [Operations runbook](docs/OPERATIONS_RUNBOOK.md)<br>[Production readiness checklist](docs/PRODUCTION_READINESS_CHECKLIST.md) |
+
+<details>
+<summary><strong>📦 More guides — adoption, evaluation & project reference</strong></summary>
+
+<br>
+
+| Explore | Resources |
+| :--- | :--- |
+| **Evaluate** | [30–60-minute evaluation](docs/EVALUATION_GUIDE.md) · [Feature matrix](docs/FEATURE_MATRIX.md) · [Migration assessment](docs/MIGRATION_GUIDE.md) |
+| **Deep dive** | [Developer architecture](docs/DEVELOPER_ARCHITECTURE.md) · [Release status](docs/RELEASE_STATUS.md) · [Quality & release workflows](docs/QUALITY_RELEASE_BENCHMARK_V06.md) |
+| **Project** | [Changelog](CHANGELOG.md) · [Versioning policy](docs/VERSIONING_POLICY.md) · [Contributing](CONTRIBUTING.md) · [License](LICENSE) |
+| **Community** | [Support](SUPPORT.md) · [Security reporting](SECURITY.md) · [GitHub issues](https://github.com/Tec-Wel/HealthQualify/issues) |
+
+</details>
+
+<div align="center">
+
+**Still exploring?** **[Browse the complete documentation index →](docs/DOCUMENTATION_INDEX.md)**
+
+<sub>Self-hostable • AI optional • Synthetic-data developer alpha • No PHI or production clinical integrations</sub>
+
+</div>
 
 ## Conceptual lifecycle
 
@@ -99,18 +143,6 @@ The diagram is the **intended workflow**. Current components live in **two disti
 
 The Compose file initializes a local SQLite developer workspace and **does not publish an HTTP port**. The secure API can be run separately on `127.0.0.1:8877` with explicit user bootstrap. See [Installation](docs/INSTALLATION.md) and [Integration](docs/INTEGRATION_GUIDE.md). Never expose alpha APIs on the internet.
 
-
-## Advanced adoption documentation
-
-The [Documentation Hub](docs/DOCUMENTATION_INDEX.md) organizes the complete learning path.
-
-- **Build and extend:** [API reference](docs/API_REFERENCE.md), [Developer architecture](docs/DEVELOPER_ARCHITECTURE.md), [Custom adapter guide](docs/CUSTOM_ADAPTER_GUIDE.md), [Testing & CI](docs/TESTING_AND_CI.md).
-- **Healthcare qualification:** [Healthcare use cases](docs/HEALTHCARE_USE_CASES.md), [Qualification methodology](docs/QUALIFICATION_METHODOLOGY.md), [Regulatory mapping](docs/REGULATORY_MAPPING.md), [Ready-to-edit synthetic validation templates](docs/VALIDATION_TEMPLATES.md).
-- **Adoption:** [30–60-minute evaluation](docs/EVALUATION_GUIDE.md), [Migration assessment](docs/MIGRATION_GUIDE.md), [Feature matrix](docs/FEATURE_MATRIX.md), [FAQ](docs/FAQ.md).
-- **Operations and trust:** [Deployment constraints](docs/DEPLOYMENT_GUIDE.md), [Operations runbook](docs/OPERATIONS_RUNBOOK.md), [Security model](docs/SECURITY_MODEL.md), [Production readiness blockers](docs/PRODUCTION_READINESS_CHECKLIST.md).
-- **Community:** [Security reporting](SECURITY.md), [Support](SUPPORT.md), [Changelog](CHANGELOG.md), [Versioning policy](docs/VERSIONING_POLICY.md).
-
-The optional `mkdocs.yml` is a **local documentation configuration only**; no public site or deployment is enabled. The repository is currently private. HealthQualify remains a synthetic-data-only developer alpha.
 
 ## Contributing and support
 
