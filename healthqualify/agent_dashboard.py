@@ -8,7 +8,7 @@ from __future__ import annotations
 import hmac
 import json
 import os
-from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from http.server import BaseHTTPRequestHandler, HTTPServer
 from pathlib import Path
 from urllib.parse import urlsplit
 
@@ -166,7 +166,7 @@ def serve(*, database, protocol, registry, changed, token, port=8899,
     if not changed or len(changed) > 100:
         raise ValueError("Explicit changed files required")
     history = AgentHistory(database)
-    server = ThreadingHTTPServer(
+    server = HTTPServer(
         ("127.0.0.1", port),
         make_handler(history, token, str(protocol), str(registry), changed, evidence_dir, trusted_sha))
     try:
