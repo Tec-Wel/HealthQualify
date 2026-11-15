@@ -62,8 +62,8 @@ class LocalEditionTests(unittest.TestCase):
     def test_html_no_cloud_and_one_time_setup(self):
         code,page,_=self.request("/")
         self.assertEqual(code,200)
-        self.assertIn(b"Create a local administrator",page if b"Create a local administrator" in page else b"Create a local administrator account")
-        self.assertIn(b"Unified",page) if b"Unified" in page else self.assertIn(b"Five AI agents",page)
+        self.assertIn(b"No cloud account",page)
+        self.assertIn(b"Five AI agents",page)
         self.assertEqual(self.request("/api/overview")[0],403)
         self.bootstrap()
         self.assertFalse(self.request("/api/setup")[1]["needs_setup"])
@@ -102,6 +102,58 @@ class LocalEditionTests(unittest.TestCase):
         self.assertEqual(self.request("/api/overview")[0],200)
         self.assertEqual(self.request("/api/model")[1]["required"],False)
         self.assertEqual(self.request("/api/model-check",{})[1]["reason"],"opt_in_required")
+
+    def test_independent_qa_review_and_authorization(self):
+        self.bootstrap()
+        demo=self.request("/api/demo",{})[1]
+        system=demo["system"]["id"]
+        observation=self.request("/api/agent",{
+            "system_id":system,"agent":"failure-investigation"})[1]["id"]
+        self.assertEqual(self.request("/api/review",{
+            "observation_id":observation,"decision":"ACKNOWLEDGED",
+            "rationale":"This is my own finding"})[0],403)
+        created=self.request("/api/users",{
+            "username":"reviewer_qa","password":"long-quality-review-password",
+            "role":"qa"})
+        self.assertEqual(created[0],201)
+        self.assertEqual(self.request("/api/grants",{
+            "username":"reviewer_qa","system_id":system})[0],201)
+        self.login("reviewer_qa","long-quality-review-password")
+        queue=self.request("/api/reviews")
+        self.assertEqual(queue[0],200)
+        self.assertTrue(any(x["id"]==observation for x in queue[1]["reviews"]))
+        checked=self.request("/api/review",{
+            "observation_id":observation,"decision":"NEEDS_INVESTIGATION",
+            "rationale":"Review the synthetic failures and records"})
+        self.assertEqual(checked[0],200)
+        self.assertFalse(checked[1]["qualification_approved"])
+        self.assertNotEqual(self.request("/api/demo",{})[0],201)
+        self.assertNotEqual(self.request("/api/users",{
+            "username":"unauthorized","password":"long-fake-password-123","role":"qa"})[0],201)
+
+    def test_qwen_opt_in_and_redacted_draft_only(self):
+        self.bootstrap()
+        demo=self.request("/api/demo",{})[1]
+        obs=self.request("/api/agent",{
+            "system_id":demo["system"]["id"],"agent":"gap-hunter"})[1]["id"]
+        self.assertEqual(self.request("/api/model-explain",{
+            "observation_id":obs})[0],403)
+        self.server.allow_model=True
+        with patch("healthqualify.ai.local_draft",
+                   return_value={"status":"DRAFT_UNVERIFIED","text":"Synthetic findings only."}):
+            explained=self.request("/api/model-explain",{"observation_id":obs})
+        self.assertEqual(explained[0],200)
+        self.assertEqual(explained[1]["status"],"DRAFT_UNVERIFIED")
+        self.assertFalse(explained[1]["qualification_approved"])
+        self.assertTrue(explained[1]["human_review_required"])
+
+    def test_css_and_javascript_load_under_strict_csp(self):
+        code,html,_=self.request("/")
+        self.assertEqual(code,200)
+        self.assertIn(b'local-ui.css',html)
+        self.assertNotIn(b'<style>',html)
+        self.assertEqual(self.request("/local-ui.css")[0],200)
+        self.assertEqual(self.request("/local-ui.js")[0],200)
 
     def test_model_check_never_downloads_or_calls_model_by_default(self):
         self.bootstrap()
