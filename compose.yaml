@@ -1,0 +1,17 @@
+# Local developer workspace initialization only; no network port is exposed.
+# The authenticated secure API is deliberately not container-published.
+services:
+  healthqualify:
+    build: .
+    command: ["python", "-m", "healthqualify.appcli", "--db", "/data/healthqualify.db", "init"]
+    volumes:
+      - healthqualify_data:/data
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+volumes:
+  healthqualify_data:

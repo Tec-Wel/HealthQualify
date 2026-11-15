@@ -1,0 +1,78 @@
+name: Prune verified merged feature branches
+# Only after successful main-branch test runs; no PR or untrusted branch context.
+on:
+  workflow_run:
+    workflows: ["Tests"]
+    types: [completed]
+    branches: [main]
+permissions:
+  contents: write
+  pull-requests: read
+jobs:
+  prune:
+    if: >-
+      ${{ github.event.workflow_run.conclusion == 'success' &&
+          github.event.workflow_run.event == 'push' &&
+          github.event.workflow_run.head_branch == 'main' &&
+          github.repository == 'Tec-Wel/HealthQualify' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete only unchanged, already-squash-merged feature refs
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          python - <<'PY'
+          import json, os, urllib.error, urllib.parse, urllib.request
+          repo=os.environ["GH_REPO"]
+          if repo!="Tec-Wel/HealthQualify":
+              raise SystemExit("Unexpected repository")
+          base=f"https://api.github.com/repos/{repo}"
+          exact={
+              10:("feature/qualification-foundation-v02","ef7ba6344696600c8990617dbb13855c84d6c2c8"),
+              11:("feature/full-platform-alpha-v03","8f930f9cde5b9c40d0664d4ffdf707a29dccba00"),
+              12:("feature/security-interop-v04","eb579c8267a93604176926a023da7c53df3c5960"),
+              13:("feature/v05-assurance-backlog-convergence","47df12a2823779ee0e24ea7a7a5a139644b60445"),
+              15:("chore/remove-external-project-references","50195cd32de4c2f703b4fbe94016a51d4343b22f"),
+              16:("fix/issue-closure-evidence-ci-hardening","e046c6d15d92384cdf856363e77832dd358e9f47"),
+              17:("fix/issue-rest-trace-backup","5ded3f29d8a5b8090ee1f314e49f6309e01d15ea"),
+          }
+          def request(path,method="GET"):
+              req=urllib.request.Request(base+path,method=method,headers={
+                  "Authorization":"Bearer "+os.environ["GH_TOKEN"],
+                  "Accept":"application/vnd.github+json",
+                  "X-GitHub-Api-Version":"2022-11-28",
+                  "User-Agent":"HealthQualify-safe-prune/1"
+              })
+              try:
+                  with urllib.request.urlopen(req,timeout=20) as response:
+                      body=response.read(200000)
+                      return response.status,json.loads(body) if body else {}
+              except urllib.error.HTTPError as err:
+                  if err.code==404:
+                      return 404,{}
+                  raise
+          code,open_prs=request("/pulls?state=open&per_page=100")
+          if code!=200:
+              raise SystemExit("Cannot verify open PRs")
+          for number,(name,sha) in exact.items():
+              code,pr=request(f"/pulls/{number}")
+              if code!=200 or not pr.get("merged_at") or pr["base"]["ref"]!="main":
+                  raise SystemExit(f"PR #{number} merger state not verified")
+              if pr["head"]["ref"]!=name or pr["head"]["sha"]!=sha:
+                  raise SystemExit(f"PR #{number} head moved; preserve branch")
+              if any(p["head"]["ref"]==name for p in open_prs):
+                  raise SystemExit(f"Open pull request still uses {name}; preserve branch")
+              path="/git/ref/heads/"+urllib.parse.quote(name,safe="/")
+              code,ref=request(path)
+              if code==404:
+                  print(f"Already absent: {name}")
+                  continue
+              if code!=200 or ref.get("object",{}).get("sha")!=sha:
+                  raise SystemExit(f"Branch {name} moved; preserve branch")
+              delete="/git/refs/heads/"+urllib.parse.quote(name,safe="/")
+              code,_=request(delete,method="DELETE")
+              if code!=204:
+                  raise SystemExit(f"Delete failed for {name}: {code}")
+              print(f"Removed merged branch: {name}")
+          PY

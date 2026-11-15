@@ -1,0 +1,67 @@
+name: Tests
+on:
+  push:
+  pull_request:
+jobs:
+  unit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install security and DICOM test dependencies
+        run: python -m pip install -r requirements-security.txt
+      - name: Install independent pytest benchmark dependency
+        run: python -m pip install 'pytest>=8,<10'
+      - name: Unit tests
+        run: python -m unittest discover -s tests -v
+      - name: Synthetic qualification demo (expected findings)
+        shell: bash
+        run: |
+          set +e
+          python -m healthqualify.cli run examples/synthetic_lis/protocol.json --out /tmp/healthqualify-ci
+          code=$?
+          set -e
+          test "$code" -eq 1
+          python -m healthqualify.cli verify /tmp/healthqualify-ci
+      - name: Healthcare v0.2 synthetic qualification (five expected defects)
+        shell: bash
+        run: |
+          python -m healthqualify.cli validate-v2 examples/synthetic_lis_v2/protocol.json
+          set +e
+          python -m healthqualify.cli run-v2 examples/synthetic_lis_v2/protocol.json --out /tmp/healthqualify-v2-ci
+          code=$?
+          set -e
+          test "$code" -eq 1
+          python -m healthqualify.cli verify-v2 /tmp/healthqualify-v2-ci
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          result = json.loads(Path("/tmp/healthqualify-v2-ci/results.json").read_text())
+          assert result["summary"]["FAIL"] == 5
+          assert result["summary"]["PASS"] == 2
+          assert result["qualification_approved"] is False
+          PY
+      - name: v0.5 strict protocol and evidence receipt
+        shell: bash
+        run: |
+          set +e
+          python -m healthqualify.v05cli run examples/synthetic_lis_v3/protocol.json --out /tmp/hq-v05-ci
+          code=$?
+          set -e
+          test "$code" -eq 1
+          digest="$(python -c 'import hashlib; from pathlib import Path; print(hashlib.sha256(Path("/tmp/hq-v05-ci/manifest.json").read_bytes()).hexdigest())')"
+          python -m healthqualify.v05cli verify /tmp/hq-v05-ci --trusted-manifest-sha256 "$digest"
+          python -m healthqualify.v05cli impact examples/synthetic_lis_v3/protocol.json healthqualify/healthcare.py
+          python -m healthqualify.v05cli benchmark examples/synthetic_lis_v2/protocol.json
+      - name: PR qualification change-impact advisory
+        if: github.event_name == 'pull_request'
+        env:
+          HQ_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HQ_PROTOCOL: examples/synthetic_lis_v3/protocol.json
+        run: python -m healthqualify.ci_impact
