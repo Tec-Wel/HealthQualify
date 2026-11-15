@@ -40,5 +40,7 @@ jobs:
           test -f /tmp/healthqualify-site/index.html
           test -f /tmp/healthqualify-site/AI_AGENTS_GUIDE/index.html
           test -f /tmp/healthqualify-site/AI_AGENT_DASHBOARD/index.html
+      - name: Check rendered HTML for literal Markdown regression
+        run: python scripts/check_docs_render.py /tmp/healthqualify-site
       # Deliberately NO pages:write permission, NO deploy action,
       # NO site artifact upload: private docs stay in this repository.
