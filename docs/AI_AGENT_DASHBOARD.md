@@ -1,4 +1,4 @@
-<div align="center">
+
 
 ![HealthQualify local AI agent dashboard](assets/ai-dashboard-hero.svg)
 
@@ -13,7 +13,7 @@
 ![Inference](https://img.shields.io/badge/Inference-Opt--in%20Qwen-16846F?style=flat-square)
 ![Status](https://img.shields.io/badge/Status-Developer%20alpha-6757A3?style=flat-square)
 
-</div>
+
 
 > [!IMPORTANT]
 > **Synthetic developer alpha — not a production quality-management dashboard.** Use only synthetic/public nonsensitive inputs; do not ingest PHI, connect to clinical systems, or interpret advisory findings as FDA validation or release approval.
@@ -45,7 +45,7 @@ Use the **current `main` branch**; earlier feature-branch links are historical a
 
 ### Step 2 · Set your local access token
 
-<details open>
+<details markdown="1" open>
 <summary><strong>🪟 Windows PowerShell</strong></summary>
 
 ```powershell
@@ -55,7 +55,7 @@ python -m healthqualify.agent_dashboard
 
 </details>
 
-<details>
+<details markdown="1">
 <summary><strong>🐧 Linux / 🍎 macOS</strong></summary>
 
 ```bash
@@ -225,7 +225,7 @@ python -m unittest discover -s tests -v
 
 Do not mark this complete without actual hardware-backed inference testing. The default CI suite uses mocks and deterministic cases.
 
-<details>
+<details markdown="1">
 <summary><strong>🛠️ Troubleshooting</strong></summary>
 
 **Cannot open the page:** Check that the command is still running and visit `127.0.0.1:8899` on the same machine.
@@ -242,12 +242,12 @@ Do not mark this complete without actual hardware-backed inference testing. The 
 
 ---
 
-<div align="center">
+
 
 ### Explore what the agents can actually detect
 
 [**🤖 Five-Agent User Guide →**](AI_AGENTS_GUIDE.md) · [**📚 Documentation Home →**](DOCUMENTATION_INDEX.md) · [**🧪 Testing & CI →**](TESTING_AND_CI.md)
 
-<sub>Private by default · Local workflows · Synthetic only · Human accountability</sub>
+*Private by default · Local workflows · Synthetic only · Human accountability*
 
-</div>
+

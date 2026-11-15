@@ -5,6 +5,8 @@ repo_name: Tec-Wel/HealthQualify
 repo_url: https://github.com/Tec-Wel/HealthQualify
 edit_uri: edit/main/docs/
 docs_dir: docs
+hooks:
+  - docs_hooks.py
 use_directory_urls: true
 
 theme:
