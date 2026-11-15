@@ -4,7 +4,7 @@
 
 > From approved requirements to executable tests, verifiable evidence, human review, and release-aware requalification — without an AI dependency.
 
-**Status: v0.3 local developer alpha (not production validated).** The initial CLI is a deterministic, synthetic-data demonstration. It is **not** a qualified system, a compliance certification, or a substitute for an organization's quality management system.
+**Status: v0.4 security and interoperability developer alpha (not production validated).** The initial CLI is a deterministic, synthetic-data demonstration. It is **not** a qualified system, a compliance certification, or a substitute for an organization's quality management system.
 
 ## What HealthQualify will do
 
@@ -18,6 +18,31 @@ HealthQualify combines the *capability categories* of regulatory guidance, quali
 6. **Requalify** — change-impact mapping, release-related test recommendations, regulatory-change review and repeatable verification.
 
 Optional AI assistants may draft requirements and protocols or explain failed tests, but cannot approve protocols or write authoritative PASS/FAIL results.
+
+## Security and interoperability alpha: v0.4
+
+**[Security and healthcare interoperability guide](docs/SECURITY_INTEROP_V04.md)** provides the authenticated API, approved test-environment connections, cryptographic evidence export and regulated release gates.
+
+```bash
+python -m pip install -r requirements-security.txt
+python -m unittest discover -s tests -v
+python -m healthqualify.appcli --db /tmp/hq-secure.db init
+python -m healthqualify.appcli --db /tmp/hq-secure.db bootstrap-admin admin_owner
+python -m healthqualify.appcli --db /tmp/hq-secure.db serve
+# Local authenticated API: http://127.0.0.1:8877
+```
+
+The new secure API is loopback-only, requires login and enforces admin/QA/validator/viewer roles. The former v0.3 development API is legacy code and **not** the default runtime. The Docker Compose configuration does not publish an HTTP port.
+
+FHIR staging checks support explicitly approved HTTPS read-only access. HL7/MLLP supports bounded offline transport framing, DICOM supports local synthetic metadata inspection, and equipment integration currently supports passive synthetic telemetry. Full clinical interoperability still requires site-specific integration and qualification.
+
+Encrypted technical evidence archives use AES-256-GCM and Ed25519 receipts with externally managed keys; these **are not validated electronic signatures**. The customer-release gate is intentionally blocked:
+
+```bash
+python -m healthqualify.appcli readiness
+```
+
+Release readiness requires operational security, privacy, clinical integration, assurance and independent regulatory review. No PHI should be supplied.
 
 ## Local product alpha: v0.3
 

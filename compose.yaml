@@ -1,13 +1,9 @@
-# Local-only development service. Do not expose to a public network.
+# Local developer workspace initialization only; no network port is exposed.
+# The authenticated secure API is deliberately not container-published.
 services:
   healthqualify:
     build: .
-    command: ["python", "-m", "healthqualify.appcli", "--db", "/data/healthqualify.db", "serve", "--host", "0.0.0.0", "--port", "8765"]
-    environment:
-      HEALTHQUALIFY_CONTAINER_ONLY: "1"
-      HEALTHQUALIFY_API_TOKEN: "${HEALTHQUALIFY_API_TOKEN:?Set a random 32+ character token}"
-    ports:
-      - "127.0.0.1:8765:8765"
+    command: ["python", "-m", "healthqualify.appcli", "--db", "/data/healthqualify.db", "init"]
     volumes:
       - healthqualify_data:/data
     read_only: true

@@ -12,8 +12,16 @@ from .regulatory import list_controls, applicability, compare_text
 from .studio import draft_urs, risk_plan
 from .ai import available_roles, local_draft
 from .modelqual import score_classifier
-from .api import serve
+from .secure_api import serve_secure
+from .security import IdentityStore
 from .interop import check_local_fhir
+from .fhir_secure import fetch_fhir, assert_fhir_field
+from .dicom_device import inspect_dicom_file, inspect_equipment_snapshot
+from .hl7_mllp import analyze_message
+from .protected_export import protect_export, verify_export
+from .attestations import attest_protocol
+from .privacy import release_readiness
+import base64
 from .evidence import seal_export, verify_seal
 from .regwatch import RegulationWatch
 
@@ -31,6 +39,8 @@ def main(argv=None):
             p.add_argument(flag)
         return p
     cmd("init")
+    cmd("bootstrap-admin","username")
+    cmd("create-user","admin_username","username","role")
     cmd("system-add","name","intended_use","owner")
     cmd("systems")
     cmd("protocol-add","system_id","path","actor")
@@ -48,6 +58,18 @@ def main(argv=None):
     cmd("regulation-diff","before_file","after_file")
     cmd("modelqual","rows_file")
     cmd("agents")
+    cmd("readiness")
+    approved=cmd("fhir-check-approved","url","field","expected_json")
+    approved.add_argument("--authorize-read-only",action="store_true")
+    dicom=cmd("dicom-synthetic","file")
+    dicom.add_argument("--authorize-synthetic",action="store_true")
+    h=cmd("hl7-mllp-inspect","file")
+    h.add_argument("--authorize-synthetic",action="store_true")
+    device=cmd("device-snapshot","file")
+    device.add_argument("--authorize-synthetic",action="store_true")
+    cmd("protect-export","source","destination")
+    cmd("verify-protected","directory")
+    cmd("review-attest","username","protocol_id","meaning","rationale")
     testfhir=cmd("fhir-check-local","url","path","expected_json")
     testfhir.add_argument("--allow-local-http",action="store_true")
     cmd("regwatch-capture","framework","text_file")
@@ -56,11 +78,52 @@ def main(argv=None):
     agent=cmd("draft-agent","role","model","text_file")
     agent.add_argument("--allow-local-ai",action="store_true")
     server=cmd("serve")
-    server.add_argument("--port",type=int,default=8765)
+    server.add_argument("--port",type=int,default=8877)
     server.add_argument("--host",default="127.0.0.1")
     args=parser.parse_args(argv)
     store=None
     try:
+        if args.command=="readiness":
+            print(json.dumps(release_readiness(),indent=2))
+            return 1
+        if args.command=="review-attest":
+            import getpass
+            password=getpass.getpass("Re-enter reviewer password: ")
+            seed=base64.b64decode(os.environ.get("HEALTHQUALIFY_SIGN_SEED_B64",""),validate=True)
+            data=attest_protocol(args.db,args.username,password,args.protocol_id,
+                                 args.meaning,args.rationale,seed)
+            print(json.dumps(data,indent=2))
+            return 0
+        if args.command=="fhir-check-approved":
+            origin=os.environ.get("HEALTHQUALIFY_FHIR_ORIGIN","")
+            token=os.environ.get("HEALTHQUALIFY_FHIR_BEARER","")
+            data=fetch_fhir(args.url,approved_origin=origin,bearer_token=token,
+                            consent=args.authorize_read_only)
+            result=assert_fhir_field(data,args.field,json.loads(args.expected_json))
+            print(json.dumps(result,indent=2))
+            return 0 if result["status"]=="PASS" else 1
+        if args.command=="dicom-synthetic":
+            print(json.dumps(inspect_dicom_file(args.file,synthetic_only=args.authorize_synthetic),indent=2))
+            return 0
+        if args.command=="hl7-mllp-inspect":
+            if not args.authorize_synthetic: raise ValueError("Synthetic-data authorization required")
+            data=Path(args.file).read_bytes()
+            print(json.dumps(analyze_message(data),indent=2))
+            return 0
+        if args.command=="device-snapshot":
+            print(json.dumps(inspect_equipment_snapshot(read_json(args.file),
+                authorized=args.authorize_synthetic),indent=2))
+            return 0
+        if args.command=="protect-export":
+            key=base64.b64decode(os.environ.get("HEALTHQUALIFY_AES_KEY_B64",""),validate=True)
+            seed=base64.b64decode(os.environ.get("HEALTHQUALIFY_SIGN_SEED_B64",""),validate=True)
+            print(json.dumps(protect_export(Path(args.source),Path(args.destination),key,seed),indent=2))
+            return 0
+        if args.command=="verify-protected":
+            public=base64.b64decode(os.environ.get("HEALTHQUALIFY_PUBLIC_KEY_B64",""),validate=True)
+            ok=verify_export(Path(args.directory),public)
+            print(json.dumps({"verified":ok}))
+            return 0 if ok else 1
         if args.command=="fhir-check-local":
             expected=json.loads(args.expected_json)
             result=check_local_fhir(args.url,args.path,expected,authorized=args.allow_local_http)
@@ -81,8 +144,34 @@ def main(argv=None):
             finally:
                 watch.close()
             return 0
+        if args.command=="bootstrap-admin":
+            import getpass
+            password=getpass.getpass("Initial admin password (12+ characters): ")
+            identity=IdentityStore(args.db)
+            try:
+                data=identity.bootstrap(args.username,password)
+                print(json.dumps(data,indent=2))
+            finally:
+                identity.close()
+            return 0
+        if args.command=="create-user":
+            import getpass
+            admin_password=getpass.getpass("Admin password: ")
+            password=getpass.getpass("New user password (12+ characters): ")
+            identity=IdentityStore(args.db)
+            try:
+                token=identity.login(args.admin_username,admin_password)
+                try:
+                    actor=identity.authenticate(token)
+                    data=identity.create_user(actor,args.username,password,args.role)
+                finally:
+                    identity.logout(token)
+                print(json.dumps(data,indent=2))
+            finally:
+                identity.close()
+            return 0
         if args.command=="serve":
-            serve(args.db,host=args.host,port=args.port,token=os.getenv("HEALTHQUALIFY_API_TOKEN"))
+            serve_secure(args.db,host=args.host,port=args.port)
             return 0
         if args.command=="frameworks":data=list_controls()
         elif args.command=="applicability":data=applicability(read_json(args.system_file),read_json(args.decisions_file))

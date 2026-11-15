@@ -35,6 +35,10 @@ def create_handler(workspace: Workspace, token: str):
 
         def do_GET(self):
             path=urlparse(self.path).path
+            if path!="/api/health":
+                auth=self.headers.get("Authorization","")
+                if not token or not hmac.compare_digest(auth,"Bearer "+token):
+                    return self.send(401,{"error":"authorization_required"})
             if path=="/api/health":
                 return self.send(200,{"status":"ok","mode":"development","qualification_approved":False})
             if path=="/api/frameworks":
