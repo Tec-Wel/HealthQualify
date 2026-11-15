@@ -76,8 +76,21 @@ class CAPA:
             raise ValueError("Unmapped requirement gap requires separate human disposition")
         original=self.work.one("runs",deviation["run_id"])
         rerun=self.work.one("runs",retest_run_id)
-        if rerun["id"]==original["id"] or rerun["protocol_id"]!=original["protocol_id"]:
-            raise ValueError("Retest must be a distinct run against the same protocol")
+        if rerun["id"]==original["id"]:
+            raise ValueError("Retest must be a distinct execution")
+        old_protocol=self.work.one("protocols",original["protocol_id"])
+        new_protocol=self.work.one("protocols",rerun["protocol_id"])
+        if old_protocol["system_id"]!=new_protocol["system_id"] or new_protocol["state"]!="BASELINED":
+            raise ValueError("Retest requires a baselined protocol for the same system")
+        old_tests=[t for t in old_protocol["payload"]["tests"] if t["id"]==deviation["test_id"]]
+        new_tests=[t for t in new_protocol["payload"]["tests"] if t["id"]==deviation["test_id"]]
+        if len(old_tests)!=1 or old_tests!=new_tests:
+            raise ValueError("Retest acceptance criterion/test definition changed")
+        for rid in old_tests[0]["requirement_ids"]:
+            a=[r for r in old_protocol["payload"]["requirements"] if r["id"]==rid]
+            b=[r for r in new_protocol["payload"]["requirements"] if r["id"]==rid]
+            if len(a)!=1 or a!=b:
+                raise ValueError("Retest changed required risk/acceptance basis")
         tests=[t for t in rerun["results"]["results"] if t["id"]==deviation["test_id"]]
         if len(tests)!=1 or tests[0]["status"]!="PASS":
             raise ValueError("Linked retest has not passed")
