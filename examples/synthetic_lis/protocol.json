@@ -1,0 +1,104 @@
+{
+  "system": {
+    "id": "LIS-DEMO",
+    "name": "Synthetic laboratory interface",
+    "version": "0.1",
+    "environment": "offline-synthetic",
+    "intended_use": "Demonstrate qualification checks without PHI"
+  },
+  "requirements": [
+    {
+      "id": "URS-001",
+      "title": "Installed runtime configuration matches approved baseline"
+    },
+    {
+      "id": "URS-002",
+      "title": "Lab result is associated with the correct patient and sample"
+    },
+    {
+      "id": "URS-003",
+      "title": "Unit conversion output matches approved synthetic reference"
+    },
+    {
+      "id": "URS-004",
+      "title": "Critical result notification is dispatched"
+    },
+    {
+      "id": "URS-005",
+      "title": "Cross-tenant access is denied"
+    },
+    {
+      "id": "URS-006",
+      "title": "Audit record is generated"
+    }
+  ],
+  "fixtures": {
+    "runtime_version": "1.4.2",
+    "patient_sample_match": false,
+    "converted_value": 5.8,
+    "critical_notification": true,
+    "cross_tenant_allowed": false,
+    "audit_entry": null
+  },
+  "tests": [
+    {
+      "id": "IQ-001",
+      "phase": "IQ",
+      "requirement_ids": [
+        "URS-001"
+      ],
+      "check": "equals",
+      "fixture": "runtime_version",
+      "expected": "1.4.2"
+    },
+    {
+      "id": "OQ-001",
+      "phase": "OQ",
+      "requirement_ids": [
+        "URS-002"
+      ],
+      "check": "equals",
+      "fixture": "patient_sample_match",
+      "expected": true
+    },
+    {
+      "id": "OQ-002",
+      "phase": "OQ",
+      "requirement_ids": [
+        "URS-003"
+      ],
+      "check": "equals",
+      "fixture": "converted_value",
+      "expected": 5.8
+    },
+    {
+      "id": "OQ-003",
+      "phase": "OQ",
+      "requirement_ids": [
+        "URS-004"
+      ],
+      "check": "equals",
+      "fixture": "critical_notification",
+      "expected": true
+    },
+    {
+      "id": "OQ-004",
+      "phase": "OQ",
+      "requirement_ids": [
+        "URS-005"
+      ],
+      "check": "equals",
+      "fixture": "cross_tenant_allowed",
+      "expected": false
+    },
+    {
+      "id": "PQ-001",
+      "phase": "PQ",
+      "requirement_ids": [
+        "URS-006"
+      ],
+      "check": "present",
+      "fixture": "audit_entry"
+    }
+  ]
+}
