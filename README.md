@@ -1,159 +1,191 @@
-# HealthQualify
+<div align="center">
 
-**Open-source, self-hostable healthcare software qualification tooling.** Track the path from intended use and requirements through synthetic test execution, evidence, review, and change-impact assessment.
+![HealthQualify — Qualify with evidence, not assumptions](docs/assets/healthqualify-home.svg)
 
-> **Release status: v0.5 developer alpha.** HealthQualify is **not** a validated regulated system, medical device, clinical decision support system, regulatory certification, or a replacement for an organization's quality management system (QMS). Use **synthetic or public non-sensitive data only**. Do not connect it to production healthcare systems or ingest PHI.
+### Open-source healthcare software qualification & technical evidence
+
+**From requirements to verifiable test results—without black-box approvals.**  
+A local-first toolkit for deterministic synthetic testing, traceability, review-ready evidence, and conservative change-impact analysis.
+
+[**Get started**](#quick-start) · [**Explore capabilities**](#what-you-can-do) · [**Browse documentation**](docs/DOCUMENTATION_INDEX.md) · [**Try the guided evaluation**](docs/EVALUATION_GUIDE.md)
+
+![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-3975A9?style=flat-square) ![License Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-50708E?style=flat-square) ![Developer alpha](https://img.shields.io/badge/Status-Developer%20alpha-7756A8?style=flat-square) ![Synthetic data only](https://img.shields.io/badge/Data-Synthetic%20only-16846F?style=flat-square) ![AI optional](https://img.shields.io/badge/AI-Optional-386F82?style=flat-square)
+
+</div>
+
+> [!IMPORTANT]
+> **Developer alpha — not a regulated validation or clinical product.** Use only synthetic or public non-sensitive data. **No PHI, production healthcare connections, medical-device control, automatic qualification approval, or FDA/GxP certification.** A passing assertion or integrity receipt is technical evidence, not regulatory sign-off. [Security and limitations →](docs/SECURITY_AND_LIMITATIONS.md)
+
+---
 
 ## Why HealthQualify?
 
-Healthcare software teams need to answer more than “did our unit tests pass?” They must know **what requirement was tested**, **what assertion executed**, **what evidence was recorded**, **what failed**, and **what needs requalification when software changes**.
+**Most tests tell you whether code passed. HealthQualify helps you explain what was tested, why it matters, what evidence exists, and what to review when software changes.**
 
-HealthQualify provides a deterministic, AI-optional engineering foundation for that journey. It does **not** automatically provide a legal approval or compliance determination.
+Healthcare software teams often need to connect an intended use and requirement to a test, an observed result, an investigation, and a later retest. HealthQualify makes that engineering trail easier to inspect while keeping final quality decisions in human hands.
 
-### Who is it for?
+| **01 · Define** | **02 · Execute** | **03 · Verify** |
+| :--- | :--- | :--- |
+| Link source-backed requirements, acceptance criteria, risk tags, and explicit synthetic fixtures. | Run allowlisted deterministic checks with clear **PASS / FAIL / ERROR / NOT_RUN** outcomes. | Inspect traceability, compare evidence against an independently saved SHA-256 digest, and replay supported checks. |
+| [Protocol configuration →](docs/CONFIGURATION.md) | [Hands-on workflow →](docs/END_TO_END_WORKFLOW.md) | [Evidence verification →](docs/VERIFICATION_GUIDE.md) |
 
-- **Software and integration developers:** test documented system contracts, examine deterministic failures, and assess change impact.
-- **Validation and quality engineers:** create traceable protocol drafts, inspect technical evidence, and identify gaps.
-- **Healthcare IT and laboratory integration teams:** experiment safely with synthetic LIS, HL7 and FHIR fixtures.
-- **Open-source contributors:** develop and test adapters, assertions, governance and evidence workflows.
+### Built for people who need to understand the result
 
-## Five local AI agents (developer alpha)
+| 🧑‍💻 **Developers & integrators** | 🧪 **Validation & QA engineers** | 🏥 **Healthcare IT teams** |
+| :--- | :--- | :--- |
+| Build safe synthetic assertions, inspect failures, and assess changes to code. | Follow requirements, risk, traceability, deviations, and evidence through a review process. | Explore synthetic LIS, HL7, limited FHIR, and other non-production interface scenarios. |
+| [Developer architecture](docs/DEVELOPER_ARCHITECTURE.md) | [Qualification methodology](docs/QUALIFICATION_METHODOLOGY.md) | [Healthcare use cases](docs/HEALTHCARE_USE_CASES.md) |
 
-Five deterministic, **draft-only** investigators: Release Impact, Qualification Gap Hunter, Failure Investigation Copilot, QA Evidence Readiness, and Cross-System Dependency Investigator. An optional local Ollama/Qwen model can explain findings; it cannot change test outcomes or approve qualification.
+---
 
-**Start here:** [Agent user guide](docs/AI_AGENTS_GUIDE.md) · [Local dashboard and orchestration](docs/AI_AGENT_DASHBOARD.md)
+## Quick start
 
-```bash
-python -m unittest tests.test_agents tests.test_agent_orchestrator -v
-python -m healthqualify.agentcli gap-hunter examples/synthetic_lis_v3/protocol.json
-# Set a random 32+ character HEALTHQUALIFY_AGENT_TOKEN before running:
-python -m healthqualify.agent_dashboard
-# Then open http://127.0.0.1:8899
-```
-
-The dashboard is single-user, loopback-only and restricted to configured synthetic inputs. **Not qualified for regulated production use.**
-
-## Quick start: synthetic qualification in a local checkout
-
-Requires **Python 3.10+** (3.12 recommended) and Git. Run from the repository root. The core synthetic runner uses the Python standard library.
+**One repository. Python 3.10+ (3.12 recommended). No cloud account or AI API key required** for the offline synthetic runner.
 
 ```bash
 git clone https://github.com/Tec-Wel/HealthQualify.git
 cd HealthQualify
+
+# Check the installation and core behavior
 python -m unittest discover -s tests -v
-python -m healthqualify.v05cli run examples/synthetic_lis_v3/protocol.json --out .healthqualify/demo-run
+
+# Generate a new, traceable synthetic evidence bundle
+python -m healthqualify.v05cli run \
+  examples/synthetic_lis_v3/protocol.json \
+  --out .healthqualify/first-run
 ```
 
-**Expected:** the synthetic example produces **2 PASS and 5 FAIL**, and the final command exits **1 on purpose**. The fixture simulates failures; that is not a failed installation. Use a **new output directory** for each run. On Windows, `py -3` may replace `python`.
+> [!NOTE]
+> **The demo is designed to find problems.** Expect **2 PASS and 5 FAIL**, with exit code **1** from the final command. Those five failures are intentionally seeded into a fictional laboratory integration fixture; they do **not** mean installation failed. Choose a new `--out` directory for every run. On Windows, use `py -3` as needed and place the command on one line in PowerShell.
 
-For verification, preserve the SHA-256 digest printed as `manifest_sha256` by the runner **outside the evidence directory**:
-
-```bash
-python -m healthqualify.v05cli verify .healthqualify/demo-run --trusted-manifest-sha256 YOUR_SAVED_64_CHARACTER_DIGEST
-```
-
-Expect `{"verified": true}` if the artifacts and trusted digest match and deterministic replay confirms the results. Saving the digest beside a mutable report is not independent trust.
-
-**Next:** [Getting started](docs/GETTING_STARTED.md) · [Installation](docs/INSTALLATION.md) · [End-to-end workflow](docs/END_TO_END_WORKFLOW.md)
-
-## What is actually implemented?
-
-| Capability | Current developer-alpha state | Important boundary |
-| --- | --- | --- |
-| v0.5 synthetic protocol runner | Strict JSON 0.3 protocol, deterministic offline assertions, PASS/FAIL/ERROR/NOT_RUN | Embedded synthetic/public fixtures, not arbitrary application test discovery |
-| Evidence verification | Protocol, results, manifest, SHA-256, trusted digest and deterministic replay | Not immutable storage, trusted timestamps, or regulated approval |
-| Change impact | Repository-relative file-to-test mapping with conservative unknown-impact fallback | Advisory; requires human review and complete mappings |
-| v0.3 workspace | Local SQLite system registry, v0.2 protocol draft/baseline, runs, deviations, audit and report | Separate workflow from the standalone v0.5 runner |
-| Secure API alpha | Loopback-only authenticated HTTP API, role checks, session tokens | No production TLS, MFA/SSO, multi-tenancy or PHI handling |
-| Interoperability prototypes | Restricted read-only FHIR, synthetic MLLP inspection, offline DICOM metadata, passive equipment snapshot | Not a live full HL7/PACS/equipment qualification suite |
-| Backup and signed technical exports | SQLite integrity backup/restore, optional encrypted technical evidence exports | No production key management, retention policy, or qualified e-signatures |
-| AI assistance | Optional local draft suggestions | Never writes authoritative test verdicts or approvals |
-
-The product roadmap and nine development issues remain separate from completion claims. See [Release status](docs/RELEASE_STATUS.md), [Backlog](docs/V05_BACKLOG_CONVERGENCE.md), and [Open issues](https://github.com/Tec-Wel/HealthQualify/issues).
-
-## v0.6 quality, release and benchmarking workflows
-
-[QA review, release impact and equal-input benchmark guide](docs/QUALITY_RELEASE_BENCHMARK_V06.md) covers credential-verified deviation reviews, offline QMS handoff, evidence-retention inventory, release-triggered test recommendations, human review decisions and measured synthetic benchmarks.
-
-These are **developer-alpha controls only**, not legally valid electronic signatures, verified WORM retention, hospital integrations or automatic qualification decisions.
-
-## 📚 Documentation
-
-![HealthQualify documentation navigation: Discover, Run and Verify, Build and Extend](docs/assets/documentation-hub.svg)
-
-> **New to HealthQualify?** Follow the guided path below. Already building? Jump straight to the developer resources. All examples use **synthetic data**; this project is a developer alpha, not a validated clinical or regulated system.
-
-### Find your starting point
-
-| 🌱 **I'm new here** | 🧪 **I want to try it** | 🛠️ **I'm building with it** |
-| :---: | :---: | :---: |
-| Understand what HealthQualify does and install it on your machine. | Run the synthetic LIS example and inspect the evidence yourself. | Integrate an adapter, extend the engine, or contribute code. |
-| **[🚀 Start the guided tour](docs/GETTING_STARTED.md)** | **[▶️ Run the full workflow](docs/END_TO_END_WORKFLOW.md)** | **[⌘ Explore developer docs](docs/DEVELOPER_ARCHITECTURE.md)** |
-| [Installation](docs/INSTALLATION.md) · [User guide](docs/USER_GUIDE.md) | [Examples](docs/EXAMPLES.md) · [Verify results](docs/VERIFICATION_GUIDE.md) | [API reference](docs/API_REFERENCE.md) · [Contribute](CONTRIBUTING.md) |
-
-### 🧭 Your first successful qualification
-
-| Step | What you'll accomplish | Guide |
-| :--- | :--- | :--- |
-| **01 · Set up** | Install Python, clone the repository and run the checks. | [Installation by OS →](docs/INSTALLATION.md) |
-| **02 · Run** | Execute a synthetic qualification with **2 expected passes / 5 seeded failures**. | [Hands-on examples →](docs/EXAMPLES.md) |
-| **03 · Verify** | Inspect results, traceability and a manifest checked against a separately saved digest. | [Evidence verification →](docs/VERIFICATION_GUIDE.md) |
-| **04 · Understand** | Follow the requirements → execution → evidence → review lifecycle. | [End-to-end walkthrough →](docs/END_TO_END_WORKFLOW.md) |
-
-### 🗂️ Explore by topic
-
-| | |
-| :--- | :--- |
-| **📖 Learn & use**<br>Build confidence with the fundamentals.<br><br>[User guide](docs/USER_GUIDE.md) · [FAQ](docs/FAQ.md)<br>[CLI commands](docs/CLI_REFERENCE.md) · [Configuration](docs/CONFIGURATION.md)<br>[Troubleshooting](docs/TROUBLESHOOTING.md) | **🔌 Build & integrate**<br>Extend HealthQualify for your own workflows.<br><br>[API reference](docs/API_REFERENCE.md) · [Architecture](docs/ARCHITECTURE.md)<br>[Integration guide](docs/INTEGRATION_GUIDE.md) · [Custom adapters](docs/CUSTOM_ADAPTER_GUIDE.md)<br>[Testing & CI](docs/TESTING_AND_CI.md) |
-| **🏥 Healthcare qualification**<br>Explore the intended-use, risk and test methodology.<br><br>[Healthcare use cases](docs/HEALTHCARE_USE_CASES.md) · [Qualification methodology](docs/QUALIFICATION_METHODOLOGY.md)<br>[Regulatory mapping](docs/REGULATORY_MAPPING.md) · [Validation templates](docs/VALIDATION_TEMPLATES.md) | **🛡️ Security & operations**<br>Know the boundaries before deployment.<br><br>[Security & limitations](docs/SECURITY_AND_LIMITATIONS.md) · [Security model](docs/SECURITY_MODEL.md)<br>[Deployment guide](docs/DEPLOYMENT_GUIDE.md) · [Operations runbook](docs/OPERATIONS_RUNBOOK.md)<br>[Production readiness checklist](docs/PRODUCTION_READINESS_CHECKLIST.md) |
-
-<details>
-<summary><strong>📦 More guides — adoption, evaluation & project reference</strong></summary>
-
-<br>
-
-| Explore | Resources |
-| :--- | :--- |
-| **Evaluate** | [30–60-minute evaluation](docs/EVALUATION_GUIDE.md) · [Feature matrix](docs/FEATURE_MATRIX.md) · [Migration assessment](docs/MIGRATION_GUIDE.md) |
-| **Deep dive** | [Developer architecture](docs/DEVELOPER_ARCHITECTURE.md) · [Release status](docs/RELEASE_STATUS.md) · [Quality & release workflows](docs/QUALITY_RELEASE_BENCHMARK_V06.md) |
-| **Project** | [Changelog](CHANGELOG.md) · [Versioning policy](docs/VERSIONING_POLICY.md) · [Contributing](CONTRIBUTING.md) · [License](LICENSE) |
-| **Community** | [Support](SUPPORT.md) · [Security reporting](SECURITY.md) · [GitHub issues](https://github.com/Tec-Wel/HealthQualify/issues) |
-
-</details>
-
-**Still exploring?** **[Browse the complete documentation index →](docs/DOCUMENTATION_INDEX.md)**
-
-*Self-hostable · AI optional · Synthetic-data developer alpha · No PHI or production clinical integrations*
-
-## Conceptual lifecycle
+**What did you generate?**
 
 ```text
-Intended use / system registry
-            ↓
-Source-backed requirements and risks
-            ↓
-Draft protocol + explicit expected outcomes
-            ↓
-Human review of scope / authorized test environment
-            ↓
-Deterministic execution ──> PASS / FAIL / ERROR / NOT_RUN
-            ↓
-Manifest + technical evidence + integrity verification
-            ↓
-Deviation investigation / correction / distinct retest
-            ↓
-Human release disposition under the organization's QMS
-            ↓
-Software change → conservative impact assessment → requalification
+.healthqualify/first-run/
+  ├── protocol.json   # The exact test definition and synthetic fixtures
+  ├── results.json    # Per-test outcomes and requirement traceability
+  └── manifest.json   # Artifact checksums and provenance metadata
 ```
 
-The diagram is the **intended workflow**. Current components live in **two distinct tracks**: v0.5 standalone synthetic execution, and v0.3 SQLite workspace based on v0.2 protocols. Do not assume one command automatically moves records between them.
+The runner prints `manifest_sha256`. Save that digest **outside the evidence folder**, then verify:
 
-## Local deployment, not public hosting
+```bash
+python -m healthqualify.v05cli verify \
+  .healthqualify/first-run \
+  --trusted-manifest-sha256 YOUR_SAVED_DIGEST
+```
 
-The Compose file initializes a local SQLite developer workspace and **does not publish an HTTP port**. The secure API can be run separately on `127.0.0.1:8877` with explicit user bootstrap. See [Installation](docs/INSTALLATION.md) and [Integration](docs/INTEGRATION_GUIDE.md). Never expose alpha APIs on the internet.
+Expected: `{"verified": true}` when the trusted manifest, artifact hashes, and deterministic replay match.
 
+[**Full installation by OS →**](docs/INSTALLATION.md) · [**Step-by-step first run →**](docs/GETTING_STARTED.md) · [**Learn to interpret results →**](docs/VERIFICATION_GUIDE.md)
 
-## Contributing and support
+---
 
-Read [CONTRIBUTING.md](CONTRIBUTING.md), run the unit suite, and file reproducible issues with **synthetic sanitized** examples. For security-sensitive findings, do not publish secrets or PHI in an issue. Apache-2.0 license: [LICENSE](LICENSE).
+## What you can do
+
+| Capability | What works in the developer alpha | Start here |
+| :--- | :--- | :--- |
+| **🔎 Synthetic qualification** | Strict offline v0.3 JSON protocols, source-linked requirements, bounded deterministic assertions and traceability | [Examples](docs/EXAMPLES.md) |
+| **🧾 Evidence integrity** | SHA-256 manifests, independent trusted digest checks and deterministic replay | [Verification guide](docs/VERIFICATION_GUIDE.md) |
+| **🧭 Change-impact analysis** | Source-path-to-test mapping and conservative `UNKNOWN_IMPACT` when changes aren't mapped | [End-to-end workflow](docs/END_TO_END_WORKFLOW.md) |
+| **📋 Local QA workspace** | SQLite system records, v0.2 draft/baseline/run lifecycle, deviations, audit trail and technical reports | [User guide](docs/USER_GUIDE.md) |
+| **🛡️ Local security & technical review** | Loopback-only authenticated API, role controls, technical reviewer records, backup and offline QMS handoff | [API reference](docs/API_REFERENCE.md) |
+| **🏥 Limited interoperability checks** | Restricted synthetic REST/FHIR checks and offline HL7/DICOM/equipment prototypes | [Integration guide](docs/INTEGRATION_GUIDE.md) |
+| **🤖 Five investigation agents** | Draft-only deterministic agent analyses; optional local Ollama/Qwen explanations and local loopback dashboard | [AI agents guide](docs/AI_AGENTS_GUIDE.md) |
+| **⚙️ Release & quality analysis** | Human-reviewed release-impact advisories, local evidence retention metadata, synthetic comparison benchmark | [Quality & release guide](docs/QUALITY_RELEASE_BENCHMARK_V06.md) |
+
+**These are not interchangeable workflows.** The standalone **v0.5 runner uses strict v0.3 protocols**; the SQLite workspace uses **v0.2 protocols**. There is no automatic protocol conversion or production QMS integration. See [Feature matrix](docs/FEATURE_MATRIX.md) for implemented, experimental, planned, and unsupported capabilities.
+
+## How the workflow fits together
+
+```mermaid
+flowchart LR
+    A["Requirements<br/>and risks"] --> B["Synthetic<br/>protocol"]
+    B --> C["Deterministic<br/>execution"]
+    C --> D["Results +<br/>traceability"]
+    D --> E["Evidence<br/>verification"]
+    E --> F["Human<br/>review"]
+    F --> G["Change impact<br/>and retesting"]
+    classDef source fill:#eaf4ff,stroke:#7ba6d2,color:#17324e;
+    classDef action fill:#e7f9f4,stroke:#65bfa6,color:#12493f;
+    class A,B,D,G source;
+    class C,E,F action;
+```
+
+This is the **conceptual qualification journey**, not one automatically orchestrated regulated pipeline. The two protocol generations and the human QMS handoff remain distinct.
+
+---
+
+## Explore the five local investigation agents
+
+Five agent roles help users *investigate* technical findings without changing test results or granting approvals.
+
+| Agent | Question it helps answer |
+| :--- | :--- |
+| **Release Impact** | Which synthetic tests should I reconsider after a code change? |
+| **Qualification Gap Hunter** | Which requirements lack an executed verification path? |
+| **Failure Investigation Copilot** | What context should I examine for a nonpassing synthetic test? |
+| **QA Evidence Readiness** | Which technical evidence or traceability gaps remain? |
+| **Cross-System Dependency Investigator** | Which declared dependencies could affect the change review? |
+
+```bash
+# Run the agent tests
+python -m unittest tests.test_agents tests.test_agent_orchestrator -v
+
+# Explore a deterministic qualification-gap analysis
+python -m healthqualify.agentcli gap-hunter examples/synthetic_lis_v3/protocol.json
+```
+
+A **single-user, loopback-only local dashboard** is also available on `127.0.0.1:8899`. It requires a random `HEALTHQUALIFY_AGENT_TOKEN` of at least 32 characters, explicitly configured synthetic inputs and separate setup steps; do not expose it publicly.
+
+[**Five-agent user guide →**](docs/AI_AGENTS_GUIDE.md) · [**Dashboard setup →**](docs/AI_AGENT_DASHBOARD.md)
+
+---
+
+## Choose your documentation path
+
+| **🌱 New to HealthQualify** | **🛠️ Building or extending** | **🏥 Evaluating for healthcare QA** |
+| :--- | :--- | :--- |
+| [Getting started](docs/GETTING_STARTED.md) | [Developer architecture](docs/DEVELOPER_ARCHITECTURE.md) | [Qualification methodology](docs/QUALIFICATION_METHODOLOGY.md) |
+| [Installation](docs/INSTALLATION.md) | [CLI reference](docs/CLI_REFERENCE.md) | [Validation templates](docs/VALIDATION_TEMPLATES.md) |
+| [End-to-end tutorial](docs/END_TO_END_WORKFLOW.md) | [Custom assertions & adapters](docs/CUSTOM_ADAPTER_GUIDE.md) | [30–60 min evaluation](docs/EVALUATION_GUIDE.md) |
+| [FAQ & troubleshooting](docs/FAQ.md) | [Testing & CI](docs/TESTING_AND_CI.md) | [Security and limits](docs/SECURITY_AND_LIMITATIONS.md) |
+
+<div align="center">
+
+### Looking for a specific guide?
+
+**[📚 Open the complete documentation center →](docs/DOCUMENTATION_INDEX.md)**
+
+</div>
+
+---
+
+## Project status & trust boundaries
+
+| **Designed for today** | **Not a capability claim** |
+| :--- | :--- |
+| Synthetic/public non-sensitive engineering evaluation | Live clinical qualification or patient-data processing |
+| Deterministic fixture tests and inspectable results | Automated compliance certifications or qualified electronic signatures |
+| Local SQLite, technical review receipts, and bounded adapters | Enterprise identity, production multi-tenancy, or validated immutable records |
+| Conservative test recommendations after code changes | Deployment authorization or completed regulatory validation |
+
+For the latest scope and known gaps, consult [Release status](docs/RELEASE_STATUS.md), [Security model](docs/SECURITY_MODEL.md), [Production readiness gates](docs/PRODUCTION_READINESS_CHECKLIST.md), and [Roadmap](docs/ROADMAP.md).
+
+## Contributing & community
+
+HealthQualify welcomes reproducible bug reports, documentation improvements, synthetic scenarios, safe deterministic checks, and carefully scoped integrations. Contributions should add tests, preserve evidence integrity, and keep clinical/regulatory approval decisions separate.
+
+[**Contributing**](CONTRIBUTING.md) · [**Open issues**](https://github.com/Tec-Wel/HealthQualify/issues) · [**Security reporting**](SECURITY.md) · [**Support**](SUPPORT.md) · [**Changelog**](CHANGELOG.md) · [**Apache-2.0 license**](LICENSE)
+
+---
+
+<div align="center">
+
+**A clearer path from what you intended to test to what you can actually verify.**
+
+[**🚀 Run your first test**](docs/GETTING_STARTED.md) · [**🧭 Browse all docs**](docs/DOCUMENTATION_INDEX.md) · [**⬆ Back to top**](#open-source-healthcare-software-qualification--technical-evidence)
+
+<sub>Local first · AI optional · Synthetic only · Human-reviewed quality decisions</sub>
+
+</div>
