@@ -4,7 +4,7 @@
 
 > From approved requirements to executable tests, verifiable evidence, human review, and release-aware requalification — without an AI dependency.
 
-**Status: v0.4 security and interoperability developer alpha (not production validated).** The initial CLI is a deterministic, synthetic-data demonstration. It is **not** a qualified system, a compliance certification, or a substitute for an organization's quality management system.
+**Status: v0.5 developer alpha — continued qualification and evidence hardening (not production validated).** The initial CLI is a deterministic, synthetic-data demonstration. It is **not** a qualified system, a compliance certification, or a substitute for an organization's quality management system.
 
 ## What HealthQualify will do
 
@@ -18,6 +18,22 @@ HealthQualify combines the *capability categories* of regulatory guidance, quali
 6. **Requalify** — change-impact mapping, release-related test recommendations, regulatory-change review and repeatable verification.
 
 Optional AI assistants may draft requirements and protocols or explain failed tests, but cannot approve protocols or write authoritative PASS/FAIL results.
+
+## v0.5 Backlog convergence
+
+**[Read the v0.5 implementation and nine-issue matrix](docs/V05_BACKLOG_CONVERGENCE.md).** New independent tools provide an offline-only strict v0.3 protocol, acceptance-source registry, conservative source-to-test impact analysis, versioned engineering evidence manifests, controlled CAPA investigation and retest, explicit risk-based CSA/IQ-OQ-PQ draft profiles, optional AI-provider abstraction, consistent SQLite backup/restore integrity checks, and an internal benchmark harness.
+
+```bash
+python -m unittest discover -s tests -v
+python -m healthqualify.v05cli run examples/synthetic_lis_v3/protocol.json --out .healthqualify/v05-run
+python -m healthqualify.v05cli impact examples/synthetic_lis_v3/protocol.json healthqualify/healthcare.py
+```
+
+The example deliberately reports five failures. The run returning status 1 is expected. **This is not a regulated qualification approval.**
+
+### Git branch hygiene
+
+The three old feature branches are already merged via PRs #10-12. A guarded main-branch cleanup workflow checks merged PRs and exact original branch SHAs before attempting deletion after a successful test run. It never touches `main`. See [branch cleanup controls](docs/V05_BACKLOG_CONVERGENCE.md#branch-cleanup-policy).
 
 ## Security and interoperability alpha: v0.4
 
