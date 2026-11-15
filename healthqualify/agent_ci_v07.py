@@ -36,7 +36,10 @@ def run_ci():
                    "report":item["report"]} for item in results["jobs"]]
             if any(j["state"]!="DRAFT" or j["report"]["qualification_approved"] is not False
                    for j in jobs):
-                raise RuntimeError("Agent investigation did not produce safe drafts")
+                failures=[{"agent":j["agent"],"state":j["state"],"error":j.get("error")}
+                          for j in results["jobs"] if j["state"]!="DRAFT" or
+                          not j.get("report") or j["report"].get("qualification_approved") is not False]
+                raise RuntimeError("Agent investigation did not produce safe drafts: "+repr(failures))
             return {"state":"DRAFT_ONLY","changed_files":paths,"jobs":jobs,
                     "qualification_approved":False,"human_review_required":True}
         finally:
