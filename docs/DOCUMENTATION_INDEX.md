@@ -51,7 +51,7 @@ flowchart LR
 > [!IMPORTANT]
 > **Developer alpha only.** Use synthetic or public non-sensitive data, never PHI. Standalone v0.5 uses strict **v0.3 JSON**; the separate SQLite workspace uses **v0.2 JSON**. No automatic import connects these workflows, and no technical result is a regulatory approval. [Review the boundaries](SECURITY_AND_LIMITATIONS.md).
 
-<details>
+<details markdown="1">
 <summary><strong>📂 Expand the complete reference shelf</strong></summary>
 
 ### Tutorials and adoption
@@ -78,10 +78,10 @@ flowchart LR
 
 ---
 
-<div align="center">
+
 
 **Need a starting point?** [Open the documentation homepage](README.md) or [run the first example](GETTING_STARTED.md).
 
-<sub>Synthetic only · Local first · Traceable evidence · Human review</sub>
+*Synthetic only · Local first · Traceable evidence · Human review*
 
-</div>
+
