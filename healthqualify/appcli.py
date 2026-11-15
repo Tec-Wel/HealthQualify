@@ -33,7 +33,7 @@ def main(argv=None):
         return p
     cmd("init")
     cmd("bootstrap-admin","username")
-    cmd("create-user","admin_token","username","role")
+    cmd("create-user","admin_username","username","role")
     cmd("system-add","name","intended_use","owner")
     cmd("systems")
     cmd("protocol-add","system_id","path","actor")
@@ -96,11 +96,16 @@ def main(argv=None):
             return 0
         if args.command=="create-user":
             import getpass
+            admin_password=getpass.getpass("Admin password: ")
             password=getpass.getpass("New user password (12+ characters): ")
             identity=IdentityStore(args.db)
             try:
-                actor=identity.authenticate(args.admin_token)
-                data=identity.create_user(actor,args.username,password,args.role)
+                token=identity.login(args.admin_username,admin_password)
+                try:
+                    actor=identity.authenticate(token)
+                    data=identity.create_user(actor,args.username,password,args.role)
+                finally:
+                    identity.logout(token)
                 print(json.dumps(data,indent=2))
             finally:
                 identity.close()
