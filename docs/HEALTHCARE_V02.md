@@ -30,6 +30,14 @@ python -m unittest discover -s tests -v
 
 The run prints a manifest digest. Store it independently, then verify with `--trusted-manifest-sha256 <digest>` when checking the bundle.
 
+## Conservative qualification drift review
+
+```bash
+python -m healthqualify.cli review-v2 examples/synthetic_lis_v2/protocol.json examples/synthetic_lis_v2/protocol.json
+```
+
+The reviewer compares requirements, acceptance basis, test definitions, system metadata, and synthetic fixture values. Changes to system metadata or fixtures are flagged `UNKNOWN_IMPACT` and recommend all current tests; changed requirement/test definitions trigger `REVIEW_REQUIRED`. It never produces regulatory approval, and cannot infer that a repository's source code is unchanged from a matching protocol file. The CLI exits 1 for a review-required change.
+
 ## Evidence schema
 - `protocol.json`: original draft synthetic protocol bytes.
 - `results.json`: actual check statuses, observations, requirement traceability, uncovered requirements, findings, run time and explicit `qualification_approved: false`.
