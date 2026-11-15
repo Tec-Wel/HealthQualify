@@ -1,4 +1,15 @@
+![Trust & operations documentation](assets/category-trust.svg)
+
+[← **Documentation home**](README.md) &nbsp; / &nbsp; **Trust & operations**
+
 # Security model and threat boundaries
+
+> **What you'll learn:** Review explicit threats, assets, identity permissions and necessary security hardening.
+
+**On this page:** [Assumptions and supported use](#assumptions-and-supported-use) · [Assets, threats and mitigations](#assets-threats-and-mitigations) · [Authorization matrix (secure API)](#authorization-matrix-secure-api) · [Abuse cases to test before extending](#abuse-cases-to-test-before-extending)
+
+---
+
 
 ## Assumptions and supported use
 
@@ -63,3 +74,9 @@ Identity is local PBKDF2-HMAC-SHA256 password-based with randomized salts and lo
 Conduct formal threat modeling, independent penetration testing, dependency/SAST/DAST checks, data privacy assessments, KMS/HSM integration, network isolation, centralized audit with independent retention, SSO/MFA, TLS, tenant authorization, protected QMS review, time synchronization, disaster recovery and documented tool validation for intended use.
 
 Security reports: [SECURITY.md](../SECURITY.md). Operations: [Runbook](OPERATIONS_RUNBOOK.md). The above is a model of **current controls and known gaps**, not a third-party audit.
+
+---
+
+### Continue exploring
+
+[verification guide](VERIFICATION_GUIDE.md) · [production readiness checklist](PRODUCTION_READINESS_CHECKLIST.md) · [All guides](README.md) · [Project homepage](../README.md)

@@ -1,4 +1,15 @@
+![Trust & operations documentation](assets/category-trust.svg)
+
+[← **Documentation home**](README.md) &nbsp; / &nbsp; **Trust & operations**
+
 # Security, privacy, assurance and product limitations
+
+> **What you'll learn:** Learn the privacy, compliance, storage and evidence limitations that apply to the developer alpha.
+
+**On this page:** [Classification](#classification) · [Allowed development practices](#allowed-development-practices) · [Security controls implemented versus missing](#security-controls-implemented-versus-missing) · [Regulatory terms: use accurately](#regulatory-terms-use-accurately)
+
+---
+
 
 ## Classification
 
@@ -44,3 +55,9 @@ Authorization, source validation, threat modeling, egress control, audit tamper 
 Do not disclose exploitable secrets, credentials, internal systems or PHI in public issues. Use the repository's available private reporting mechanism if configured, or contact the maintainers through an appropriate private channel. No public contact address is assumed here.
 
 See [Release status](RELEASE_STATUS.md), [Security and interoperability alpha](SECURITY_INTEROP_V04.md), and [Verification](VERIFICATION_GUIDE.md).
+
+---
+
+### Continue exploring
+
+[security model](SECURITY_MODEL.md) · [verification guide](VERIFICATION_GUIDE.md) · [All guides](README.md) · [Project homepage](../README.md)

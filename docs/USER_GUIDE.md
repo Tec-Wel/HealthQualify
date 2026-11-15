@@ -1,4 +1,15 @@
+![Start here documentation](assets/category-start.svg)
+
+[← **Documentation home**](README.md) &nbsp; / &nbsp; **Start here**
+
 # User guide: apply HealthQualify to your own project
+
+> **What you'll learn:** Apply HealthQualify's two supported protocol tracks and deterministic assertions to a synthetic project.
+
+**On this page:** [Choose the right path](#choose-the-right-path) · [Start with the project contract](#start-with-the-project-contract) · [Create a fixture-backed protocol](#create-a-fixture-backed-protocol) · [Execute and inspect](#execute-and-inspect)
+
+---
+
 
 HealthQualify should help you answer **what was intended, what was actually checked, which requirement each check supports, what failed, and which evidence is trustworthy**. This guide is for **developer-alpha, non-production, synthetic-data qualification experiments**.
 
@@ -72,3 +83,9 @@ Mapped changes return targeted recommendations and require human review. Unknown
 Work with your organization's QA/regulatory owners to assess intended use, risk, jurisdiction, appropriate assurance approach, test-environment controls, independent review, traceability, retention, electronic record obligations, and the validation of HealthQualify itself. The current repository does not meet those operational gates.
 
 Next: [End-to-end workflow](END_TO_END_WORKFLOW.md) · [Examples](EXAMPLES.md) · [Security & limitations](SECURITY_AND_LIMITATIONS.md).
+
+---
+
+### Continue exploring
+
+[getting started](GETTING_STARTED.md) · [end to end workflow](END_TO_END_WORKFLOW.md) · [All guides](README.md) · [Project homepage](../README.md)

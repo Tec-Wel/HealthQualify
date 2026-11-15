@@ -1,4 +1,15 @@
+![Project reference documentation](assets/category-reference.svg)
+
+[← **Documentation home**](README.md) &nbsp; / &nbsp; **Project reference**
+
 # Roadmap and acceptance gates
+
+> **What you'll learn:** Review historical phases and proposed future functionality without interpreting plans as shipped features.
+
+**On this page:** [v0.1 Foundation — deterministic reproducibility](#v01-foundation-deterministic-reproducibility) · [v0.2 Qualification workspace](#v02-qualification-workspace) · [v0.3 Continuous qualification](#v03-continuous-qualification) · [v0.4 Healthcare AI and intelligence](#v04-healthcare-ai-and-intelligence)
+
+---
+
 
 ## v0.1 Foundation — deterministic reproducibility
 - Working CLI with allowlisted checks, JSON schema validation, explicit failure exit codes.
@@ -39,3 +50,9 @@
 Compare the same synthetic LIS requirements and seeded defects with standalone scripting, traceability tooling and baseline pytest. Track setup time, coverage of seeded defects, false positives, reproducibility, artifact integrity, maintenance and affected-test impact accuracy.
 
 All milestones are planned, not completed product claims.
+
+---
+
+### Continue exploring
+
+[release status](RELEASE_STATUS.md) · [product](PRODUCT.md) · [All guides](README.md) · [Project homepage](../README.md)

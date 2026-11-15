@@ -1,4 +1,15 @@
+![Build & extend documentation](assets/category-build.svg)
+
+[← **Documentation home**](README.md) &nbsp; / &nbsp; **Build & extend**
+
 # Testing and continuous integration
+
+> **What you'll learn:** Run unit tests, review GitHub Actions behavior and distinguish seeded failures from defects.
+
+**On this page:** [Test philosophy](#test-philosophy) · [Local commands](#local-commands) · [Test suites by responsibility](#test-suites-by-responsibility) · [Expected negative qualification runs](#expected-negative-qualification-runs)
+
+---
+
 
 ## Test philosophy
 
@@ -65,3 +76,9 @@ This intentionally returns **exit 1**, **5 FAIL and 2 PASS**. Treat a genuine un
 Identify **which** step failed (install, unit test, demo execution, expected count, verification, PR impact). Inspect GitHub Actions logs with secrets removed. For a reproducible issue, provide version, OS, Python interpreter, branch SHA, command, sanitized JSON and expected/actual result.
 
 See [Troubleshooting](TROUBLESHOOTING.md) and [Contributing](../CONTRIBUTING.md).
+
+---
+
+### Continue exploring
+
+[developer architecture](DEVELOPER_ARCHITECTURE.md) · [cli reference](CLI_REFERENCE.md) · [All guides](README.md) · [Project homepage](../README.md)
