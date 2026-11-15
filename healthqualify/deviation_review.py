@@ -56,9 +56,12 @@ class DeviationReview:
             # free-form URLs or external raw data here.
             if not evidence_ref.startswith("hq-run:") or "/" not in evidence_ref[7:]:
                 raise ValueError("An internal run/test evidence reference is required")
-            valid_refs={t["evidence_ref"] for t in run["results"]["results"]}
+            if not deviation["test_id"]:
+                raise ValueError("Uncovered requirement requires a separate scoped review workflow")
+            valid_refs={t["evidence_ref"] for t in run["results"]["results"]
+                        if t["id"]==deviation["test_id"] and t["status"]!="PASS"}
             if evidence_ref not in valid_refs:
-                raise ValueError("Evidence reference does not belong to original run")
+                raise ValueError("Evidence must identify this deviation's nonpassing test in its original run")
             rid=str(uuid.uuid4())
             record={"id":rid,"deviation_id":deviation_id,"reviewer":username,
                     "disposition":disposition,"rationale":rationale.strip(),
