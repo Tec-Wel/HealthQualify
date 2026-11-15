@@ -17,6 +17,22 @@ HealthQualify provides a deterministic, AI-optional engineering foundation for t
 - **Healthcare IT and laboratory integration teams:** experiment safely with synthetic LIS, HL7 and FHIR fixtures.
 - **Open-source contributors:** develop and test adapters, assertions, governance and evidence workflows.
 
+## Five local AI agents (developer alpha)
+
+Five deterministic, **draft-only** investigators: Release Impact, Qualification Gap Hunter, Failure Investigation Copilot, QA Evidence Readiness, and Cross-System Dependency Investigator. An optional local Ollama/Qwen model can explain findings; it cannot change test outcomes or approve qualification.
+
+**Start here:** [Agent user guide](docs/AI_AGENTS_GUIDE.md) · [Local dashboard and orchestration](docs/AI_AGENT_DASHBOARD.md)
+
+```bash
+python -m unittest tests.test_agents tests.test_agent_orchestrator -v
+python -m healthqualify.agentcli gap-hunter examples/synthetic_lis_v3/protocol.json
+# Set a random 32+ character HEALTHQUALIFY_AGENT_TOKEN before running:
+python -m healthqualify.agent_dashboard
+# Then open http://127.0.0.1:8899
+```
+
+The dashboard is single-user, loopback-only and restricted to configured synthetic inputs. **Not qualified for regulated production use.**
+
 ## Quick start: synthetic qualification in a local checkout
 
 Requires **Python 3.10+** (3.12 recommended) and Git. Run from the repository root. The core synthetic runner uses the Python standard library.

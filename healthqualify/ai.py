@@ -13,7 +13,12 @@ ROLES={
  "iq":"Suggest installation/configuration checks; mark unverified expectations as gaps.",
  "oq":"Suggest functional, negative and authorization tests with human review.",
  "pq":"Suggest intended-use scenarios and witnessed workflows; do not claim PQ is complete.",
- "deviation":"Suggest causes and corrective actions without closing the deviation."
+ "deviation":"Suggest causes and corrective actions without closing the deviation.",
+ "release-impact":"Explain deterministically mapped affected tests and unknown impact; suggest review steps without reducing required tests.",
+ "gap-hunter":"Explain uncovered requirements, missing or nonpassing tests and evidence gaps using only supplied references.",
+ "failure-investigation":"Distinguish observed failures from possible causes; hypotheses are unverified and require investigation.",
+ "qa-readiness":"Explain review blockers, missing evidence and deviations; never imply regulatory approval or release readiness.",
+ "dependency-investigator":"Explain impacted registered systems and unknown dependency mappings; never infer undocumented connections."
 }
 
 def available_roles() -> dict:

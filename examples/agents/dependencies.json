@@ -1,0 +1,12 @@
+{
+  "systems": [
+    {
+      "id": "LIS-SYNTHETIC-V2",
+      "components": ["healthqualify/healthcare.py", "healthqualify/assurance.py"]
+    },
+    {
+      "id": "EHR-SYNTHETIC-INTERFACE",
+      "components": ["healthqualify/healthcare.py"]
+    }
+  ]
+}
