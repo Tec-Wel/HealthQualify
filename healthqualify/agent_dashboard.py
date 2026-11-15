@@ -39,7 +39,7 @@ table{border-collapse:collapse;width:100%}td,th{padding:11px;text-align:left;bor
 <div class="notice"><strong>Not a regulated approval system.</strong> Findings are advisory, model explanations are unverified, and QA release authorization is not supported.</div>
 <section class="panel"><h2>Local access</h2><p>Enter the token configured for this workstation. It is kept in this page's memory only.</p>
 <input id="token" type="password" autocomplete="off" placeholder="Local dashboard token"> <button onclick="refresh()">Load history</button>
-<p class="muted">Default: deterministic analysis, with no model or network call.</p></section>
+<p class="muted">Default: deterministic analysis, with no model or network call.</p><label><input id="useollama" type="checkbox" style="width:auto"> Request optional local Qwen explanation (requires server --allow-ollama)</label></section>
 <section class="panel"><h2>Investigate your synthetic protocol</h2><p class="muted">The dashboard uses server-configured, allowlisted demo files. It does not accept arbitrary file paths.</p>
 <div class="grid" id="agents"></div><p><button id="runall" onclick="run('all')">Run all five agents</button></p></section>
 <section class="panel"><h2>Run results</h2><div id="result" role="status">Select an agent to generate a draft finding.</div></section>
@@ -68,7 +68,7 @@ async function request(path,body){
 }
 async function run(agent){
  const buttons=document.querySelectorAll("button");buttons.forEach(b=>b.disabled=true);
- try{const result=await request("/api/run",{agent});
+ try{const result=await request("/api/run",{agent,use_ollama:document.querySelector("#useollama").checked});
  document.querySelector("#result").textContent=JSON.stringify(result,null,2);
  await refresh();
  }catch(e){document.querySelector("#result").textContent="Error: "+e.message}
@@ -84,7 +84,7 @@ async function refresh(){
 </script></body></html>"""
 
 
-def make_handler(history, token, protocol, registry, changed, evidence_dir=None, trusted_sha=None):
+def make_handler(history, token, protocol, registry, changed, evidence_dir=None, trusted_sha=None, allow_ollama=False):
     class Handler(BaseHTTPRequestHandler):
         def log_message(self, *_args):
             pass
@@ -139,14 +139,17 @@ def make_handler(history, token, protocol, registry, changed, evidence_dir=None,
                 if not 0 < n <= 4096:
                     raise ValueError("Invalid request length")
                 payload = json.loads(self.rfile.read(n))
-                if not isinstance(payload, dict) or set(payload) != {"agent"}:
-                    raise ValueError("Only agent selection is accepted")
+                if not isinstance(payload, dict) or set(payload) != {"agent", "use_ollama"}:
+                    raise ValueError("Only agent and use_ollama are accepted")
+                use_ollama = payload["use_ollama"]
+                if type(use_ollama) is not bool or (use_ollama and not allow_ollama):
+                    raise ValueError("Local Ollama is disabled by server policy")
                 agent = payload["agent"]
                 if agent != "all" and agent not in AGENTS:
                     raise ValueError("Unknown agent")
                 kw = {"changed_files": changed, "registry_path": registry,
                       "evidence_dir": evidence_dir, "trusted_manifest_sha256": trusted_sha,
-                      "use_ollama": False}
+                      "use_ollama": use_ollama}
                 if agent == "all":
                     data = history.run_all("local_dashboard", protocol, **kw)
                 else:
@@ -160,7 +163,7 @@ def make_handler(history, token, protocol, registry, changed, evidence_dir=None,
 
 
 def serve(*, database, protocol, registry, changed, token, port=8899,
-          evidence_dir=None, trusted_sha=None):
+          evidence_dir=None, trusted_sha=None, allow_ollama=False):
     if not isinstance(token, str) or len(token) < 32:
         raise ValueError("Set a random local token at least 32 characters long")
     if not isinstance(port, int) or not 1024 <= port <= 65535:
@@ -170,7 +173,7 @@ def serve(*, database, protocol, registry, changed, token, port=8899,
     history = AgentHistory(database)
     server = HTTPServer(
         ("127.0.0.1", port),
-        make_handler(history, token, str(protocol), str(registry), changed, evidence_dir, trusted_sha))
+        make_handler(history, token, str(protocol), str(registry), changed, evidence_dir, trusted_sha, allow_ollama))
     try:
         print("HealthQualify local agent dashboard: http://127.0.0.1:" + str(port))
         server.serve_forever()
@@ -187,11 +190,12 @@ def main(argv=None):
     p.add_argument("--registry", default="examples/agents/dependencies.json")
     p.add_argument("--changed", nargs="+", default=["healthqualify/healthcare.py"])
     p.add_argument("--port", type=int, default=8899)
+    p.add_argument("--allow-ollama", action="store_true", help="Allow explicit per-request local Ollama explanations")
     args = p.parse_args(argv)
     token = os.environ.get("HEALTHQUALIFY_AGENT_TOKEN", "")
     Path(args.db).parent.mkdir(parents=True, exist_ok=True)
     serve(database=args.db, protocol=args.protocol, registry=args.registry,
-          changed=args.changed, token=token, port=args.port)
+          changed=args.changed, token=token, port=args.port, allow_ollama=args.allow_ollama)
 
 
 if __name__ == "__main__":
