@@ -11,6 +11,22 @@
 > [!IMPORTANT]
 > **Synthetic developer alpha.** Not FDA certification, validated GxP software, Part 11 electronic signatures, medical-device control, or production clinical use. No PHI. AI findings are advisory and never grant qualification approval. [Read the security boundaries](docs/SECURITY_AND_LIMITATIONS.md).
 
+## 🖥️ Local Edition v0.8 — install, sign in, qualify
+
+**No cloud account, purchased API token, mandatory LLM, or AI subscription.** The local edition bundles a guided synthetic LIS qualification journey, five offline-capable advisory agents, traceability/evidence views, a QA draft-review queue and optional local Qwen explanations.
+
+**From a source checkout with Python 3.10+:** double-click `launch-healthqualify.bat` on Windows, or run `sh launch-healthqualify.command` on macOS / `sh launch-healthqualify.sh` on Linux. Alternatively run:
+
+```bash
+python -m healthqualify.local_edition_v08
+```
+
+It opens a **loopback-only** workspace at `http://127.0.0.1:8899`; create a local admin on first launch. No copy-pasted dashboard token is required. For an optional model already installed with Ollama, use `--allow-local-qwen`; the application remains fully usable without it.
+
+[Local Edition installation and guided workflow](docs/LOCAL_EDITION_V08.md) · [Standalone developer bundle workflow](.github/workflows/local-edition-build.yml)
+
+> **Developer alpha only:** demonstration executions are DRAFT technical runs; findings and QA queue decisions are **not** formal approvals, regulated electronic signatures, or patient-care evidence. The native bundles are created by an optional manual GitHub workflow and have not been independently signed or notarized.
+
 ## One product. Two complementary workflows.
 
 ![HealthQualify investigation and qualification areas](docs/assets/visual-product-areas.svg)
