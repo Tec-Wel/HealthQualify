@@ -126,6 +126,19 @@ class Workspace:
             raise ValueError("Protocol digest mismatch")
         result=minimize_result(assess_v2(protocol["payload"]))
         rid=key()
+        # Stable internal evidence references; no raw patient/fixture values are
+        # embedded in receipts. This URI identifies a result in the local store,
+        # not an externally signed or immutable artifact.
+        ref_by_test = {}
+        for test in result["results"]:
+            ref = "hq-run:" + rid + "/test/" + test["id"]
+            test["evidence_ref"] = ref
+            ref_by_test[test["id"]] = ref
+        for row in result["traceability"]:
+            row["evidence_refs"] = [ref_by_test[tid] for tid in row["test_ids"]]
+        result["run_id"] = rid
+        result["protocol_id"] = protocol_id
+        result["protocol_digest"] = protocol["digest"]
         encoded=encode(result).decode()
         with self.conn:
             self.conn.execute("INSERT INTO runs VALUES(?,?,?,?,?)",

@@ -37,3 +37,33 @@ def verify_backup(path, trusted_sha256):
         return con.execute("PRAGMA integrity_check").fetchone()[0]=="ok"
     finally:
         con.close()
+
+def restore_verified(backup_path, destination, trusted_sha256):
+    """Restore a verified SQLite backup into a NEW database path only.
+
+    Never overwrites an existing workspace. A separately trusted checksum must
+    be supplied; this is not a production disaster recovery test.
+    """
+    src,dst=Path(backup_path),Path(destination)
+    if (not src.is_file() or src.is_symlink() or dst.exists() or dst.is_symlink()
+        or src.resolve()==dst.resolve()):
+        raise ValueError("Existing, linked, or invalid backup/restore path")
+    if not verify_backup(src,trusted_sha256):
+        raise ValueError("Backup checksum or integrity mismatch")
+    source=sqlite3.connect(f"file:{src.resolve()}?mode=ro",uri=True)
+    target=sqlite3.connect(str(dst))
+    try:
+        source.backup(target)
+        if target.execute("PRAGMA integrity_check").fetchone()[0]!="ok":
+            raise ValueError("Restored database failed SQLite integrity check")
+        target.commit()
+    except Exception:
+        target.close()
+        source.close()
+        dst.unlink(missing_ok=True)
+        raise
+    else:
+        target.close()
+        source.close()
+    return {"restored":True,"destination":str(dst),
+            "source_sha256":trusted_sha256,"regulated_recovery_verified":False}

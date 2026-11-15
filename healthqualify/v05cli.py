@@ -7,8 +7,9 @@ from pathlib import Path
 from .evidence_v3 import export_v3, verify_v3
 from .change_graph import plan_requalification
 from .assurance_profiles import plan
-from .backup import backup_sqlite, verify_backup
+from .backup import backup_sqlite, verify_backup, restore_verified
 from .benchmark import run_internal_fixture
+from .rest_local import check_local_json
 
 def main(argv=None):
     root=argparse.ArgumentParser(description="HealthQualify v0.5 developer tools; no regulated approval")
@@ -32,6 +33,15 @@ def main(argv=None):
     backupcheck=p.add_parser("backup-verify")
     backupcheck.add_argument("path")
     backupcheck.add_argument("--trusted-sha256",required=True)
+    restore=p.add_parser("backup-restore")
+    restore.add_argument("backup_path")
+    restore.add_argument("destination")
+    restore.add_argument("--trusted-sha256",required=True)
+    rest=p.add_parser("rest-check-local")
+    rest.add_argument("url")
+    rest.add_argument("field")
+    rest.add_argument("expected_json")
+    rest.add_argument("--authorize-synthetic",action="store_true")
     bench=p.add_parser("benchmark")
     bench.add_argument("protocol")
     args=root.parse_args(argv)
@@ -51,6 +61,13 @@ def main(argv=None):
                         json.loads(Path(args.controls).read_text()),args.pathway)
         elif args.action=="backup":
             result=backup_sqlite(args.source,args.destination)
+        elif args.action=="backup-restore":
+            result=restore_verified(args.backup_path,args.destination,args.trusted_sha256)
+        elif args.action=="rest-check-local":
+            result=check_local_json(args.url,args.field,json.loads(args.expected_json),
+                                    authorized=args.authorize_synthetic)
+            print(json.dumps(result,indent=2))
+            return 0 if result["status"]=="PASS" else 1
         elif args.action=="backup-verify":
             ok=verify_backup(args.path,args.trusted_sha256)
             print(json.dumps({"verified":ok}))
