@@ -164,7 +164,7 @@ class EvaluationTests(unittest.TestCase):
     @patch("healthqualify.agent_ci_v07.subprocess.run")
     def test_main_push_all_five_agents_draft_only(self,run):
         run.return_value=subprocess.CompletedProcess([],0,
-                 "healthqualify/healthcare.py\\n","")
+                 "healthqualify/healthcare.py"+chr(10),"")
         result=run_ci()
         self.assertEqual(result["state"],"DRAFT_ONLY")
         self.assertEqual(len(result["jobs"]),5)
