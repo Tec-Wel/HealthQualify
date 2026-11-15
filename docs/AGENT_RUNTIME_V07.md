@@ -79,6 +79,26 @@ python -m unittest tests.test_agent_runtime_v07 -v
 
 **Important:** this suite evaluates only deterministic advisory logic. `model_inference_tested=false` and `model_accuracy=null` are deliberate. To measure real Qwen or hosted models, first pin the model digest, execute on approved hardware and evaluate explanatory statements for groundedness, precision, false conclusions, latency, and no modifications to deterministic verdicts.
 
+## Strict agent tool interface
+
+`healthqualify.agent_tools_v07.AgentToolbox` exposes seven approved, **read-only** tools: `system_summary`, `protocol_versions`, `requirement_index`, `recent_runs`, `deviations`, `compare_latest_runs`, and `agent_metrics`. It denies unknown tool names, unauthorized system IDs and unbounded history requests. It does not expose fixture values, raw test observations, arbitrary SQL or operating-system commands.
+
+## Optional local inference acceptance probe
+
+A separate, **explicitly opted-in** probe can invoke a preinstalled local Ollama model against the synthetic labeled cases and preserve its narratives for human grounding review:
+
+```bash
+python -m healthqualify.agent_model_probe_v07 \
+  --enable-local-ollama --model qwen3:8b --max-cases 30 \
+  --out local-model-review.json
+```
+
+This script does **not** download a model. Set up a reviewed Ollama instance on loopback and protect network egress independently. Each model response is tagged `DRAFT_UNVERIFIED`; failures remain `MODEL_ERROR`. The deterministic finding digest is checked before and after every call, but a real model's grounding and factuality are **not** automatically scored. The output explicitly contains `model_grounding_score: null` and `human_grounding_review: PENDING`. GitHub CI uses mocks for this pathway, not live Qwen inference.
+
+## Event and observability boundaries
+
+`agent_triggers` records deduplicated synthetic events; `process-trigger` executes one controlled advisory investigation, never a deployment or test mutation. Admins grant/revoke system scope; QA receives a one-time review decision queue. `metrics` reports local draft count and observed execution latency but not a verified model cost or validated quality score. Enterprise event ingestion, workers and end-to-end monitoring are still separate work.
+
 ## Suggested next engineering release
 
 v0.8: properly isolated PostgreSQL organization/service model, identity provider, secure event ingestion, agent tool contracts, production observability, trusted evidence storage and 30-scenario model-inference acceptance testing. A real clinical or regulated launch also requires site-specific intended-use qualification, security/privacy assessment, quality procedures and applicable signature controls.
