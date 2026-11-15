@@ -49,11 +49,12 @@ def main(argv=None):
     agent.add_argument("--allow-local-ai",action="store_true")
     server=cmd("serve")
     server.add_argument("--port",type=int,default=8765)
+    server.add_argument("--host",default="127.0.0.1")
     args=parser.parse_args(argv)
     store=None
     try:
         if args.command=="serve":
-            serve(args.db,port=args.port,token=os.getenv("HEALTHQUALIFY_API_TOKEN"))
+            serve(args.db,host=args.host,port=args.port,token=os.getenv("HEALTHQUALIFY_API_TOKEN"))
             return 0
         if args.command=="frameworks":data=list_controls()
         elif args.command=="applicability":data=applicability(read_json(args.system_file),read_json(args.decisions_file))
