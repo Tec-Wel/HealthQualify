@@ -1,3 +1,9 @@
+---
+hide:
+  - navigation
+  - toc
+---
+
 ![HealthQualify · Evidence-first qualification](assets/documentation-hero.svg)
 
 # Qualify with evidence. Not assumptions.
