@@ -171,6 +171,9 @@ class LocalHandler(BaseHTTPRequestHandler):
             if path=="/local-ui.js":
                 script=UI.with_name("local_ui_v08.js")
                 return self.response(200,script.read_bytes(),content_type="text/javascript; charset=utf-8")
+            if path=="/local-ui.css":
+                css=UI.with_name("local_ui_v08.css")
+                return self.response(200,css.read_bytes(),content_type="text/css; charset=utf-8")
             if path=="/api/health":
                 return self.response(200,{"status":"ok","network":"loopback-only",
                                           "llm_required":False,"clinical_use":False})
