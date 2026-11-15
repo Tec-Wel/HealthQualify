@@ -35,10 +35,10 @@ Role policy includes `admin`, `qa`, `validator`, `viewer`. A session lasts rough
 The v0.5 `rest-check-local` checks a field of a synthetic JSON response from a loopback service. It **does not** execute an entire v0.3 protocol over HTTP or talk to arbitrary external hosts.
 
 ```bash
-python -m healthqualify.v05cli rest-check-local http://127.0.0.1:8000/example status '"ready"' --authorize-synthetic
+python -m healthqualify.v05cli rest-check-local http://127.0.0.1:8000/test/example status '"ready"' --authorize-synthetic
 ```
 
-Start a synthetic local server separately; no server is bundled for that illustrative endpoint. The check is **GET-only**, bounded, loopback-only and has no redirect following. Errors are not evidence of remote system failure without understanding environment configuration.
+Start a synthetic local server separately; no server is bundled for that illustrative endpoint. The check is **GET-only**, bounded, loopback-only, limited to `/test/` paths, redacts observed values, and has no redirect following. Errors are not evidence of remote system failure without understanding environment configuration.
 
 ## 3. Read-only HTTPS FHIR staging assertion
 
