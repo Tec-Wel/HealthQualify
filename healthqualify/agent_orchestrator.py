@@ -121,7 +121,7 @@ class AgentHistory:
                                  trusted_manifest_sha256=trusted_manifest_sha256,
                                  use_ollama=use_ollama, model=model)
             self._transition(job_id, "DRAFT", report=result)
-        except (OSError, ValueError, TypeError, KeyError, json.JSONDecodeError, TimeoutError) as exc:
+        except Exception as exc:
             self._transition(job_id, "FAILED", error=type(exc).__name__ + ": " + str(exc)[:300])
             raise
         return self.get(job_id)
@@ -142,7 +142,7 @@ class AgentHistory:
                     registry_path=registry_path, evidence_dir=evidence_dir,
                     trusted_manifest_sha256=trusted_manifest_sha256,
                     use_ollama=use_ollama, model=model))
-            except (OSError, ValueError, TypeError, KeyError, json.JSONDecodeError, TimeoutError):
+            except Exception:
                 completed.append(self.list(1)[0])
         return {"jobs": completed, "chain_head": self.chain_head(),
                 "qualification_approved": False, "human_review_required": True}
