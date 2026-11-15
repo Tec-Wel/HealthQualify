@@ -1,158 +1,98 @@
 # HealthQualify
 
-**Open-source healthcare software validation and continuous qualification.**
+**Open-source, self-hostable healthcare software qualification tooling.** Track the path from intended use and requirements through synthetic test execution, evidence, review, and change-impact assessment.
 
-> From approved requirements to executable tests, verifiable evidence, human review, and release-aware requalification — without an AI dependency.
+> **Release status: v0.5 developer alpha.** HealthQualify is **not** a validated regulated system, medical device, clinical decision support system, regulatory certification, or a replacement for an organization's quality management system (QMS). Use **synthetic or public non-sensitive data only**. Do not connect it to production healthcare systems or ingest PHI.
 
-**Status: v0.5 developer alpha — continued qualification and evidence hardening (not production validated).** The initial CLI is a deterministic, synthetic-data demonstration. It is **not** a qualified system, a compliance certification, or a substitute for an organization's quality management system.
+## Why HealthQualify?
 
-## What HealthQualify will do
+Healthcare software teams need to answer more than “did our unit tests pass?” They must know **what requirement was tested**, **what assertion executed**, **what evidence was recorded**, **what failed**, and **what needs requalification when software changes**.
 
-HealthQualify combines the *capability categories* of regulatory guidance, qualification planning, IQ/OQ/PQ protocol generation, requirements traceability and gap analysis with a cloud-neutral execution and evidence engine.
+HealthQualify provides a deterministic, AI-optional engineering foundation for that journey. It does **not** automatically provide a legal approval or compliance determination.
 
-1. **Understand** — system registry, intended use, regulatory applicability, versioned source references, GAMP-style risk planning and CSA profiles.
-2. **Design** — approved requirements, URS/FRS, risk analysis, IQ/OQ/PQ protocols and manual procedures.
-3. **Execute** — deterministic test adapters for configuration, REST/FHIR/HL7, SQL, software workflows and selected PQ scenarios.
-4. **Prove** — results with distinct PASS, FAIL, ERROR, and NOT_RUN states; SHA-256 evidence manifest; requirements-to-execution traceability.
-5. **Review** — deviations, CAPA links, controlled baselines, reviewer decisions and exports.
-6. **Requalify** — change-impact mapping, release-related test recommendations, regulatory-change review and repeatable verification.
+### Who is it for?
 
-Optional AI assistants may draft requirements and protocols or explain failed tests, but cannot approve protocols or write authoritative PASS/FAIL results.
+- **Software and integration developers:** test documented system contracts, examine deterministic failures, and assess change impact.
+- **Validation and quality engineers:** create traceable protocol drafts, inspect technical evidence, and identify gaps.
+- **Healthcare IT and laboratory integration teams:** experiment safely with synthetic LIS, HL7 and FHIR fixtures.
+- **Open-source contributors:** develop and test adapters, assertions, governance and evidence workflows.
 
-## v0.5 Backlog convergence
+## Quick start: synthetic qualification in a local checkout
 
-**[Read the v0.5 implementation and nine-issue matrix](docs/V05_BACKLOG_CONVERGENCE.md).** New independent tools provide an offline-only strict v0.3 protocol, acceptance-source registry, conservative source-to-test impact analysis, versioned engineering evidence manifests, controlled CAPA investigation and retest, explicit risk-based CSA/IQ-OQ-PQ draft profiles, optional AI-provider abstraction, consistent SQLite backup/restore integrity checks, and an internal benchmark harness.
+Requires **Python 3.10+** (3.12 recommended) and Git. Run from the repository root. The core synthetic runner uses the Python standard library.
 
 ```bash
+git clone https://github.com/Tec-Wel/HealthQualify.git
+cd HealthQualify
 python -m unittest discover -s tests -v
-python -m healthqualify.v05cli run examples/synthetic_lis_v3/protocol.json --out .healthqualify/v05-run
-python -m healthqualify.v05cli impact examples/synthetic_lis_v3/protocol.json healthqualify/healthcare.py
+python -m healthqualify.v05cli run examples/synthetic_lis_v3/protocol.json --out .healthqualify/demo-run
 ```
 
-The example deliberately reports five failures. The run returning status 1 is expected. **This is not a regulated qualification approval.**
+**Expected:** the synthetic example produces **2 PASS and 5 FAIL**, and the final command exits **1 on purpose**. The fixture simulates failures; that is not a failed installation. Use a **new output directory** for each run. On Windows, `py -3` may replace `python`.
 
-### Git branch hygiene
-
-The three old feature branches are already merged via PRs #10-12. A guarded main-branch cleanup workflow checks merged PRs and exact original branch SHAs before attempting deletion after a successful test run. It never touches `main`. See [branch cleanup controls](docs/V05_BACKLOG_CONVERGENCE.md#branch-cleanup-policy).
-
-## Security and interoperability alpha: v0.4
-
-**[Security and healthcare interoperability guide](docs/SECURITY_INTEROP_V04.md)** provides the authenticated API, approved test-environment connections, cryptographic evidence export and regulated release gates.
+For verification, preserve the SHA-256 digest printed as `manifest_sha256` by the runner **outside the evidence directory**:
 
 ```bash
-python -m pip install -r requirements-security.txt
-python -m unittest discover -s tests -v
-python -m healthqualify.appcli --db /tmp/hq-secure.db init
-python -m healthqualify.appcli --db /tmp/hq-secure.db bootstrap-admin admin_owner
-python -m healthqualify.appcli --db /tmp/hq-secure.db serve
-# Local authenticated API: http://127.0.0.1:8877
+python -m healthqualify.v05cli verify .healthqualify/demo-run --trusted-manifest-sha256 YOUR_SAVED_64_CHARACTER_DIGEST
 ```
 
-The new secure API is loopback-only, requires login and enforces admin/QA/validator/viewer roles. The former v0.3 development API is legacy code and **not** the default runtime. The Docker Compose configuration does not publish an HTTP port.
+Expect `{"verified": true}` if the artifacts and trusted digest match and deterministic replay confirms the results. Saving the digest beside a mutable report is not independent trust.
 
-FHIR staging checks support explicitly approved HTTPS read-only access. HL7/MLLP supports bounded offline transport framing, DICOM supports local synthetic metadata inspection, and equipment integration currently supports passive synthetic telemetry. Full clinical interoperability still requires site-specific integration and qualification.
+**Next:** [Getting started](docs/GETTING_STARTED.md) · [Installation](docs/INSTALLATION.md) · [End-to-end workflow](docs/END_TO_END_WORKFLOW.md)
 
-Encrypted technical evidence archives use AES-256-GCM and Ed25519 receipts with externally managed keys; these **are not validated electronic signatures**. The customer-release gate is intentionally blocked:
+## What is actually implemented?
 
-```bash
-python -m healthqualify.appcli readiness
+| Capability | Current developer-alpha state | Important boundary |
+| --- | --- | --- |
+| v0.5 synthetic protocol runner | Strict JSON 0.3 protocol, deterministic offline assertions, PASS/FAIL/ERROR/NOT_RUN | Embedded synthetic/public fixtures, not arbitrary application test discovery |
+| Evidence verification | Protocol, results, manifest, SHA-256, trusted digest and deterministic replay | Not immutable storage, trusted timestamps, or regulated approval |
+| Change impact | Repository-relative file-to-test mapping with conservative unknown-impact fallback | Advisory; requires human review and complete mappings |
+| v0.3 workspace | Local SQLite system registry, v0.2 protocol draft/baseline, runs, deviations, audit and report | Separate workflow from the standalone v0.5 runner |
+| Secure API alpha | Loopback-only authenticated HTTP API, role checks, session tokens | No production TLS, MFA/SSO, multi-tenancy or PHI handling |
+| Interoperability prototypes | Restricted read-only FHIR, synthetic MLLP inspection, offline DICOM metadata, passive equipment snapshot | Not a live full HL7/PACS/equipment qualification suite |
+| Backup and signed technical exports | SQLite integrity backup/restore, optional encrypted technical evidence exports | No production key management, retention policy, or qualified e-signatures |
+| AI assistance | Optional local draft suggestions | Never writes authoritative test verdicts or approvals |
+
+The product roadmap and nine development issues remain separate from completion claims. See [Release status](docs/RELEASE_STATUS.md), [Backlog](docs/V05_BACKLOG_CONVERGENCE.md), and [Open issues](https://github.com/Tec-Wel/HealthQualify/issues).
+
+## Documentation
+
+**Start here:** [Getting started](docs/GETTING_STARTED.md) · [Installation by OS](docs/INSTALLATION.md) · [User guide](docs/USER_GUIDE.md)
+
+**Learn by doing:** [End-to-end workflow](docs/END_TO_END_WORKFLOW.md) · [Examples](docs/EXAMPLES.md) · [Verification guide](docs/VERIFICATION_GUIDE.md)
+
+**Reference:** [CLI reference](docs/CLI_REFERENCE.md) · [Configuration](docs/CONFIGURATION.md) · [Integration guide](docs/INTEGRATION_GUIDE.md) · [Architecture](docs/ARCHITECTURE.md) · [Troubleshooting](docs/TROUBLESHOOTING.md)
+
+**Trust and project:** [Security & limitations](docs/SECURITY_AND_LIMITATIONS.md) · [Contributing](CONTRIBUTING.md) · [License](LICENSE)
+
+## Conceptual lifecycle
+
+```text
+Intended use / system registry
+            ↓
+Source-backed requirements and risks
+            ↓
+Draft protocol + explicit expected outcomes
+            ↓
+Human review of scope / authorized test environment
+            ↓
+Deterministic execution ──> PASS / FAIL / ERROR / NOT_RUN
+            ↓
+Manifest + technical evidence + integrity verification
+            ↓
+Deviation investigation / correction / distinct retest
+            ↓
+Human release disposition under the organization's QMS
+            ↓
+Software change → conservative impact assessment → requalification
 ```
 
-Release readiness requires operational security, privacy, clinical integration, assurance and independent regulatory review. No PHI should be supplied.
+The diagram is the **intended workflow**. Current components live in **two distinct tracks**: v0.5 standalone synthetic execution, and v0.3 SQLite workspace based on v0.2 protocols. Do not assume one command automatically moves records between them.
 
-## Local product alpha: v0.3
+## Local deployment, not public hosting
 
-The existing v0.1 and v0.2 synthetic engines remain available. The new workspace CLI connects the product modules behind a SQLite-backed local development workflow:
+The Compose file initializes a local SQLite developer workspace and **does not publish an HTTP port**. The secure API can be run separately on `127.0.0.1:8877` with explicit user bootstrap. See [Installation](docs/INSTALLATION.md) and [Integration](docs/INTEGRATION_GUIDE.md). Never expose alpha APIs on the internet.
 
-```bash
-python -m unittest discover -s tests -v
-python -m healthqualify.appcli --db healthqualify.db init
-python -m healthqualify.appcli --db healthqualify.db system-add "LIS Demo" "Synthetic lab interoperability" "Engineer"
-python -m healthqualify.appcli frameworks
-python -m healthqualify.appcli agents
-```
+## Contributing and support
 
-See **[v0.3 Product and Developer Guide](docs/PLATFORM_V03.md)** for the complete draft-protocol → baseline review → execution → deviations → evidence-report workflow, local dashboard and restricted REST API. The developer baseline is not a Part 11 electronic signature. Actual live HL7/FHIR integration testing and clinical use are **not** enabled.
-
-Supported v0.3 concepts:
-
-- **System Registry** — SQLite systems, intended use, owners
-- **Requirements / Risk Studio** — URS drafts and proportional assurance-plan suggestions
-- **Protocol Studio** — stored versioned v0.2 synthetic protocols, separate author/reviewer baseline events
-- **Qualification Runner** — deterministic IQ/OQ/PQ fixture assertions and findings
-- **Evidence Vault** — HTML/JSON report export, hashes, opt-in HMAC receipt
-- **DeviationFlow** — recorded findings, evidence-linked retest requirement for resolution
-- **Regulatory Studio / RegWatch** — source-linked catalog, explicit applicability decisions, operator-supplied text comparisons and snapshots
-- **Continuous Qualification** — conservative protocol-to-protocol impact review via `review-v2`
-- **ModelQual** — offline metrics on supplied prediction sets
-- **Optional AI** — opt-in local Ollama draft assistants; never authoritative
-- **Dashboard / API** — local-only HTML dashboard and bearer-token-gated write endpoints
-- **Container** — local Docker Compose profile, bound to localhost only
-
-### Local dashboard
-
-```bash
-export HEALTHQUALIFY_API_TOKEN="$(python -c 'import secrets;print(secrets.token_urlsafe(32))')"
-python -m healthqualify.appcli --db healthqualify.db serve
-# Visit http://127.0.0.1:8765
-```
-
-The portable image can be deployed on EC2/GCP/Azure/on-prem after appropriate security engineering; the provided Compose file is for local development only. No PHI, regulated production connection, protected audit trail or legal qualification approval is supported.
-
-## First usable developer experience
-
-Python 3.10+ and no external packages are required for the initial CLI:
-
-```bash
-python -m healthqualify.cli run examples/synthetic_lis/protocol.json --out .healthqualify/run
-python -m healthqualify.cli verify .healthqualify/run
-python -m unittest discover -s tests -v
-```
-
-The bundled synthetic LIS protocol contains deliberately failing checks, demonstrating that failures cannot be silently promoted to success. Exit codes: 0 = checks passed; 1 = failed/incomplete; 2 = malformed input or execution error.
-
-## New: v0.2 healthcare qualification (feature branch)
-
-Run the seven-case synthetic HL7/FHIR laboratory profile using the independent, no-AI engine:
-
-```bash
-python -m healthqualify.cli validate-v2 examples/synthetic_lis_v2/protocol.json
-python -m healthqualify.cli run-v2 examples/synthetic_lis_v2/protocol.json --out .healthqualify/v2-run
-python -m healthqualify.cli verify-v2 .healthqualify/v2-run
-```
-
-The demonstration intentionally reports **5 FAIL and 2 PASS**, so `run-v2` exits 1. It detects synthetic patient-ID mismatch, unit mismatch, missing critical notification, unauthorized cross-tenant access, and missing audit events. These assertions operate on **embedded synthetic fixtures**, not a live HL7 network or production healthcare environment.
-
-`run-v2` prints the SHA-256 of its manifest. Save this digest outside the exported bundle, then pass it to `verify-v2 --trusted-manifest-sha256 <digest>` to identify substituted manifests. This is an integrity demonstration, not a signed/immutable evidence system.
-
-Each v0.2 requirement declares a risk and acceptance basis. The CLI accepts draft protocols only: it cannot implement regulated approvals. A requirement without a linked executed test is reported as UNCOVERED / NOT_RUN rather than PASS.
-
-See [healthcare foundation instructions](docs/HEALTHCARE_V02.md).
-
-## Scope and boundaries
-
-- **Target:** healthcare software, LIS/LIMS/EHR integrations, hospital IT, controlled software interfaces and eventually healthcare AI and equipment-connected systems.
-- **Assurance methods:** IQ/OQ/PQ where justified; optional risk-based computer software assurance. Do not force IQ/OQ/PQ on every healthcare application.
-- **Healthcare adapters:** HL7, FHIR, DICOM, equipment gateways and live environment inspection are *planned*, not implemented by this starter.
-- **Evidence:** the starter records protocol bytes, test outcomes and hashes. Hashes detect changes relative to a trusted reference; they are not immutable storage, independent timestamps, Part 11 compliance, or valid electronic signatures.
-- **Security:** synthetic data only in the example. Do not run against production systems or ingest PHI.
-- **Regulatory:** site-specific applicability assessment and qualified human decisions are required. No automatic FDA/GMP certification.
-
-## Architecture and roadmap
-
-- [Product specification](docs/PRODUCT.md)
-- [Architecture and security boundaries](docs/ARCHITECTURE.md)
-- [Roadmap and benchmark](docs/ROADMAP.md)
-
-**Core technology:** Python, local filesystem/SQLite (planned), later FastAPI, React, PostgreSQL and Docker. The same containers should run on EC2, GCP Compute Engine, Azure VMs or on-premises. Local SLM/LLM and hosted AI integrations remain opt-in.
-
-## Engineering approach
-
-- Other established test frameworks (pytest, Playwright, Locust, Inferno, etc.) should be integrated rather than rewritten.
-
-Do not copy third-party code or regulated standards text without reviewing licenses and attribution.
-
-## Open source
-
-New HealthQualify code: Apache-2.0. See [LICENSE](LICENSE).
-Contributions and security reporting guidance will expand as the foundation matures.
+Read [CONTRIBUTING.md](CONTRIBUTING.md), run the unit suite, and file reproducible issues with **synthetic sanitized** examples. For security-sensitive findings, do not publish secrets or PHI in an issue. Apache-2.0 license: [LICENSE](LICENSE).

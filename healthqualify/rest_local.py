@@ -1,46 +1,49 @@
-"""Read-only local REST JSON test adapter for synthetic interoperability tests.
+"""Bounded, synthetic-only loopback HTTP JSON assertion for developer alpha.
 
-Never uses production URLs, writes requests, redirects, query parameters, or
-uncensored response values in a qualification result. Does not assert clinical
-FHIR conformance or regulatory validation.
+This module deliberately does not accept public hosts, redirects, writes, or
+production data; it is not a general REST integration test framework.
 """
 from __future__ import annotations
+
+import ipaddress
 import json
 from urllib.parse import urlsplit
-from urllib.request import Request, HTTPRedirectHandler, build_opener
-from .healthcare import value_at_path
+from urllib.request import Request, build_opener, HTTPHandler
+from urllib.error import URLError, HTTPError
 
-class RedirectDenied(HTTPRedirectHandler):
-    def redirect_request(self, *args, **kwargs):
-        raise ValueError("Redirects forbidden")
 
-def check_local_json(url: str, field_path: str, expected, *,
-                     authorized: bool = False, max_bytes: int = 262144,
-                     timeout: int = 4) -> dict:
+class _NoRedirect(HTTPHandler):
+    def http_error_302(self, req, fp, code, msg, headers):
+        raise ValueError("Redirects are not allowed")
+
+    http_error_301 = http_error_303 = http_error_307 = http_error_308 = http_error_302
+
+
+def check_local_json(url: str, field: str, expected, authorized: bool = False):
     if authorized is not True:
-        raise ValueError("Explicit test authorization required")
-    if not isinstance(url,str) or len(url)>300:
-        raise ValueError("Bounded synthetic URL required")
-    parsed=urlsplit(url)
-    if (parsed.scheme!="http" or parsed.hostname!="127.0.0.1" or
-        not parsed.port or parsed.port<1 or parsed.port>65535 or
-        parsed.username or parsed.password or parsed.query or parsed.fragment or
-        not parsed.path.startswith("/test/") or ".." in parsed.path):
-        raise ValueError("Only loopback synthetic /test/ endpoints permitted")
-    if type(timeout) is not int or not 1<=timeout<=8 or type(max_bytes) is not int or not 1<=max_bytes<=262144:
-        raise ValueError("Invalid network bounds")
-    req=Request(url,headers={"Accept":"application/json","User-Agent":"HealthQualify-LocalREST/0.6"},
-                method="GET")
-    with build_opener(RedirectDenied).open(req,timeout=timeout) as response:
-        if response.status!=200:
-            return {"status":"ERROR","reason":"NON_200","qualification_approved":False}
-        body=response.read(max_bytes+1)
-    if len(body)>max_bytes:
-        raise ValueError("Response exceeds safe size")
-    data=json.loads(body)
-    observed=value_at_path(data,field_path)
-    passed=type(observed) is type(expected) and observed==expected
-    return {"status":"PASS" if passed else "FAIL","check":"json_field_equals",
-            "field":field_path,"observations_redacted":True,
-            "qualification_approved":False,
-            "notice":"Synthetic read-only REST assertion; not clinical approval."}
+        raise ValueError("Synthetic-only read authorization required")
+    parts = urlsplit(url)
+    if parts.scheme != "http" or parts.hostname not in {"127.0.0.1", "::1"} or parts.username or parts.password or parts.query or parts.fragment:
+        raise ValueError("Only explicit loopback HTTP URLs without credentials or query parameters are supported")
+    if not isinstance(field, str) or not field or any(p in ("", "__proto__") for p in field.split(".")):
+        raise ValueError("A nonempty dot-delimited JSON field is required")
+    req = Request(url, method="GET", headers={"Accept": "application/json"})
+    try:
+        with build_opener(_NoRedirect()).open(req, timeout=3) as response:
+            if response.status != 200:
+                raise ValueError("Expected HTTP 200")
+            if "application/json" not in response.headers.get("Content-Type", ""):
+                raise ValueError("Expected JSON content type")
+            body = response.read(65537)
+            if len(body) > 65536:
+                raise ValueError("Response exceeds 64 KiB")
+    except (HTTPError, URLError, TimeoutError) as exc:
+        raise ValueError("Local synthetic REST check failed") from exc
+    obj = json.loads(body)
+    observed = obj
+    for key in field.split("."):
+        if not isinstance(observed, dict) or key not in observed:
+            return {"status": "FAIL", "field": field, "reason": "missing_field"}
+        observed = observed[key]
+    return {"status": "PASS" if observed == expected else "FAIL", "field": field,
+            "expected": expected, "observed": observed}
