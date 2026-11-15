@@ -99,6 +99,19 @@ The diagram is the **intended workflow**. Current components live in **two disti
 
 The Compose file initializes a local SQLite developer workspace and **does not publish an HTTP port**. The secure API can be run separately on `127.0.0.1:8877` with explicit user bootstrap. See [Installation](docs/INSTALLATION.md) and [Integration](docs/INTEGRATION_GUIDE.md). Never expose alpha APIs on the internet.
 
+
+## Advanced adoption documentation
+
+The [Documentation Hub](docs/DOCUMENTATION_INDEX.md) organizes the complete learning path.
+
+- **Build and extend:** [API reference](docs/API_REFERENCE.md), [Developer architecture](docs/DEVELOPER_ARCHITECTURE.md), [Custom adapter guide](docs/CUSTOM_ADAPTER_GUIDE.md), [Testing & CI](docs/TESTING_AND_CI.md).
+- **Healthcare qualification:** [Healthcare use cases](docs/HEALTHCARE_USE_CASES.md), [Qualification methodology](docs/QUALIFICATION_METHODOLOGY.md), [Regulatory mapping](docs/REGULATORY_MAPPING.md), [Ready-to-edit synthetic validation templates](docs/VALIDATION_TEMPLATES.md).
+- **Adoption:** [30–60-minute evaluation](docs/EVALUATION_GUIDE.md), [Migration assessment](docs/MIGRATION_GUIDE.md), [Feature matrix](docs/FEATURE_MATRIX.md), [FAQ](docs/FAQ.md).
+- **Operations and trust:** [Deployment constraints](docs/DEPLOYMENT_GUIDE.md), [Operations runbook](docs/OPERATIONS_RUNBOOK.md), [Security model](docs/SECURITY_MODEL.md), [Production readiness blockers](docs/PRODUCTION_READINESS_CHECKLIST.md).
+- **Community:** [Security reporting](SECURITY.md), [Support](SUPPORT.md), [Changelog](CHANGELOG.md), [Versioning policy](docs/VERSIONING_POLICY.md).
+
+The optional `mkdocs.yml` is a **local documentation configuration only**; no public site or deployment is enabled. The repository is currently private. HealthQualify remains a synthetic-data-only developer alpha.
+
 ## Contributing and support
 
 Read [CONTRIBUTING.md](CONTRIBUTING.md), run the unit suite, and file reproducible issues with **synthetic sanitized** examples. For security-sensitive findings, do not publish secrets or PHI in an issue. Apache-2.0 license: [LICENSE](LICENSE).

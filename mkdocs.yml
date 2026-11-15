@@ -1,0 +1,39 @@
+site_name: HealthQualify Documentation
+site_description: Developer-alpha healthcare software qualification tooling — synthetic data only
+repo_url: https://github.com/Tec-Wel/HealthQualify
+docs_dir: docs
+theme:
+  name: mkdocs
+nav:
+  - Home: DOCUMENTATION_INDEX.md
+  - Get started:
+      - Installation: INSTALLATION.md
+      - First run: GETTING_STARTED.md
+      - Evaluation: EVALUATION_GUIDE.md
+  - User workflows:
+      - User guide: USER_GUIDE.md
+      - End-to-end: END_TO_END_WORKFLOW.md
+      - Examples: EXAMPLES.md
+      - Verification: VERIFICATION_GUIDE.md
+      - Healthcare use cases: HEALTHCARE_USE_CASES.md
+      - Methodology: QUALIFICATION_METHODOLOGY.md
+      - Templates: VALIDATION_TEMPLATES.md
+  - Developers:
+      - CLI: CLI_REFERENCE.md
+      - API: API_REFERENCE.md
+      - Config: CONFIGURATION.md
+      - Architecture: DEVELOPER_ARCHITECTURE.md
+      - Extending: CUSTOM_ADAPTER_GUIDE.md
+      - Integrations: INTEGRATION_GUIDE.md
+      - Testing: TESTING_AND_CI.md
+  - Evaluate & operate:
+      - Capabilities: FEATURE_MATRIX.md
+      - Migration: MIGRATION_GUIDE.md
+      - Security: SECURITY_MODEL.md
+      - Production gates: PRODUCTION_READINESS_CHECKLIST.md
+      - Deployment: DEPLOYMENT_GUIDE.md
+      - Operations: OPERATIONS_RUNBOOK.md
+      - FAQ: FAQ.md
+      - Troubleshooting: TROUBLESHOOTING.md
+      - Versioning: VERSIONING_POLICY.md
+      - Regulatory mapping: REGULATORY_MAPPING.md
