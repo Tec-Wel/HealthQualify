@@ -1,8 +1,7 @@
-"""Build-only conversion of GitHub alert blockquotes to MkDocs admonitions.
+"""Build-time GitHub-Markdown compatibility for the static documentation site.
 
-GitHub Markdown retains its native [!IMPORTANT]/[!NOTE] presentation. The
-static MkDocs site receives actual Material admonition cards instead of
-displaying the GitHub alert marker as literal body text.
+Preserves GitHub alert syntax and repository-relative links in source. MkDocs
+receives proper Material admonitions and valid links for docs_dir.
 """
 from __future__ import annotations
 
@@ -16,6 +15,7 @@ ALERTS = {
     "CAUTION": "danger",
 }
 START = re.compile(r"^> \[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*$")
+BASE = "https://github.com/Tec-Wel/HealthQualify/blob/main/"
 
 
 def on_page_markdown(markdown, **_kwargs):
@@ -28,8 +28,8 @@ def on_page_markdown(markdown, **_kwargs):
             output.append(lines[i])
             i += 1
             continue
-        kind = ALERTS[match.group(1)]
         body = []
+        kind = ALERTS[match.group(1)]
         i += 1
         while i < len(lines) and lines[i].startswith(">"):
             item = lines[i][1:]
@@ -37,32 +37,20 @@ def on_page_markdown(markdown, **_kwargs):
             i += 1
         output.extend(["!!! " + kind, *["    " + line if line else "" for line in body], ""])
 
-    site_markdown = "\\n".join(output)
-    # Most guides were authored for GitHub, where repository-root links use
-    # ../README.md. MkDocs has its own docs/index.md root and cannot serve files
-    # from outside docs/. Rewrite only recognized local Markdown link targets.
+    site_markdown = "\n".join(output)
+    # README.md within docs/ referred to GitHub's separate documentation
+    # landing in older guides. The MkDocs home is docs/index.md.
     site_markdown = re.sub(
-        r"(?<=\\])\\((?:README\\.md)(#[^)]*)?\\)",
+        r"(?<=\])\(README\.md(#[^)]*)?\)",
         lambda m: "(index.md" + (m.group(1) or "") + ")",
         site_markdown,
     )
-    root_links = {
-        "README.md": "README.md",
-        "CONTRIBUTING.md": "CONTRIBUTING.md",
-        "SECURITY.md": "SECURITY.md",
-        "SUPPORT.md": "SUPPORT.md",
-        "CHANGELOG.md": "CHANGELOG.md",
-    }
-    for name, target in root_links.items():
-        site_markdown = site_markdown.replace(
-            "](../" + name + ")",
-            "](https://github.com/Tec-Wel/HealthQualify/blob/main/" + target + ")",
-        )
-    # Protocol templates live outside docs_dir and should link to the actual
-    # GitHub source rather than generating broken MkDocs document links.
+    for name in ("README.md", "CONTRIBUTING.md", "SECURITY.md", "SUPPORT.md", "CHANGELOG.md"):
+        site_markdown = site_markdown.replace("](../" + name + ")", "](" + BASE + name + ")")
+    # Files outside docs/ are available in the source repo, not in MkDocs.
     site_markdown = re.sub(
-        r"(?<=\\])\\(\\.\\./examples/templates/([^)]*)\\)",
-        lambda m: "](https://github.com/Tec-Wel/HealthQualify/blob/main/examples/templates/" + m.group(1) + ")",
+        r"(?<=\])\(\.\./examples/templates/([^)]*)\)",
+        lambda m: "(" + BASE + "examples/templates/" + m.group(1) + ")",
         site_markdown,
     )
     return site_markdown
