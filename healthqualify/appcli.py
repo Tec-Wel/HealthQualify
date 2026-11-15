@@ -13,6 +13,8 @@ from .studio import draft_urs, risk_plan
 from .ai import available_roles, local_draft
 from .modelqual import score_classifier
 from .api import serve
+from .evidence import seal_export, verify_seal
+from .regwatch import RegulationWatch
 
 def read_json(file: str):
     return json.loads(Path(file).read_text(encoding="utf-8"))
@@ -45,6 +47,9 @@ def main(argv=None):
     cmd("regulation-diff","before_file","after_file")
     cmd("modelqual","rows_file")
     cmd("agents")
+    cmd("regwatch-capture","framework","text_file")
+    cmd("seal","directory")
+    cmd("verify-seal","directory")
     agent=cmd("draft-agent","role","model","text_file")
     agent.add_argument("--allow-local-ai",action="store_true")
     server=cmd("serve")
@@ -53,6 +58,21 @@ def main(argv=None):
     args=parser.parse_args(argv)
     store=None
     try:
+        if args.command in {"seal","verify-seal"}:
+            secret=os.getenv("HEALTHQUALIFY_EVIDENCE_KEY","").encode("utf-8")
+            if args.command=="seal":
+                print(json.dumps(seal_export(Path(args.directory),secret),indent=2))
+                return 0
+            ok=verify_seal(Path(args.directory),secret)
+            print(json.dumps({"integrity_receipt_verified":ok}))
+            return 0 if ok else 1
+        if args.command=="regwatch-capture":
+            watch=RegulationWatch(args.db)
+            try:
+                print(json.dumps(watch.capture(args.framework,Path(args.text_file).read_text(encoding="utf-8")),indent=2))
+            finally:
+                watch.close()
+            return 0
         if args.command=="serve":
             serve(args.db,host=args.host,port=args.port,token=os.getenv("HEALTHQUALIFY_API_TOKEN"))
             return 0
