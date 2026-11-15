@@ -1,4 +1,15 @@
+![Project reference documentation](assets/category-reference.svg)
+
+[← **Documentation home**](README.md) &nbsp; / &nbsp; **Project reference**
+
 # HealthQualify v0.5 — Backlog Convergence
+
+> **What you'll learn:** Read technical v0.5 evidence, backup, impact and qualification convergence details.
+
+**On this page:** [Nine-issue implementation matrix](#nine-issue-implementation-matrix) · [Developer commands](#developer-commands) · [Branch cleanup policy](#branch-cleanup-policy) · [Safety limitations](#safety-limitations)
+
+---
+
 
 **Release classification:** technical developer alpha. Not suitable for PHI, hospital production, clinical decision support or regulated electronic-record approval. No IQ/OQ/PQ or CSA pathway is automatically certified.
 
@@ -61,3 +72,9 @@ If the workflow lacks permission, or if the branch has moved, it must fail or pr
 - External API and clinical test execution must be separately authorized, monitored and isolated.
 - CAPA closure is a software workflow record, not a legally sufficient regulated quality disposition.
 - The synthetic benchmark **does not demonstrate superior performance** to other tools.
+
+---
+
+### Continue exploring
+
+[release status](RELEASE_STATUS.md) · [roadmap](ROADMAP.md) · [All guides](README.md) · [Project homepage](../README.md)

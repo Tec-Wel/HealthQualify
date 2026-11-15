@@ -1,4 +1,15 @@
+![Project reference documentation](assets/category-reference.svg)
+
+[← **Documentation home**](README.md) &nbsp; / &nbsp; **Project reference**
+
 # HealthQualify — unified product specification (draft)
+
+> **What you'll learn:** Understand the product mission, planned modules, target users, and explicit non-goals.
+
+**On this page:** [Mission](#mission) · [Target users](#target-users) · [Functional modules](#functional-modules) · [Regulatory scope — context dependent](#regulatory-scope-context-dependent)
+
+---
+
 
 ## Mission
 A self-hosted, AI-optional healthcare qualification and computer software assurance platform with one chain of accountability: **regulatory source / intended use → risk → approved requirement → approved protocol → execution → evidence → deviation → human disposition → controlled release**.
@@ -57,3 +68,9 @@ Synthetic LIS integration. Seed cases include patient/sample mismatch, incorrect
 ## Competitive advantage to validate
 Against equivalent standalone scripts, requirements coverage tooling, and standard pytest + GitHub Actions workflows:
 measure setup time, seeded failure detection, false results, evidence verifiability, repeatability, maintenance burden, and correct requalification impact. No performance superiority claims until benchmarks are run.
+
+---
+
+### Continue exploring
+
+[release status](RELEASE_STATUS.md) · [roadmap](ROADMAP.md) · [All guides](README.md) · [Project homepage](../README.md)

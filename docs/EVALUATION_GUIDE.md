@@ -1,4 +1,15 @@
+![Start here documentation](assets/category-start.svg)
+
+[← **Documentation home**](README.md) &nbsp; / &nbsp; **Start here**
+
 # Evaluate HealthQualify in 30–60 minutes
+
+> **What you'll learn:** Complete a time-boxed synthetic evaluation with expected negative tests and an evidence review scorecard.
+
+**On this page:** [Prerequisites (5–10 minutes)](#prerequisites-510-minutes) · [Scenario A: seeded defect detection (10 minutes)](#scenario-a-seeded-defect-detection-10-minutes) · [Scenario B: verify provenance (5–10 minutes)](#scenario-b-verify-provenance-510-minutes) · [Scenario C: assess code changes (5 minutes)](#scenario-c-assess-code-changes-5-minutes)
+
+---
+
 
 **Audience:** prospective maintainers, developers, IT integration testers, validation engineers and QA reviewers. **Outcome:** reproducibly demonstrate developer-alpha strengths/limitations with fictional inputs—**not** a purchase recommendation or production approval.
 
@@ -63,3 +74,9 @@ Copy [synthetic protocol template](../examples/templates/strict-synthetic-protoc
 **Go for further engineering evaluation** if the demo is reproducible, scope boundaries fit your experiment and maintainers can address gaps. **No-go for regulated production** until independent product security, intended-use validation, operational controls, regulatory applicability, retention and QMS requirements have been met.
 
 Use [Feature matrix](FEATURE_MATRIX.md), [Production readiness checklist](PRODUCTION_READINESS_CHECKLIST.md), and [FAQ](FAQ.md).
+
+---
+
+### Continue exploring
+
+[getting started](GETTING_STARTED.md) · [end to end workflow](END_TO_END_WORKFLOW.md) · [All guides](README.md) · [Project homepage](../README.md)

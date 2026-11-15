@@ -1,4 +1,15 @@
+![Trust & operations documentation](assets/category-trust.svg)
+
+[← **Documentation home**](README.md) &nbsp; / &nbsp; **Trust & operations**
+
 # Production readiness and regulated-use gating checklist
+
+> **What you'll learn:** Identify security, operational, regulatory and QMS controls that remain unmet for production use.
+
+**On this page:** [Evaluation status](#evaluation-status) · [Evidence collection worksheet for each gate](#evidence-collection-worksheet-for-each-gate) · [Pilot decision framework](#pilot-decision-framework) · [Signoff boundaries](#signoff-boundaries)
+
+---
+
 
 **Default disposition: NO-GO for production, PHI, regulated electronic records, patient care or device control.** This template allows a prospective adopter to assess gaps; checking boxes does not automatically authorize use.
 
@@ -48,3 +59,9 @@ The text `REVIEWED OUTSIDE TOOL` is not an implementation of certification; auth
 Even if every future readiness row receives evidence, legal and operational sign-off must occur through the organization's own validated QMS and approval structure. HealthQualify's `qualification_approved` field remains false in its current synthetic protocols.
 
 See [Deployment](DEPLOYMENT_GUIDE.md), [Security model](SECURITY_MODEL.md), [Regulatory mapping](REGULATORY_MAPPING.md), [Feature matrix](FEATURE_MATRIX.md).
+
+---
+
+### Continue exploring
+
+[security model](SECURITY_MODEL.md) · [verification guide](VERIFICATION_GUIDE.md) · [All guides](README.md) · [Project homepage](../README.md)

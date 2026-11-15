@@ -16,16 +16,15 @@ GUIDES = [
     "docs/SECURITY_MODEL.md", "docs/PRODUCTION_READINESS_CHECKLIST.md",
     "docs/EVALUATION_GUIDE.md", "docs/MIGRATION_GUIDE.md",
     "docs/FAQ.md", "docs/FEATURE_MATRIX.md", "docs/DOCUMENTATION_INDEX.md",
-    "docs/AI_AGENTS_GUIDE.md", "docs/AI_AGENT_DASHBOARD.md",
     "docs/VERSIONING_POLICY.md", "README.md", "SECURITY.md",
     "SUPPORT.md", "CHANGELOG.md",
 ]
-PATTERN = re.compile(r"(?<!!)\[[^\]]+\]\(([^)]+)\)")
+PATTERN = re.compile(r"!?\[[^\]]+\]\(([^)]+)\)")
 
 
 class DocumentationContracts(unittest.TestCase):
     def test_local_links_exist(self):
-        for filename in GUIDES:
+        for filename in sorted(set(GUIDES + [str(p.relative_to(ROOT)) for p in (ROOT / "docs").glob("*.md")])):
             path = ROOT / filename
             self.assertTrue(path.is_file(), filename)
             for target in PATTERN.findall(path.read_text(encoding="utf-8")):

@@ -1,4 +1,15 @@
+![Project reference documentation](assets/category-reference.svg)
+
+[← **Documentation home**](README.md) &nbsp; / &nbsp; **Project reference**
+
 # HealthQualify v0.4 — Security and Healthcare Interoperability Alpha
+
+> **What you'll learn:** Inspect technical controls and the boundaries of the v0.4 healthcare interoperability prototypes.
+
+**On this page:** [Implemented controls](#implemented-controls) · [Setup: authenticated single-site API](#setup-authenticated-single-site-api) · [Technical evidence encryption and signatures](#technical-evidence-encryption-and-signatures) · [Healthcare integration use cases](#healthcare-integration-use-cases)
+
+---
+
 
 **Purpose:** Demonstrate security design controls and carefully scoped healthcare integration checks. Not production-ready, validated for regulated use, or suitable for PHI.
 
@@ -105,3 +116,9 @@ Use `healthqualify.hl7_mllp.pack_mllp`, `unpack_mllp`, and `analyze_message` for
 ## Stop/go gates for customer introduction
 
 A healthcare organization must independently complete a threat model, secure deployment architecture and penetration testing, supported source-system/clinical integration qualification, privacy and data protection assessment, operating SOPs, backup and disaster recovery tests, clinical/intended-use acceptance criteria, and the applicability/validation of any regulated record or electronic-signature requirements. No "FDA-certified," "GMP compliant," or clinically validated claims should be made from passing this repository's tests.
+
+---
+
+### Continue exploring
+
+[release status](RELEASE_STATUS.md) · [roadmap](ROADMAP.md) · [All guides](README.md) · [Project homepage](../README.md)

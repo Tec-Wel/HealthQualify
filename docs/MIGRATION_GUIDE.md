@@ -1,4 +1,15 @@
+![Start here documentation](assets/category-start.svg)
+
+[← **Documentation home**](README.md) &nbsp; / &nbsp; **Start here**
+
 # Migration planning from existing scripts and validation records
+
+> **What you'll learn:** Plan a safe manual mapping from existing test cases, requirements and records into supported synthetic fixtures.
+
+**On this page:** [Inventory before migrating](#inventory-before-migrating) · [Map legacy concepts carefully](#map-legacy-concepts-carefully) · [Pilot migration procedure](#pilot-migration-procedure) · [Migration acceptance gate](#migration-acceptance-gate)
+
+---
+
 
 HealthQualify **does not currently provide a general-purpose import/migration command** for Excel/Word requirements, vendor QMS, Jira, pytest or GitHub project data. This guide is an **assessment and manual mapping approach**, not a claim of automated migration.
 
@@ -35,3 +46,9 @@ List sources: requirements files, risk records, protocol versions, scripts, outc
 For each requirement: source verified, risk assigned, acceptance criterion testable, technical test linked, evidence verifiable, gaps accounted for, reviewing authority identified, source tool validated for intended use. Never call a reconstructed synthetic report equivalent to an original executed clinical acceptance test.
 
 For details see [User guide](USER_GUIDE.md), [Custom adapter guide](CUSTOM_ADAPTER_GUIDE.md), [Validation templates](VALIDATION_TEMPLATES.md).
+
+---
+
+### Continue exploring
+
+[getting started](GETTING_STARTED.md) · [end to end workflow](END_TO_END_WORKFLOW.md) · [All guides](README.md) · [Project homepage](../README.md)

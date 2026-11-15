@@ -1,4 +1,15 @@
+![Healthcare QA documentation](assets/category-health.svg)
+
+[← **Documentation home**](README.md) &nbsp; / &nbsp; **Healthcare QA**
+
 # Reusable synthetic qualification templates
+
+> **What you'll learn:** Reuse synthetic requirements, risk, traceability, test and deviation worksheets as engineering drafts.
+
+**On this page:** [Package contents](#package-contents) · [How to use the pack](#how-to-use-the-pack) · [Traceability example](#traceability-example) · [Template quality rules](#template-quality-rules)
+
+---
+
 
 **Status:** example *engineering worksheets*. None are approved URS/FRS, IQ/OQ/PQ documents, Part 11 records, regulatory compliance checklists, or evidence of completed validation. Use them to draft materials for **independent human QA review**.
 
@@ -40,3 +51,9 @@ Do not combine outcomes from different fixture systems into a single project evi
 Every template should be clear about **who owns the record**, **which revision it describes**, **which risk it addresses**, **what constitutes acceptance**, **where the evidence lives**, **how to verify it independently**, and **what cannot be decided by the software**.
 
 See [Qualification methodology](QUALIFICATION_METHODOLOGY.md) and [Verification](VERIFICATION_GUIDE.md).
+
+---
+
+### Continue exploring
+
+[healthcare use cases](HEALTHCARE_USE_CASES.md) · [qualification methodology](QUALIFICATION_METHODOLOGY.md) · [All guides](README.md) · [Project homepage](../README.md)

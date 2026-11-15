@@ -1,4 +1,15 @@
+![Project reference documentation](assets/category-reference.svg)
+
+[← **Documentation home**](README.md) &nbsp; / &nbsp; **Project reference**
+
 # Issue hardening: REST, traceability, and backup restore
+
+> **What you'll learn:** Explore technical REST isolation, evidence traceability and verified recovery boundaries.
+
+**On this page:** [Issue #2 — Local read-only REST checks](#issue-2-local-read-only-rest-checks) · [Issue #4 — Evidence links](#issue-4-evidence-links) · [Issue #8 — Safe SQLite recovery](#issue-8-safe-sqlite-recovery) · [Release constraints](#release-constraints)
+
+---
+
 
 This is a synthetic-data developer implementation, not a clinical or regulated-production release.
 
@@ -37,3 +48,9 @@ Restore demands a separately trusted checksum, validates the SQLite database, an
 ## Release constraints
 
 These improvements advance issues #2, #4 and #8 but do not satisfy their entire acceptance criteria. Independent privacy, security, hospital integration, protected evidence and regulated record validation remain required.
+
+---
+
+### Continue exploring
+
+[release status](RELEASE_STATUS.md) · [roadmap](ROADMAP.md) · [All guides](README.md) · [Project homepage](../README.md)

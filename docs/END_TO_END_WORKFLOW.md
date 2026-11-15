@@ -1,4 +1,14 @@
+![Start here documentation](assets/category-start.svg)
+
+[← **Documentation home**](README.md) &nbsp; / &nbsp; **Start here**
+
 # End-to-end workflow: from project definition to evidence review
+
+> **What you'll learn:** Follow the two separate qualification tracks from protocol creation to evidence and human review.
+
+**On this page:** [Workflow at a glance](#workflow-at-a-glance) · [Track A: execute and verify a v0.5 strict synthetic protocol](#track-a-execute-and-verify-a-v05-strict-synthetic-protocol) · [Track B: local SQLite system, protocol review, run and report](#track-b-local-sqlite-system-protocol-review-run-and-report) · [Human review checklist](#human-review-checklist)
+
+---
 
 This is a **hands-on two-track tutorial**. It separates (A) a working v0.5 offline evidence demonstration from (B) a v0.3 SQLite workspace that stores v0.2 protocol draft/baseline/review records. They are complementary **but not automatically integrated**.
 
@@ -99,3 +109,9 @@ Capture the `run_id` from the `run` output. The workspace records findings and p
 ## Outcome and next steps
 
 A successful technical demo yields an intelligible chain from synthetic inputs to reproducible results. It does **not** certify that a clinical system has been validated. For syntax, see [Configuration](CONFIGURATION.md); for underlying constraints, [Security & limitations](SECURITY_AND_LIMITATIONS.md).
+
+---
+
+### Continue exploring
+
+[getting started](GETTING_STARTED.md) · [examples](EXAMPLES.md) · [All guides](README.md) · [Project homepage](../README.md)

@@ -1,4 +1,15 @@
+![Trust & operations documentation](assets/category-trust.svg)
+
+[← **Documentation home**](README.md) &nbsp; / &nbsp; **Trust & operations**
+
 # Verification and evidence integrity guide
+
+> **What you'll learn:** Understand evidence integrity, independently trusted digests, replay and negative verification cases.
+
+**On this page:** [Three questions that must not be confused](#three-questions-that-must-not-be-confused) · [v0.5 synthetic evidence recipe](#v05-synthetic-evidence-recipe) · [Interpret the evidence bundle](#interpret-the-evidence-bundle) · [Deliberate negative verification](#deliberate-negative-verification)
+
+---
+
 
 ## Three questions that must not be confused
 
@@ -71,3 +82,9 @@ The v0.3 workspace supports `appcli report RUN_UUID DIRECTORY`. It also supports
 ## Minimum human evidence review record
 
 For each revision, capture: system ID, intended use, test fixture source, build SHA, environment identity, test author, independent reviewer as required, requirements and risks, protocol digest, outcomes, deviations and retests, external manifest digest, impact findings and final disposition **under a separately controlled QMS**.
+
+---
+
+### Continue exploring
+
+[security model](SECURITY_MODEL.md) · [production readiness checklist](PRODUCTION_READINESS_CHECKLIST.md) · [All guides](README.md) · [Project homepage](../README.md)

@@ -1,4 +1,15 @@
+![Start here documentation](assets/category-start.svg)
+
+[← **Documentation home**](README.md) &nbsp; / &nbsp; **Start here**
+
 # Troubleshooting and diagnostics
+
+> **What you'll learn:** Diagnose common environment, protocol, verification and access-control problems.
+
+**On this page:** [Frequent scenarios](#frequent-scenarios) · [Verify an expected synthetic failure versus a software problem](#verify-an-expected-synthetic-failure-versus-a-software-problem) · [Evidence integrity diagnostic order](#evidence-integrity-diagnostic-order) · [Asking for help](#asking-for-help)
+
+---
+
 
 Begin with these checks from the repository root:
 
@@ -46,3 +57,9 @@ A successful **unit test** run means code-level tests passed. A successful **dem
 Open an [issue](https://github.com/Tec-Wel/HealthQualify/issues) with: current Git commit, OS, Python version, exact command, sanitized protocol fragment, expected versus actual result, traceback with secrets removed, and whether you're running v0.5 standalone, v0.3 workspace, or a one-off adapter. **Never attach PHI, credentials, API tokens or production artifacts.**
 
 See [Security & limitations](SECURITY_AND_LIMITATIONS.md) and [Contributing](../CONTRIBUTING.md).
+
+---
+
+### Continue exploring
+
+[getting started](GETTING_STARTED.md) · [end to end workflow](END_TO_END_WORKFLOW.md) · [All guides](README.md) · [Project homepage](../README.md)

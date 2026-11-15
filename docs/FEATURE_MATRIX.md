@@ -1,4 +1,15 @@
+![Trust & operations documentation](assets/category-trust.svg)
+
+[← **Documentation home**](README.md) &nbsp; / &nbsp; **Trust & operations**
+
 # Feature and maturity matrix
+
+> **What you'll learn:** See which capabilities are implemented, experimental, planned, or unsupported in developer alpha.
+
+**On this page:** [Definition of “implemented”](#definition-of-implemented)
+
+---
+
 
 **Version basis:** inspect the checked-out commit and [Release status](RELEASE_STATUS.md) because these capabilities are actively evolving. Status here is developer-alpha behavior; no item is “production validated.”
 
@@ -33,3 +44,9 @@
 A feature has code and representative tests, subject to safety and capability limits. **Implemented alpha ≠ independently validated ≠ regulatory-ready ≠ enterprise-secure**.
 
 Before deciding whether to adopt a feature, inspect [Evaluation guide](EVALUATION_GUIDE.md), [Security model](SECURITY_MODEL.md), and [Production readiness checklist](PRODUCTION_READINESS_CHECKLIST.md).
+
+---
+
+### Continue exploring
+
+[security model](SECURITY_MODEL.md) · [verification guide](VERIFICATION_GUIDE.md) · [All guides](README.md) · [Project homepage](../README.md)

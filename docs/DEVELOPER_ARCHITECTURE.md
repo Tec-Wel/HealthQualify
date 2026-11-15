@@ -1,4 +1,14 @@
+![Build & extend documentation](assets/category-build.svg)
+
+[← **Documentation home**](README.md) &nbsp; / &nbsp; **Build & extend**
+
 # Developer architecture — components, execution and trust
+
+> **What you'll learn:** Understand module boundaries, the two protocol generations, and the technical evidence pipeline.
+
+**On this page:** [Purpose](#purpose) · [Context diagram](#context-diagram) · [Source map](#source-map) · [Critical distinction: two protocol generations](#critical-distinction-two-protocol-generations)
+
+---
 
 ## Purpose
 
@@ -78,3 +88,9 @@ Trust anchors must live **outside** a mutable evidence bundle. Replay assumes tr
 ## Extension strategy
 
 Implement a new allowlisted check with bounded inputs, synthetic fixtures, deterministic outcomes, adversarial tests and documented evidence schema. Do not load executable code directly from untrusted JSON. Start with [Custom adapter guide](CUSTOM_ADAPTER_GUIDE.md). For contribution requirements, see [Testing & CI](TESTING_AND_CI.md).
+
+---
+
+### Continue exploring
+
+[cli reference](CLI_REFERENCE.md) · [testing and ci](TESTING_AND_CI.md) · [All guides](README.md) · [Project homepage](../README.md)

@@ -1,4 +1,15 @@
+![Trust & operations documentation](assets/category-trust.svg)
+
+[← **Documentation home**](README.md) &nbsp; / &nbsp; **Trust & operations**
+
 # Operations runbook — local developer-alpha environment
+
+> **What you'll learn:** Follow safe local startup, health checks, backup, restore, and incident-handling steps.
+
+**On this page:** [1. Before opening the service](#1-before-opening-the-service) · [2. Initialize, bootstrap and start](#2-initialize-bootstrap-and-start) · [3. Daily developer checks](#3-daily-developer-checks) · [4. Backup and verify](#4-backup-and-verify)
+
+---
+
 
 **Purpose:** reproducible startup, health diagnosis, backup, recovery and incident triage for a non-production synthetic environment. **Not** an approved production SOP, service-level commitment or disaster recovery plan.
 
@@ -81,3 +92,9 @@ The `--legal-hold` flag and retention date are **metadata** in a local SQLite re
 Collect source commit, interpreter, test outcome, evidence location and trusted digest, unresolved deviations, backup/restore checks, reviewer acknowledgement and known limitations. Do not use a developer-alpha record as formal customer qualification approval.
 
 See [Security model](SECURITY_MODEL.md), [Troubleshooting](TROUBLESHOOTING.md), [Production readiness](PRODUCTION_READINESS_CHECKLIST.md).
+
+---
+
+### Continue exploring
+
+[security model](SECURITY_MODEL.md) · [verification guide](VERIFICATION_GUIDE.md) · [All guides](README.md) · [Project homepage](../README.md)

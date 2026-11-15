@@ -1,4 +1,15 @@
+![Project reference documentation](assets/category-reference.svg)
+
+[← **Documentation home**](README.md) &nbsp; / &nbsp; **Project reference**
+
 # Versioning, documentation and release policy
+
+> **What you'll learn:** Understand versioning, provenance, protocol compatibility and release expectations.
+
+**On this page:** [Current maturity](#current-maturity) · [Working rules](#working-rules) · [Suggested future release checklist (not an implemented automated gate)](#suggested-future-release-checklist-not-an-implemented-automated-gate)
+
+---
+
 
 ## Current maturity
 
@@ -24,3 +35,9 @@ HealthQualify uses **developer-alpha** version labels to organize feature develo
 7. Require external QMS sign-off where applicable; the alpha supplies none.
 
 See [Release status](RELEASE_STATUS.md), [Production readiness](PRODUCTION_READINESS_CHECKLIST.md), and [Testing & CI](TESTING_AND_CI.md).
+
+---
+
+### Continue exploring
+
+[release status](RELEASE_STATUS.md) · [roadmap](ROADMAP.md) · [All guides](README.md) · [Project homepage](../README.md)

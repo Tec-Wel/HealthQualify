@@ -1,4 +1,14 @@
+![Build & extend documentation](assets/category-build.svg)
+
+[← **Documentation home**](README.md) &nbsp; / &nbsp; **Build & extend**
+
 # Custom check and adapter developer guide
+
+> **What you'll learn:** Learn how to implement reviewed, deterministic synthetic checks without introducing arbitrary execution.
+
+**On this page:** [Choose an extension type](#choose-an-extension-type) · [A fully working example without changing the framework](#a-fully-working-example-without-changing-the-framework) · [Implement a new deterministic check: source-change recipe](#implement-a-new-deterministic-check-source-change-recipe) · [Optional one-off localhost REST assertion](#optional-one-off-localhost-rest-assertion)
+
+---
 
 **Audience:** developers extending HealthQualify for a synthetic engineering use case. **Important:** there is **no public plugin registry or dynamic adapter loading interface** today. Extending the strict runner requires a **reviewed source-code change**, associated tests, and changes to its allowlist. Do not claim arbitrary third-party adapters can be installed from a config file.
 
@@ -58,3 +68,9 @@ There is **no server bundled at that URL**. The implementation refuses public UR
 - No automated approval, risk downgrading or unreviewed qualified output.
 
 A proposed adapter can be discussed in a GitHub issue first. See [Architecture](DEVELOPER_ARCHITECTURE.md), [Testing](TESTING_AND_CI.md), and [Security model](SECURITY_MODEL.md).
+
+---
+
+### Continue exploring
+
+[developer architecture](DEVELOPER_ARCHITECTURE.md) · [cli reference](CLI_REFERENCE.md) · [All guides](README.md) · [Project homepage](../README.md)

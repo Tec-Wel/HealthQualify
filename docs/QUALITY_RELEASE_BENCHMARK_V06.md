@@ -1,4 +1,15 @@
+![Project reference documentation](assets/category-reference.svg)
+
+[← **Documentation home**](README.md) &nbsp; / &nbsp; **Project reference**
+
 # HealthQualify v0.6 — Quality review, release impact and benchmark operation
+
+> **What you'll learn:** Learn about QA review, release-impact advisories, technical retention and synthetic benchmarks.
+
+**On this page:** [Testing](#testing)
+
+---
+
 
 **Engineering alpha only.** Synthetic data; no patient data, no FDA certification, no GxP electronic-signature claim. All outcomes are technical observations, and release/qualification approval remains with an authorized human quality process.
 
@@ -78,3 +89,9 @@ python -m unittest discover -s tests -v
 ```
 
 The intentionally seeded LIS failures are expected: two passing cases and five failing cases. Production/live clinical and regulated electronic record workflows remain out of scope.
+
+---
+
+### Continue exploring
+
+[release status](RELEASE_STATUS.md) · [roadmap](ROADMAP.md) · [All guides](README.md) · [Project homepage](../README.md)

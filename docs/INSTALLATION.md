@@ -1,4 +1,15 @@
+![Start here documentation](assets/category-start.svg)
+
+[← **Documentation home**](README.md) &nbsp; / &nbsp; **Start here**
+
 # Installation and local setup
+
+> **What you'll learn:** Set up Python on Windows, macOS, or Linux, then initialize the separate SQLite workspace if needed.
+
+**On this page:** [Supported setup](#supported-setup) · [Windows 10/11: PowerShell](#windows-1011-powershell) · [macOS: Terminal (zsh) and Linux: shell](#macos-terminal-zsh-and-linux-shell) · [Check setup independently](#check-setup-independently)
+
+---
+
 
 ## Supported setup
 
@@ -108,3 +119,9 @@ The Compose service runs `appcli init` against a local named volume and **does n
 | Import error for optional security package | Dependencies not installed | Install `requirements-security.txt` in the active environment |
 
 More details: [Troubleshooting](TROUBLESHOOTING.md).
+
+---
+
+### Continue exploring
+
+[getting started](GETTING_STARTED.md) · [end to end workflow](END_TO_END_WORKFLOW.md) · [All guides](README.md) · [Project homepage](../README.md)

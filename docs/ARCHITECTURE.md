@@ -1,4 +1,14 @@
+![Project reference documentation](assets/category-reference.svg)
+
+[← **Documentation home**](README.md) &nbsp; / &nbsp; **Project reference**
+
 # HealthQualify architecture and trust boundaries
+
+> **What you'll learn:** Understand the original platform model, execution safety constraints, and trust boundaries.
+
+**On this page:** [Model](#model) · [Execution safety](#execution-safety) · [Trust model](#trust-model) · [Deployment evolution](#deployment-evolution)
+
+---
 
 ## Model
 - **Protocol:** versioned machine-readable requirements, test definitions, expected outcomes, environment and approval reference.
@@ -29,3 +39,9 @@ Separate control-plane state (approved protocols, policies, reviewers and metada
 
 ## Change impact
 Use graph edges from components -> tests -> requirements -> risks and source regulations to propose reruns. Where links are incomplete mark **UNKNOWN IMPACT**, not safe.
+
+---
+
+### Continue exploring
+
+[release status](RELEASE_STATUS.md) · [roadmap](ROADMAP.md) · [All guides](README.md) · [Project homepage](../README.md)
