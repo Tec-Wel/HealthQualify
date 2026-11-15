@@ -23,20 +23,30 @@ class SecureAPITests(unittest.TestCase):
     def setUp(self):
         self.tmp=tempfile.TemporaryDirectory()
         self.database=str(Path(self.tmp.name)/"store.db")
-        self.work=Workspace(self.database)
-        self.identities=IdentityStore(self.database)
-        self.identities.bootstrap("admin_root","admin-secret-long-passphrase")
-        self.http=HTTPServer(("127.0.0.1",0),make_handler(self.work,self.identities))
-        self.thread=threading.Thread(target=self.http.serve_forever,daemon=True)
+        initial=IdentityStore(self.database)
+        initial.bootstrap("admin_root","admin-secret-long-passphrase")
+        initial.close()
+        self.ready=threading.Event()
+        def server_thread():
+            self.work=Workspace(self.database)
+            self.identities=IdentityStore(self.database)
+            self.http=HTTPServer(("127.0.0.1",0),make_handler(self.work,self.identities))
+            self.base=f"http://127.0.0.1:{self.http.server_port}"
+            self.ready.set()
+            try:
+                self.http.serve_forever()
+            finally:
+                self.http.server_close()
+                self.identities.close()
+                self.work.close()
+        self.thread=threading.Thread(target=server_thread,daemon=True)
         self.thread.start()
-        self.base=f"http://127.0.0.1:{self.http.server_port}"
+        self.assertTrue(self.ready.wait(timeout=5))
 
     def tearDown(self):
         self.http.shutdown()
         self.thread.join(timeout=4)
-        self.http.server_close()
-        self.identities.close()
-        self.work.close()
+        self.assertFalse(self.thread.is_alive())
         self.tmp.cleanup()
 
     def request(self, path, data=None, token=None):
