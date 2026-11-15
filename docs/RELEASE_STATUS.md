@@ -1,16 +1,16 @@
-# HealthQualify — actual implementation status (v0.3 developer alpha)
+# HealthQualify — implementation status (v0.4 security/interoperability alpha)
 
-**Important:** This release is not a complete regulated-production platform. All features below are independently authored HealthQualify proof-of-concepts and developer tools. Do not use on PHI or for a regulated approval decision.
+**v0.4 additions:** PBKDF2 identity, role-gated short-lived sessions, authenticated local API, technical QA review attestations, AES-256-GCM encrypted exports, Ed25519 integrity signatures, opt-in approved-origin HTTPS FHIR checks, bounded MLLP framing, offline DICOM metadata and passive device snapshot inspections, minimized persisted observations, and fail-closed regulated release gates. See [Security & Interoperability v0.4](SECURITY_INTEROP_V04.md). **Important:** This release is not a complete regulated-production platform. All features below are independently authored HealthQualify proof-of-concepts and developer tools. Do not use on PHI or for a regulated approval decision.
 
 | Requested module | Built now | Still required for production |
 |---|---|---|
 | Regulatory Studio | Source-linked framework catalog, explicit applicability, offline text diffs, operator-supplied snapshots, optional eCFR section fetch | Official change ingestion scheduler, legal review workflows, regulatory source verification and licensed content handling |
 | Requirements Studio | Draft URS and risk/assurance planning functions | Document import, review UX, true human-controlled approval and requirement revision history |
 | Protocol Studio | Versioned draft v0.2 JSON protocols in SQLite, baseline event and author/reviewer separation | Signed approval, stronger schema, versioned executable test definitions, independent trusted record store |
-| Healthcare Integration | Synthetic HL7/FHIR field assertions, restricted loopback-only read-only FHIR HTTP test | Real HL7/MLLP, authenticated FHIR, DICOM and vendor equipment interfaces with environment authorization and PHI governance |
+| Healthcare Integration | Opt-in staging HTTPS FHIR GET, MLLP framing, offline synthetic DICOM metadata, passive equipment snapshot | Production HL7/MLLP transport, full FHIR/DICOM interoperability, live equipment integrations, data governance, clinical qualification |
 | DeviationFlow | Persistent findings from runs, retest-linked resolution requirement, audit event | Investigator/owner assignment, CAPA workflows, multifactor identity, supervisory review |
-| Evidence Vault | JSON/HTML export, SHA-256 manifests and optional HMAC receipt | Independently timestamped signatures, protected storage, backup/restore, configurable retention, e-signature assessment |
-| Dashboard/API | Local server-side HTML and limited bearer-protected write API | React UX, FastAPI application, RBAC, multi-tenant isolation, TLS, threat-model testing |
+| Evidence Vault | JSON/HTML export; SHA-256/HMAC plus optional AES-GCM encrypted Ed25519-signed technical archives; QA reauthentication receipt | Independent trusted time, HSM/KMS, protected operational storage, backup/restore, retention and validated regulated e-signatures |
+| Dashboard/API | Authenticated local HTTP API with admin/QA/validator/viewer permissions; former dashboard is legacy and no longer default | React UX, FastAPI, multi-tenant isolation, MFA/SSO, rate limits, TLS, threat-model testing |
 | Cloud Deployment | One Dockerfile and local-only Compose demonstration | Secure production deploy manifests, PostgreSQL/object storage, tested AWS/GCP/Azure/on-prem templates |
 | AI Assistance | Explicitly enabled local Ollama draft agents; offline model scoring | External provider governance, prompt injection defenses, document workflows, benchmarked model evaluations |
 | Continuous Qualification | Conservative protocol-version diff and recommended test IDs | GitHub webhook integration, code component graph, documented release approvals and selective automatic reruns |
