@@ -1,53 +1,64 @@
-<div align="center">
+![HealthQualify · Evidence-first qualification](assets/documentation-hero.svg)
 
-![HealthQualify documentation center](assets/documentation-hero.svg)
+# Qualify with evidence. Not assumptions.
 
-# Qualify with evidence, not assumptions.
+**A clear, local-first workspace for healthcare software qualification.** Connect requirements to synthetic test results, inspect source-linked findings, and see what needs review before the next software change.
 
-**Local-first engineering tools for software qualification, traceable synthetic tests, and review-ready findings.**
+**[🚀 Start with a five-minute demo](GETTING_STARTED.md)** · **[🤖 Explore the five AI agents](AI_AGENTS_GUIDE.md)** · **[🖥️ Open the local dashboard guide](AI_AGENT_DASHBOARD.md)**
 
-[**🚀 First run**](GETTING_STARTED.md) · [**🤖 Explore AI agents**](AI_AGENTS_GUIDE.md) · [**🖥️ Local dashboard**](AI_AGENT_DASHBOARD.md) · [**📚 All documentation**](DOCUMENTATION_INDEX.md)
-
-</div>
-
-> [!IMPORTANT]
-> **Developer alpha:** This software is not a validated GxP system or FDA-approved qualification authority. Use only synthetic or public non-sensitive data. AI suggestions do not change authoritative test outcomes or issue regulatory approvals.
-
-## Choose a starting point
-
-| **🌱 New to HealthQualify** | **🤖 Exploring AI agents** | **🔐 Evaluating for healthcare QA** |
-| :--- | :--- | :--- |
-| Install the toolkit, run a synthetic protocol, and understand why some tests intentionally fail. | Meet the five local investigators, compare their responsibilities, and optionally enable Qwen. | Understand intended use, evidence verification, safety boundaries, and production-readiness gaps. |
-| **[Start the 5-minute walkthrough →](GETTING_STARTED.md)** | **[Explore the five-agent guide →](AI_AGENTS_GUIDE.md)** | **[Review the product limits →](PRODUCTION_READINESS_CHECKLIST.md)** |
-
-## How HealthQualify works
-
-```mermaid
-flowchart LR
-    A["Requirements"] --> B["Synthetic qualification tests"]
-    B --> C["Deterministic results"]
-    C --> D["Evidence verification"]
-    D --> E["Human review"]
-    C -. "optional advisory" .-> F["Local AI investigators"]
-    F -. "draft findings" .-> E
-```
-
-| **Documentation path** | **What you'll learn** |
-| :--- | :--- |
-| [Getting started](GETTING_STARTED.md) | First successful synthetic qualification run |
-| [User guide](USER_GUIDE.md) | Review test outcomes and source records |
-| [AI agents](AI_AGENTS_GUIDE.md) | Investigate change impact, qualification gaps, failures, readiness, and dependencies |
-| [AI dashboard](AI_AGENT_DASHBOARD.md) | Run five agents and inspect local history |
-| [Evidence verification](VERIFICATION_GUIDE.md) | Understand hashes and independent trust anchors |
-| [Security model](SECURITY_MODEL.md) | Local access, data boundaries, and current limitations |
-| [Complete documentation index](DOCUMENTATION_INDEX.md) | Browse every guide |
+!!! warning "Developer alpha · Synthetic inputs only"
+    HealthQualify is an engineering toolkit—not FDA certification, a validated GxP system, or a clinical tool. Never use PHI or live healthcare production systems in this alpha. Agent recommendations cannot approve qualification or override test evidence.
 
 ---
 
-<div align="center">
+## Choose your starting point
 
-**Open source · Local first · AI optional · Synthetic-only developer alpha**
+| **01 · Get started** | **02 · Explore AI intelligence** | **03 · Evaluate qualification** |
+| :--- | :--- | :--- |
+| **Your first successful technical test** | **Five source-linked local investigators** | **Understand the evidence trail** |
+| Install the project, run the synthetic laboratory example, and understand the deliberately failing checks. | Investigate release impact, gaps, test failures, review readiness, and dependencies—with optional local Qwen. | Review deterministic outcomes, verified evidence, change impact, and current regulatory limitations. |
+| **[Start the quickstart →](GETTING_STARTED.md)** | **[Meet the five agents →](AI_AGENTS_GUIDE.md)** | **[Explore the evaluation →](EVALUATION_GUIDE.md)** |
 
-[Repository](https://github.com/Tec-Wel/HealthQualify) · [Installation](INSTALLATION.md) · [Contributing](https://github.com/Tec-Wel/HealthQualify/blob/main/CONTRIBUTING.md)
+## What HealthQualify helps you do
 
-</div>
+| **Define & connect** | **Execute & verify** | **Investigate & review** |
+| :--- | :--- | :--- |
+| Intended use, source-backed requirements, acceptance criteria, risk tags, and mapped tests. | Deterministic synthetic checks, traceable results, reproducible evidence verification. | Change impact, qualification gaps, nonpassing tests, cross-system dependencies, and human quality review. |
+| [Requirements and protocols →](CONFIGURATION.md) | [Evidence verification →](VERIFICATION_GUIDE.md) | [Five AI agents →](AI_AGENTS_GUIDE.md) |
+
+## From a requirement to a reviewable result
+
+```mermaid
+flowchart LR
+  A["1. Requirements"] --> B["2. Synthetic tests"]
+  B --> C["3. Deterministic execution"]
+  C --> D["4. Evidence verification"]
+  D --> E["5. Human review"]
+  C -. "advisory data" .-> F["Five local agents"]
+  F -. "draft findings" .-> E
+  classDef core fill:#e7f7f4,stroke:#138b7f,color:#123f3a
+  class C,D,F core
+```
+
+The agents investigate. The deterministic engine records test outcomes. Authorized people make final qualification decisions.
+
+## Try it locally
+
+Run from the HealthQualify repository root. Python 3.10+ is required.
+
+```bash
+git clone https://github.com/Tec-Wel/HealthQualify.git
+cd HealthQualify
+python -m unittest tests.test_agents tests.test_agent_orchestrator -v
+
+# Run a local, no-LLM qualification-gap investigation
+python -m healthqualify.agentcli gap-hunter examples/synthetic_lis_v3/protocol.json
+```
+
+**Want the browser experience?** [Set up the local dashboard →](AI_AGENT_DASHBOARD.md). Prefer the full documentation library? [Browse every guide →](DOCUMENTATION_INDEX.md).
+
+---
+
+**Local first · AI optional · Synthetic only · Human-reviewed decisions**
+
+[GitHub repository](https://github.com/Tec-Wel/HealthQualify) · [Installation](INSTALLATION.md) · [Security model](SECURITY_MODEL.md) · [Contributing](https://github.com/Tec-Wel/HealthQualify/blob/main/CONTRIBUTING.md)
