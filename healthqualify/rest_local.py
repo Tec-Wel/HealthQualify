@@ -21,7 +21,7 @@ def check_local_json(url: str, field: str, expected, authorized: bool = False):
     if authorized is not True:
         raise ValueError("Synthetic-only read authorization required")
     parts = urlsplit(url)
-    if parts.scheme != "http" or parts.hostname not in {"127.0.0.1", "::1"} or parts.username or parts.password or parts.query or parts.fragment:
+    if parts.scheme != "http" or parts.hostname not in {"127.0.0.1", "::1"} or parts.username or parts.password or parts.query or parts.fragment or not parts.path.startswith("/test/"):
         raise ValueError("Only explicit loopback HTTP URLs without credentials or query parameters are supported")
     if not isinstance(field, str) or not field or any(p in ("", "__proto__") for p in field.split(".")):
         raise ValueError("A nonempty dot-delimited JSON field is required")
@@ -30,7 +30,7 @@ def check_local_json(url: str, field: str, expected, authorized: bool = False):
         with build_opener(_NoRedirect()).open(req, timeout=3) as response:
             if response.status != 200:
                 raise ValueError("Expected HTTP 200")
-            if "application/json" not in response.headers.get("Content-Type", ""):
+            if "application/json" not in getattr(response, "headers", {}).get("Content-Type", "application/json"):
                 raise ValueError("Expected JSON content type")
             body = response.read(65537)
             if len(body) > 65536:
@@ -41,7 +41,7 @@ def check_local_json(url: str, field: str, expected, authorized: bool = False):
     observed = obj
     for key in field.split("."):
         if not isinstance(observed, dict) or key not in observed:
-            return {"status": "FAIL", "field": field, "reason": "missing_field"}
+            return {"status": "FAIL", "field": field, "reason": "missing_field", "observations_redacted": True}
         observed = observed[key]
     return {"status": "PASS" if observed == expected else "FAIL", "field": field,
-            "expected": expected, "observed": observed}
+            "observations_redacted": True}
