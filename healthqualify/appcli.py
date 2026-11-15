@@ -12,7 +12,8 @@ from .regulatory import list_controls, applicability, compare_text
 from .studio import draft_urs, risk_plan
 from .ai import available_roles, local_draft
 from .modelqual import score_classifier
-from .api import serve
+from .secure_api import serve_secure
+from .security import IdentityStore
 from .interop import check_local_fhir
 from .evidence import seal_export, verify_seal
 from .regwatch import RegulationWatch
@@ -31,6 +32,8 @@ def main(argv=None):
             p.add_argument(flag)
         return p
     cmd("init")
+    cmd("bootstrap-admin","username")
+    cmd("create-user","admin_token","username","role")
     cmd("system-add","name","intended_use","owner")
     cmd("systems")
     cmd("protocol-add","system_id","path","actor")
@@ -56,7 +59,7 @@ def main(argv=None):
     agent=cmd("draft-agent","role","model","text_file")
     agent.add_argument("--allow-local-ai",action="store_true")
     server=cmd("serve")
-    server.add_argument("--port",type=int,default=8765)
+    server.add_argument("--port",type=int,default=8877)
     server.add_argument("--host",default="127.0.0.1")
     args=parser.parse_args(argv)
     store=None
@@ -81,8 +84,29 @@ def main(argv=None):
             finally:
                 watch.close()
             return 0
+        if args.command=="bootstrap-admin":
+            import getpass
+            password=getpass.getpass("Initial admin password (12+ characters): ")
+            identity=IdentityStore(args.db)
+            try:
+                data=identity.bootstrap(args.username,password)
+                print(json.dumps(data,indent=2))
+            finally:
+                identity.close()
+            return 0
+        if args.command=="create-user":
+            import getpass
+            password=getpass.getpass("New user password (12+ characters): ")
+            identity=IdentityStore(args.db)
+            try:
+                actor=identity.authenticate(args.admin_token)
+                data=identity.create_user(actor,args.username,password,args.role)
+                print(json.dumps(data,indent=2))
+            finally:
+                identity.close()
+            return 0
         if args.command=="serve":
-            serve(args.db,host=args.host,port=args.port,token=os.getenv("HEALTHQUALIFY_API_TOKEN"))
+            serve_secure(args.db,host=args.host,port=args.port)
             return 0
         if args.command=="frameworks":data=list_controls()
         elif args.command=="applicability":data=applicability(read_json(args.system_file),read_json(args.decisions_file))
