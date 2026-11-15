@@ -1,0 +1,74 @@
+/* HealthQualify documentation: independent static styling; no external services. */
+:root {
+  --md-primary-fg-color: #102b45;
+  --md-primary-fg-color--light: #23536b;
+  --md-primary-fg-color--dark: #091c30;
+  --md-accent-fg-color: #0c8579;
+  --hq-outline: rgba(25, 75, 93, .14);
+}
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color: #0b263a;
+  --md-accent-fg-color: #66dec2;
+  --hq-outline: rgba(170, 209, 219, .2);
+}
+.md-header {
+  box-shadow: 0 1px 10px rgba(11, 31, 48, .11);
+}
+.md-header__title, .md-nav__title {
+  font-weight: 750;
+}
+.md-content__inner {
+  margin-top: 1.2rem;
+}
+.md-typeset h1 {
+  font-weight: 780;
+  letter-spacing: -.035em;
+  line-height: 1.17;
+}
+.md-typeset h2 {
+  margin-top: 2.1rem;
+  padding-top: .35rem;
+  border-top: 1px solid var(--hq-outline);
+  letter-spacing: -.02em;
+}
+.md-typeset h3 { font-weight: 720; }
+.md-typeset a { text-underline-offset: .16em; }
+.md-typeset a:hover { text-decoration-thickness: .11em; }
+.md-typeset img[alt*="HealthQualify"], .md-typeset img[alt*="AI agent"], .md-typeset img[alt*="dashboard"] {
+  border-radius: .8rem;
+  box-shadow: 0 10px 35px rgba(7, 27, 45, .11);
+}
+.md-typeset table:not([class]) {
+  display: table;
+  border: 1px solid var(--hq-outline);
+  border-radius: .45rem;
+  overflow: hidden;
+  max-width: 100%;
+}
+.md-typeset table:not([class]) th {
+  background: rgba(17, 126, 118, .09);
+  font-weight: 760;
+}
+.md-typeset table:not([class]) td { vertical-align: top; }
+.md-typeset blockquote {
+  border-left-color: #18a493;
+  background: rgba(22, 152, 137, .055);
+  padding: .7rem 1rem;
+  border-radius: 0 .4rem .4rem 0;
+}
+.md-typeset details {
+  border-color: var(--hq-outline);
+  border-radius: .65rem;
+}
+.md-typeset details[open] {
+  box-shadow: 0 6px 18px rgba(10, 31, 44, .05);
+}
+.md-typeset .highlight {
+  border-radius: .65rem;
+  overflow: hidden;
+}
+.md-typeset code { border-radius: .22rem; }
+.md-footer { background: #0b2033; }
+@media screen and (max-width: 44.9375em) {
+  .md-typeset table:not([class]) { display: block; overflow-x: auto; }
+}
