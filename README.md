@@ -63,9 +63,9 @@ These are **developer-alpha controls only**, not legally valid electronic signat
 
 ## 📚 Documentation
 
-> **New to HealthQualify?** Follow the guided path below. Already building? Jump straight to the developer resources. All examples use **synthetic data**; this project is a developer alpha, not a validated clinical or regulated system.
+![HealthQualify documentation navigation: Discover, Run and Verify, Build and Extend](docs/assets/documentation-hub.svg)
 
-<div align="center">
+> **New to HealthQualify?** Follow the guided path below. Already building? Jump straight to the developer resources. All examples use **synthetic data**; this project is a developer alpha, not a validated clinical or regulated system.
 
 ### Find your starting point
 
@@ -74,8 +74,6 @@ These are **developer-alpha controls only**, not legally valid electronic signat
 | Understand what HealthQualify does and install it on your machine. | Run the synthetic LIS example and inspect the evidence yourself. | Integrate an adapter, extend the engine, or contribute code. |
 | **[🚀 Start the guided tour](docs/GETTING_STARTED.md)** | **[▶️ Run the full workflow](docs/END_TO_END_WORKFLOW.md)** | **[⌘ Explore developer docs](docs/DEVELOPER_ARCHITECTURE.md)** |
 | [Installation](docs/INSTALLATION.md) · [User guide](docs/USER_GUIDE.md) | [Examples](docs/EXAMPLES.md) · [Verify results](docs/VERIFICATION_GUIDE.md) | [API reference](docs/API_REFERENCE.md) · [Contribute](CONTRIBUTING.md) |
-
-</div>
 
 ### 🧭 Your first successful qualification
 
@@ -107,13 +105,9 @@ These are **developer-alpha controls only**, not legally valid electronic signat
 
 </details>
 
-<div align="center">
-
 **Still exploring?** **[Browse the complete documentation index →](docs/DOCUMENTATION_INDEX.md)**
 
-<sub>Self-hostable • AI optional • Synthetic-data developer alpha • No PHI or production clinical integrations</sub>
-
-</div>
+*Self-hostable · AI optional · Synthetic-data developer alpha · No PHI or production clinical integrations*
 
 ## Conceptual lifecycle
 
