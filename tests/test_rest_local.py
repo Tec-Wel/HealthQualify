@@ -9,9 +9,9 @@ from healthqualify.rest_local import check_local_json
 
 class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
-        if self.path == "/redirect":
+        if self.path == "/test/redirect":
             self.send_response(302)
-            self.send_header("Location", "/data")
+            self.send_header("Location", "/test/data")
             self.end_headers()
             return
         data = json.dumps({"status": "ready", "nested": {"count": 2}}).encode()
@@ -40,10 +40,10 @@ class LocalRestTests(unittest.TestCase):
         cls.worker.join(timeout=2)
 
     def test_expected_values(self):
-        self.assertEqual(check_local_json(self.base + "/data", "status", "ready", True)["status"], "PASS")
-        self.assertEqual(check_local_json(self.base + "/data", "status", "bad", True)["status"], "FAIL")
-        self.assertEqual(check_local_json(self.base + "/data", "nested.count", 2, True)["status"], "PASS")
-        self.assertEqual(check_local_json(self.base + "/data", "missing", 1, True)["status"], "FAIL")
+        self.assertEqual(check_local_json(self.base + "/test/data", "status", "ready", True)["status"], "PASS")
+        self.assertEqual(check_local_json(self.base + "/test/data", "status", "bad", True)["status"], "FAIL")
+        self.assertEqual(check_local_json(self.base + "/test/data", "nested.count", 2, True)["status"], "PASS")
+        self.assertEqual(check_local_json(self.base + "/test/data", "missing", 1, True)["status"], "FAIL")
 
     def test_fail_closed(self):
         for url in ("https://example.com/", "http://localhost:80/", "http://127.0.0.1:8000/?token=x",
@@ -51,6 +51,6 @@ class LocalRestTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 check_local_json(url, "status", "ready", True)
         with self.assertRaises(ValueError):
-            check_local_json(self.base + "/data", "status", "ready")
+            check_local_json(self.base + "/test/data", "status", "ready")
         with self.assertRaises(ValueError):
-            check_local_json(self.base + "/redirect", "status", "ready", True)
+            check_local_json(self.base + "/test/redirect", "status", "ready", True)
