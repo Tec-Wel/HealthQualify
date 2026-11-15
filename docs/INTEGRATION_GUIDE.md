@@ -1,4 +1,15 @@
+![Build & extend documentation](assets/category-build.svg)
+
+[← **Documentation home**](README.md) &nbsp; / &nbsp; **Build & extend**
+
 # Integration guide: supported boundaries and safe test connections
+
+> **What you'll learn:** Use bounded localhost REST, read-only FHIR staging, and offline interoperability prototypes safely.
+
+**On this page:** [1. Authenticated loopback workspace API](#1-authenticated-loopback-workspace-api) · [2. Standalone local JSON REST assertion](#2-standalone-local-json-rest-assertion) · [3. Read-only HTTPS FHIR staging assertion](#3-read-only-https-fhir-staging-assertion) · [4. HL7 v2, DICOM and equipment](#4-hl7-v2-dicom-and-equipment)
+
+---
+
 
 HealthQualify is designed to be cloud-neutral, but the current repository is **not** a production healthcare integration gateway. Integration demos require **synthetic data, authorized staging endpoints, and explicit opt-in flags**.
 
@@ -67,3 +78,9 @@ For your own CI, keep the seeded LIS demo's **expected exit 1** separate from ac
 ## 6. Docker
 
 `docker compose build` and `docker compose run --rm healthqualify` initialize a local developer SQLite volume. Compose deliberately **does not publish port 8877** or create a deployed service. Production deployment, secret storage, monitoring, backups, TLS and regulatory assessment are outside current scope.
+
+---
+
+### Continue exploring
+
+[developer architecture](DEVELOPER_ARCHITECTURE.md) · [cli reference](CLI_REFERENCE.md) · [All guides](README.md) · [Project homepage](../README.md)

@@ -1,4 +1,15 @@
+![Start here documentation](assets/category-start.svg)
+
+[← **Documentation home**](README.md) &nbsp; / &nbsp; **Start here**
+
 # Getting started: your first HealthQualify run
+
+> **What you'll learn:** Clone the repository, execute your first synthetic LIS run, and verify its evidence bundle.
+
+**On this page:** [1. Understand what the demo proves](#1-understand-what-the-demo-proves) · [2. Prepare the machine](#2-prepare-the-machine) · [3. Run the seven-case protocol](#3-run-the-seven-case-protocol) · [4. Inspect evidence, then verify it](#4-inspect-evidence-then-verify-it)
+
+---
+
 
 **Audience:** first-time developers, healthcare IT testers and validation engineers. **Outcome:** a reproducible offline synthetic run with verifiable technical evidence. **Data:** synthetic only.
 
@@ -87,3 +98,9 @@ Expected: `UNKNOWN_IMPACT`; all existing tests are recommended and `human_review
 4. See [Integration](INTEGRATION_GUIDE.md) for explicitly approved non-production interfaces.
 
 **Stop before real clinical data:** the developer alpha is not approved for PHI, clinical workflow or regulated release. See [Security & limitations](SECURITY_AND_LIMITATIONS.md).
+
+---
+
+### Continue exploring
+
+[end to end workflow](END_TO_END_WORKFLOW.md) · [examples](EXAMPLES.md) · [All guides](README.md) · [Project homepage](../README.md)

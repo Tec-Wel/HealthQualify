@@ -1,4 +1,15 @@
+![Start here documentation](assets/category-start.svg)
+
+[← **Documentation home**](README.md) &nbsp; / &nbsp; **Start here**
+
 # Examples: learn from reproducible synthetic projects
+
+> **What you'll learn:** Try representative LIS, local REST, read-only FHIR, and change-impact examples using fictional data.
+
+**On this page:** [A. Laboratory Information System (LIS) — complete fixture](#a-laboratory-information-system-lis-complete-fixture) · [B. Restricted local JSON REST assertion](#b-restricted-local-json-rest-assertion) · [C. FHIR Observation staged read](#c-fhir-observation-staged-read) · [D. Simulate impact of a code change](#d-simulate-impact-of-a-code-change)
+
+---
+
 
 All examples are **educational**, use synthetic/public values, and should not be promoted to production qualification claims.
 
@@ -62,3 +73,9 @@ See [End-to-end workflow](END_TO_END_WORKFLOW.md) **Track B**. It uses v0.2 JSON
 ## F. Optional capabilities you should not misinterpret
 
 The repository includes **offline** HL7 MLLP frame inspection, synthetic DICOM metadata inspection (optional pydicom dependency), passive equipment snapshots and internal ModelQual benchmarking. These are limited prototype checks, **not** bedside device control, DICOMweb, live HL7 listener/ACK validation or competitor performance claims. Consult [Security & interoperability](SECURITY_INTEROP_V04.md).
+
+---
+
+### Continue exploring
+
+[getting started](GETTING_STARTED.md) · [end to end workflow](END_TO_END_WORKFLOW.md) · [All guides](README.md) · [Project homepage](../README.md)

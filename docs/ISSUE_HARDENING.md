@@ -1,4 +1,15 @@
+![Project reference documentation](assets/category-reference.svg)
+
+[← **Documentation home**](README.md) &nbsp; / &nbsp; **Project reference**
+
 # Qualification issue hardening: replay integrity and PR impact
+
+> **What you'll learn:** Understand replay integrity safeguards, conservative PR impact, and the remaining engineering limitations.
+
+**On this page:** [Current engineering changes](#current-engineering-changes) · [What this does not establish](#what-this-does-not-establish)
+
+---
+
 
 ## Current engineering changes
 
@@ -15,3 +26,9 @@
 - Protected evidence storage, real-source integration qualification, licensed regulatory review, customer-specific approvals and independent verification remain open work.
 
 The nine original issues should be closed individually only when their full original acceptance criteria are demonstrably satisfied, not because a CI job is green.
+
+---
+
+### Continue exploring
+
+[release status](RELEASE_STATUS.md) · [roadmap](ROADMAP.md) · [All guides](README.md) · [Project homepage](../README.md)

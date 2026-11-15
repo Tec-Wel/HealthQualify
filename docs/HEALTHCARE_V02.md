@@ -1,4 +1,15 @@
+![Healthcare QA documentation](assets/category-health.svg)
+
+[← **Documentation home**](README.md) &nbsp; / &nbsp; **Healthcare QA**
+
 # v0.2 Synthetic Healthcare Qualification Guide
+
+> **What you'll learn:** Review the earlier v0.2 LIS qualification fixture, test outcomes, and evidence limits.
+
+**On this page:** [Scope](#scope) · [What gets exercised](#what-gets-exercised) · [Commands](#commands) · [Conservative qualification drift review](#conservative-qualification-drift-review)
+
+---
+
 
 ## Scope
 HealthQualify v0.2 is **a local offline example**, not a validated clinical integration, formal IQ/OQ/PQ qualification system, a GAMP assessment, or an electronic-signature solution.
@@ -62,3 +73,9 @@ The reviewer compares requirements, acceptance basis, test definitions, system m
 
 ## Independent development
 HealthQualify components are independently implemented. The qualification engine runs deterministic checks and records technical evidence without relying on an AI model.
+
+---
+
+### Continue exploring
+
+[healthcare use cases](HEALTHCARE_USE_CASES.md) · [qualification methodology](QUALIFICATION_METHODOLOGY.md) · [All guides](README.md) · [Project homepage](../README.md)

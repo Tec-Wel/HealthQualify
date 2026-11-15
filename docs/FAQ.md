@@ -1,4 +1,13 @@
+![Start here documentation](assets/category-start.svg)
+
+[← **Documentation home**](README.md) &nbsp; / &nbsp; **Start here**
+
 # Frequently asked questions
+
+> **What you'll learn:** Find concise explanations of common setup, evidence, security, and adoption questions.
+
+---
+
 
 ### What is HealthQualify?
 An open-source developer-alpha set of deterministic synthetic qualification tools, traceability/evidence utilities, local SQLite workflow and conservative change-impact review.
@@ -53,3 +62,9 @@ Use GitHub Issues with a sanitized reproducer, or [Security policy](../SECURITY.
 
 ### What should I read first?
 [Getting started](GETTING_STARTED.md) → [Evaluation](EVALUATION_GUIDE.md) → [Your own project](USER_GUIDE.md) → [Verification](VERIFICATION_GUIDE.md).
+
+---
+
+### Continue exploring
+
+[getting started](GETTING_STARTED.md) · [end to end workflow](END_TO_END_WORKFLOW.md) · [All guides](README.md) · [Project homepage](../README.md)

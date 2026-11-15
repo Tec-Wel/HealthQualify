@@ -1,4 +1,15 @@
+![Healthcare QA documentation](assets/category-health.svg)
+
+[← **Documentation home**](README.md) &nbsp; / &nbsp; **Healthcare QA**
+
 # Healthcare use cases: what can be tested today?
+
+> **What you'll learn:** Explore realistic healthcare test scenarios and understand which integration checks are available today.
+
+**On this page:** [Use case 1 — LIS ↔ EHR data quality](#use-case-1-lis-ehr-data-quality) · [Use case 2 — FHIR API read-only staging smoke check](#use-case-2-fhir-api-read-only-staging-smoke-check) · [Use case 3 — Hospital software access control](#use-case-3-hospital-software-access-control) · [Use case 4 — DICOM metadata](#use-case-4-dicom-metadata)
+
+---
+
 
 **Scope:** synthetic developer-alpha demonstrations. Intended use, standards applicability and test protocols must be assessed independently for each institution. No PHI, live patient system or production equipment access.
 
@@ -55,3 +66,9 @@ See [v0.6 quality review](QUALITY_RELEASE_BENCHMARK_V06.md) and [Qualification m
 ## Suggested acceptance matrix
 
 For any project, define **system boundary**, **data classification**, **requirement source**, **risk**, **acceptance assertion**, **fixture origin**, **test ID**, **expected result**, **evidence trust anchor**, **reviewer** and **open gap**. Use [Validation templates](VALIDATION_TEMPLATES.md) to capture these before extending the code.
+
+---
+
+### Continue exploring
+
+[qualification methodology](QUALIFICATION_METHODOLOGY.md) · [validation templates](VALIDATION_TEMPLATES.md) · [All guides](README.md) · [Project homepage](../README.md)
