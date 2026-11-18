@@ -55,4 +55,6 @@ The project remains free to run with no cloud account, purchased API tokens, pai
 | Responsible publication approver and date | PENDING |
 | Decision | **HOLD / NOT APPROVED FOR PUBLICATION** |
 
+For evidence collection and package sign-off, see [release evidence package](RELEASE_EVIDENCE_PACKAGE.md). This checklist does **not** authorize public launch.
+
 See [LICENSE](https://github.com/Tec-Wel/HealthQualify/blob/main/LICENSE), [NOTICE](https://github.com/Tec-Wel/HealthQualify/blob/main/NOTICE), [THIRD_PARTY_NOTICES.md](https://github.com/Tec-Wel/HealthQualify/blob/main/THIRD_PARTY_NOTICES.md), [PRIVACY.md](https://github.com/Tec-Wel/HealthQualify/blob/main/PRIVACY.md), [DISCLAIMER.md](https://github.com/Tec-Wel/HealthQualify/blob/main/DISCLAIMER.md), and [SECURITY.md](https://github.com/Tec-Wel/HealthQualify/blob/main/SECURITY.md).
