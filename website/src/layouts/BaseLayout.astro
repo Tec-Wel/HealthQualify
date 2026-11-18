@@ -14,6 +14,7 @@ const pages = [
   { label: 'Local Edition', path: 'local-edition/', id: 'local' },
   { label: 'Explore Demo', path: 'demo/', id: 'demo' },
   { label: 'Architecture', path: 'architecture/', id: 'architecture' },
+  { label: 'Showcase', path: 'showcase/', id: 'showcase' },
   { label: 'Community', path: 'community/', id: 'community' },
 ];
 const href = (path: string) => root + path;
@@ -28,6 +29,12 @@ const href = (path: string) => root + path;
     <meta name="description" content={description} />
     <meta property="og:title" content={title + ' — HealthQualify'} />
     <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://tec-wel.github.io/HealthQualify/social-preview.svg" />
+    <meta property="og:image:alt" content="HealthQualify: qualify with evidence and investigate what changed; synthetic developer alpha." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="robots" content="noindex,nofollow" />
+    <link rel="canonical" href={Astro.url.href} />
     <title>{title} — HealthQualify</title>
     <link rel="icon" type="image/svg+xml" href={href('brand-mark.svg')} />
   </head>
@@ -55,7 +62,7 @@ const href = (path: string) => root + path;
           <p>Qualification evidence, not assumptions. Built for local-first software engineering demonstrations.</p>
           <span class="tiny">Apache-2.0 · No mandatory paid API · No mandatory cloud</span>
         </div>
-        <div><strong>Explore</strong><a href={href('qualification/')}>Qualification</a><a href={href('agents/')}>Five AI Agents</a><a href={href('local-edition/')}>Local Edition</a><a href={href('demo/')}>Interactive tour</a><a href={href('architecture/')}>Architecture explorer</a><a href={href('docs/')}>Documentation</a></div>
+        <div><strong>Explore</strong><a href={href('qualification/')}>Qualification</a><a href={href('agents/')}>Five AI Agents</a><a href={href('local-edition/')}>Local Edition</a><a href={href('demo/')}>Interactive tour</a><a href={href('architecture/')}>Architecture explorer</a><a href={href('showcase/')}>Product showcase</a><a href={href('docs/')}>Documentation</a></div>
         <div><strong>Trust</strong><a href={href('docs/disclaimer-policy/')}>Safety &amp; regulatory limitations</a><a href={href('docs/privacy-policy/')}>Privacy</a><a href={href('docs/PUBLIC_LAUNCH_READINESS/')}>Launch readiness</a><a href="https://github.com/Tec-Wel/HealthQualify/blob/main/SECURITY.md">Security</a></div>
         <div><strong>Community</strong><a href={href('community/')}>Contribute</a><a href="https://github.com/Tec-Wel/HealthQualify/issues">Issues</a><a href="https://github.com/Tec-Wel/HealthQualify/blob/main/LICENSE">License</a></div>
       </div>
