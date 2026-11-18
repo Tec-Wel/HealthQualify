@@ -19,6 +19,14 @@ HealthQualify is licensed under **[Apache-2.0](LICENSE)**. The project is curren
 
 **No mandatory cloud account, paid API key or LLM subscription.** The core runs locally with synthetic data. The optional local Ollama/Qwen setup is separate and not bundled; operating hardware and downloaded software have their own licensing and privacy considerations.
 
+## New Astro website + MkDocs documentation experience
+
+A professional, original MONAI-inspired **Astro** landing website is maintained under [`website/`](website/README.md), alongside the existing searchable **MkDocs Material** portal. Both build into one static site under the planned GitHub Pages path `/HealthQualify/`, with documentation at `/HealthQualify/docs/`.
+
+- [Website preview build workflow](.github/workflows/website-build.yml) — creates a GitHub Actions artifact; **no public deployment while launch gate #36 is open**.
+- [Public launch and security gates](docs/PUBLIC_LAUNCH_READINESS.md) — repository remains private pending maintainer authorization.
+- Astro is static, has no paid hosted APIs, trackers or mandatory cloud runtime. Existing Python agents and CLI remain untouched.
+
 ## 🖥️ Local Edition v0.8 — install, sign in, qualify
 
 **No cloud account, purchased API token, mandatory LLM, or AI subscription.** The local edition bundles a guided synthetic LIS qualification journey, five offline-capable advisory agents, traceability/evidence views, a QA draft-review queue and optional local Qwen explanations.
