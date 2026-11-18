@@ -10,6 +10,10 @@ HealthQualify is an early-stage community-facing project maintained through its 
 - Medical, regulatory or legal claims require an appropriately qualified independent reviewer.
 - Deterministic checks and human quality authority take precedence over generative suggestions.
 
+## Trademark and owner authorization
+
+HealthQualify software is governed by [Apache-2.0](LICENSE). The [trademark guidance](TRADEMARK_POLICY.md) covers accurate origin references and misleading unofficial branding, without reducing rights under the software license. Legal owner, patent position and authority to release remain unverified; see the [owner/IP decision checklist](docs/OWNER_IP_RELEASE_DECISION.md). Do not treat repository administrative access as proof of copyright ownership.
+
 ## Release authority
 
 Only repository maintainers authorized by the repository owner may tag releases or publish distributions. Changing the repository from private to public is a **separate explicitly approved launch decision** after documented owner/IP, history/secrets, security and third-party-license gates pass. A passing CI run alone does not authorize publication.
