@@ -43,10 +43,16 @@ def main():
         raise SystemExit("MkDocs search output missing")
     checked=0
     for page in DIST.rglob("*.html"):
+        # MkDocs creates a special 404.html containing its own unresolved
+        # placeholder "None"; it is not a navigable content page.
+        if page.name == "404.html":
+            continue
         parser=Links()
         parser.feed(page.read_text(encoding="utf-8"))
         for url in parser.urls:
             route=urlsplit(url)
+            if route.path.endswith("/None"):
+                raise SystemExit("Unexpected unresolved placeholder link in "+str(page))
             if not route.path.startswith(BASE):
                 continue
             suffix=unquote(route.path[len(BASE):])
