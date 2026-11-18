@@ -1,0 +1,4 @@
+# HealthQualify developer-alpha static site.
+# Public indexing must not be enabled before launch readiness approval.
+User-agent: *
+Disallow: /
