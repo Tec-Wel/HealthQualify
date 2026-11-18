@@ -1,0 +1,16 @@
+HealthQualify
+
+This file records project attribution and publication checks; it is not a change
+to the Apache License, Version 2.0.
+
+The source code is distributed under Apache-2.0 (see LICENSE). The repository
+maintainer must verify the legal copyright holder(s) and, where appropriate,
+add a truthful copyright notice before any public release. GitHub account
+ownership alone does not establish copyright or patent ownership.
+
+No individual or company is asserted here as the sole copyright owner pending
+that review. See THIRD_PARTY_NOTICES.md for separately licensed dependencies,
+model weights, code assets, and attribution diligence.
+
+No affiliation with or endorsement by FDA, standards organizations, vendors,
+or healthcare institutions is claimed.
