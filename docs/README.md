@@ -22,6 +22,10 @@ Guided tutorials, practical healthcare workflows, API references, and honest sec
 
 The repository is licensed under Apache-2.0, but remains a synthetic-data **developer alpha** pending public-launch review. See [Public launch readiness](PUBLIC_LAUNCH_READINESS.md), [Privacy](privacy-policy.md), [Safety disclaimer](disclaimer-policy.md), [Third-party notices](third-party-notices.md) and [Community governance](community-governance.md). The core works with no mandatory cloud account, purchased API tokens or language model.
 
+## New visual website experience
+
+HealthQualify now maintains a separate **Astro** public-site design for product discovery, while this **MkDocs** portal remains the technical source of truth. Both are built into a single static preview (website at `/HealthQualify/`, documentation at `/HealthQualify/docs/`). Publication is on hold until the [public-launch readiness checklist](PUBLIC_LAUNCH_READINESS.md) is approved.
+
 ## Choose your path
 
 | | | |
