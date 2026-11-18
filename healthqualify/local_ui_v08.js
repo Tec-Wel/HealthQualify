@@ -1,5 +1,5 @@
 "use strict";
-let csrf="",user=null,needsSetup=false,lastObservation=null,overview={systems:[],runs:[],deviations:[],protocols:[]};
+let csrf="",user=null,needsSetup=false,lastObservation=null,selectedModel="",overview={systems:[],runs:[],deviations:[],protocols:[]};
 const $=id=>document.getElementById(id);
 function showMessage(message, bad=false){$("notification").textContent=message||"";$("notification").style.color=bad?"#9b2d2d":"#087f75";}
 function safeShort(s,n=18){return String(s||"").slice(0,n);}
@@ -142,8 +142,9 @@ async function loadModel(){
  try{
   const m=await api("/api/model");
   $("modelStatus").textContent=m.enabled?
-   "Optional Qwen check enabled. Model is not required.":
-   "Optional Qwen disabled. All deterministic qualification features still work.";
+   "Local model enabled. Click Discover installed models to choose one.":
+   "Local model disabled. Restart with --allow-local-qwen to enable optional explanations.";
+  $("localModelSelect").disabled=true;
  }catch(e){showMessage(e.message,true);}
 }
 $("authForm").addEventListener("submit",async event=>{
@@ -175,10 +176,11 @@ $("explainAgent").onclick=async()=>{
  if(!lastObservation)return;
  const button=$("explainAgent");button.disabled=true;
  try{
-  const result=await api("/api/model-explain",{observation_id:lastObservation});
+  if(!selectedModel)throw new Error("Discover and select an installed model on the Local Qwen page.");
+  const result=await api("/api/model-explain",{observation_id:lastObservation,model:selectedModel});
   $("explanationResult").hidden=false;
   $("explanationResult").textContent=result.text+"\\n\\nUnverified model draft. Human review required.";
-  showMessage("Local Qwen explanation generated; original findings unchanged.");
+  showMessage("Draft explanation generated using "+result.model+"; original findings unchanged.");
  }catch(e){showMessage("Optional model unavailable: "+e.message,true);}
  finally{button.disabled=false;}
 };
@@ -198,9 +200,30 @@ $("qaForm").addEventListener("submit",async event=>{
 });
 $("refreshReviews").onclick=loadReviews;
 $("checkModel").onclick=async()=>{
- try{const m=await api("/api/model-check",{});
-  $("modelStatus").textContent=m.available?"Local Qwen model detected. Inference has not been validated.":
-   "Local model unavailable: "+(m.reason||"not installed")+" — core operation unaffected.";
+ const selector=$("localModelSelect");selector.disabled=true;selector.replaceChildren();
+ try{
+  const m=await api("/api/model-check",{});
+  const models=Array.isArray(m.models)?m.models:[];
+  if(!m.available||!models.length){
+   selectedModel="";
+   $("modelStatus").textContent="No local models available: "+(m.reason||"none installed")+
+    ". Deterministic features remain available.";
+   return;
+  }
+  for(const name of models){
+   const option=document.createElement("option");option.value=name;option.textContent=name;
+   selector.append(option);
+  }
+  selectedModel=models.includes(selectedModel)?selectedModel:
+   (models.includes("qwen3:0.6b")?"qwen3:0.6b":models[0]);
+  selector.value=selectedModel;selector.disabled=false;
+  $("modelStatus").textContent=models.length+" installed local model(s). Selected: "+
+   selectedModel+". Inference quality has not been validated.";
  }catch(e){showMessage(e.message,true);}
+};
+$("localModelSelect").onchange=()=>{
+ selectedModel=$("localModelSelect").value;
+ $("modelStatus").textContent="Selected "+selectedModel+
+  ". Explanations are advisory drafts; deterministic findings remain unchanged.";
 };
 init().catch(()=>{$("authError").textContent="Unable to initialize local workspace.";});
