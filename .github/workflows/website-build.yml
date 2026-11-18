@@ -1,0 +1,60 @@
+name: HealthQualify website and docs — free static build
+on:
+  pull_request:
+    paths:
+      - 'website/**'
+      - 'mkdocs.yml'
+      - 'docs/**'
+      - 'docs_hooks.py'
+      - 'requirements-docs.txt'
+      - '.github/workflows/website-build.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'website/**'
+      - 'mkdocs.yml'
+      - 'docs/**'
+      - 'docs_hooks.py'
+      - 'requirements-docs.txt'
+      - '.github/workflows/website-build.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build-preview:
+    name: Combined Astro + MkDocs static preview
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install free documentation dependencies
+        run: python -m pip install -r requirements-docs.txt
+      - name: Install Astro with project-local dependencies
+        working-directory: website
+        run: npm install --no-audit --no-fund
+      - name: Run static website contract checks
+        working-directory: website
+        run: npm test
+      - name: Build Astro landing site (GitHub Pages base path)
+        working-directory: website
+        run: npm run build
+      - name: Build searchable MkDocs portal at /docs/
+        run: python -m mkdocs build --site-dir website/dist/docs
+      - name: Verify combined static output and internal navigation
+        run: python scripts/verify_website_build.py
+      - name: Archive preview — not public deployment
+        uses: actions/upload-artifact@v4
+        with:
+          name: healthqualify-astro-mkdocs-preview
+          path: website/dist/
+          retention-days: 14
+      - name: Confirm public launch remains gated
+        run: |
+          echo "Built static site only. Public GitHub Pages publication requires separate owner/legal/security approval." >> "$GITHUB_STEP_SUMMARY"
