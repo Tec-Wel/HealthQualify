@@ -15,7 +15,7 @@
 
 | Surface | Finding | Action |
 |---|---|---|
-| `README.md` | Called the Astro landing page "MONAI-inspired" | Replaced with HealthQualify's independent branding description |
+| `README.md` | Used third-party-inspired wording for the Astro landing page | Replaced with HealthQualify's independent branding description |
 | `website/README.md` | Included a competitor inspiration label and comparison | Replaced with original-product positioning and provenance review requirement |
 | `THIRD_PARTY_NOTICES.md` | Preliminary license register | Retained and expanded Astro/Node and design-asset diligence |
 | `NOTICE` and `LICENSE` | Ownership caveat and Apache-2.0 text | Preserved without substantive change |
