@@ -7,6 +7,7 @@
 | Gate | Technical deliverable | Human/independent evidence |
 |---|---|---|
 | License | Retain Apache-2.0, accurate attribution and third-party notices | Verify copyright owner, inventor/contributor rights, employment/contract obligations, and patent position |
+| Owner / patents / trademarks | Document [owner and invention release decision](OWNER_IP_RELEASE_DECISION.md) and [trademark guidance](../TRADEMARK_POLICY.md) | Authorized owner and qualified IP counsel review before disclosure; do not commit privileged inventions or confidential contracts |
 | Privacy | Accurate privacy notice and synthetic-only handling | Assess traffic, storage, deletion, data processing and public claims |
 | Source and history | Full-history secrets / PHI / confidential-data scan | Human triage of findings, high-risk manual sampling, remove and rotate disclosed secrets if present |
 | Dependencies and assets | Versioned license inventory + SBOM | Manual transitive dependency and bundled asset review, including model weights |
@@ -20,7 +21,8 @@
 
 ## Work that remains manual
 
-- Confirm legal rights, inventor and copyright positions; do not guess a rights holder.
+- Confirm legal rights, inventor and copyright positions; do not guess a rights holder. Maintain evidence and patent strategy privately outside the future public repository.
+- Enforce DCO checks on new PR commits, and independently verify copyright/assignment rights for prior contributions; a DCO is not an ownership transfer.
 - Inspect all **historical commits, branches, tags and hidden/deleted paths** for secrets, confidential code, patient/health data or employer-controlled material. Automated detection can miss undisclosed intellectual property. Remediate and rotate any compromised secrets **before publication**.
 - Verify distribution license compatibility for optional Ollama/model weights and all packaged software. Qwen is **not bundled**.
 - Complete the independent-branding and asset-provenance checklist; removing an inspiration phrase alone does not establish original design or IP clearance.
