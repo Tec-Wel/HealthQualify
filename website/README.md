@@ -10,7 +10,7 @@ Requires Node.js 22+ and Python 3.10+ (Python 3.12 recommended):
 
 ```bash
 cd website
-npm install
+npm ci
 npm run dev
 ```
 
@@ -25,7 +25,7 @@ python -m mkdocs build --site-dir website/dist/docs
 python scripts/verify_website_build.py
 ```
 
-The full GitHub Actions static build also captures real synthetic Local Edition screenshots through Playwright Chromium, embeds them at `/product-images/`, and verifies that the asset paths resolve. A local `npm run build` alone does not generate those screenshots; for the fully verified gallery, download the successful **Combined Astro + MkDocs static preview** artifact.
+The checked-in `package-lock.json` allows reproducible `npm ci` installs in GitHub Actions. The full GitHub Actions static build also captures real synthetic Local Edition screenshots through Playwright Chromium, embeds them at `/product-images/`, and verifies that the asset paths resolve. A local `npm run build` alone does not generate those screenshots; for the fully verified gallery, download the successful **Combined Astro + MkDocs static preview** artifact.
 
 Run `cd website && npm test` for the static website contract tests. GitHub Actions also runs Chromium browser QA at 390px, 768px and 1440px, plus the real local application against temporary synthetic data; screenshots are stored as **private workflow artifacts**. Because the repository remains private and public-launch approvals are pending, HTML meta and robots rules use **noindex / Disallow**. Change those rules only after publication approval.
 
