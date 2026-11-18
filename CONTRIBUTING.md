@@ -1,6 +1,6 @@
 # Contributing
 
-**New to this repository?** [Follow the visual first-contribution guide](docs/CONTRIBUTOR_VISUAL_GUIDE.md) or [review the reusable design system](docs/DESIGN_GUIDELINES.md) before proposing README, docs, or dashboard styling changes. to HealthQualify
+**New to this repository?** [Follow the visual first-contribution guide](docs/CONTRIBUTOR_VISUAL_GUIDE.md) or [review the reusable design system](docs/DESIGN_GUIDELINES.md) before proposing README, docs, or dashboard styling changes.
 
 Thank you for helping build transparent, reproducible open-source healthcare software assurance tooling.
 
@@ -53,6 +53,10 @@ Commands must be real, copyable, scoped to the repository root and clear about O
 
 Provide OS, Python version, Git commit, command, expected/actual behavior, and sanitized reproducer. Never include PHI, API tokens, passwords, real clinical fixtures or confidential hospital connection details. Report possible vulnerabilities privately.
 
-## Licensing
+## Licensing, contribution rights and DCO
 
-By contributing, follow the repository [Apache-2.0 license](LICENSE) and applicable attribution obligations.
+By contributing, confirm that you authored or are authorized to submit the code and materials under the repository [Apache-2.0 license](LICENSE), and follow attribution requirements. Do not contribute employer-owned, hospital-owned, proprietary clinical content, paid standards or PHI without written authorization.
+
+For **new code commits**, include a Developer Certificate of Origin sign-off using `git commit -s -m "your message"`. The `Signed-off-by: Name <email>` trailer represents your agreement to the [Developer Certificate of Origin 1.1](https://developercertificate.org/) (a contributor provenance statement, not an employment/IP clearance by itself). Do not add someone else's sign-off. If you cannot truthfully sign, contact maintainers privately and do not submit the code until rights are resolved.
+
+See [Code of Conduct](CODE_OF_CONDUCT.md), [Governance](GOVERNANCE.md), [Privacy](PRIVACY.md), and [Disclaimer](DISCLAIMER.md).
