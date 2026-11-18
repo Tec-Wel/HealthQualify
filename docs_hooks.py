@@ -45,7 +45,7 @@ def on_page_markdown(markdown, **_kwargs):
         lambda m: "(index.md" + (m.group(1) or "") + ")",
         site_markdown,
     )
-    for name in ("README.md", "CONTRIBUTING.md", "SECURITY.md", "SUPPORT.md", "CHANGELOG.md"):
+    for name in ("README.md", "CONTRIBUTING.md", "SECURITY.md", "SUPPORT.md", "CHANGELOG.md", "TRADEMARK_POLICY.md"):
         site_markdown = site_markdown.replace("](../" + name + ")", "](" + BASE + name + ")")
     # Files outside docs/ are available in the source repo, not in MkDocs.
     site_markdown = re.sub(
