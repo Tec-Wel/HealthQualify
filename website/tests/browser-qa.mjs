@@ -28,7 +28,8 @@ const browser=await chromium.launch({headless:true});
 let application;
 try{
   for(const viewport of [{width:390,height:844,name:'mobile'},{width:768,height:1024,name:'tablet'},{width:1440,height:900,name:'desktop'}]){
-    const page=await browser.newPage({viewport:{width:viewport.width,height:viewport.height},deviceScaleFactor:1});
+    const context=await browser.newContext({viewport:{width:viewport.width,height:viewport.height},deviceScaleFactor:1});
+    const page=await context.newPage();
     page.on('pageerror',e=>errors.push(viewport.name+': '+e.message));
     await page.goto(site,{waitUntil:'networkidle'});
     assert(await page.locator('h1').count()===1,'Homepage needs exactly one H1');
@@ -50,6 +51,7 @@ try{
     assert((await page.locator('#arch-title').innerText()).includes('Ollama'),'Architecture explorer did not update');
     await page.screenshot({path:join(output,'architecture-'+viewport.name+'.png'),fullPage:true});
     await page.close();
+    await context.close();
   }
 
   const scratch=mkdtempSync(join(tmpdir(),'healthqualify-synthetic-browser-'));
