@@ -4,6 +4,10 @@
 
 HealthQualify is a **developer-alpha** open-source project. Current code is suitable only for synthetic/public non-sensitive evaluation and is **not** a production clinical, PHI, regulated records, device-control or qualification approval platform. There is no announced long-term security-support policy or SLA. Please assess the latest commit and release notes before testing.
 
+## Confidential reporting capability
+
+The repository owner must enable any available GitHub private vulnerability reporting feature in repository Settings and verify it with a test account, **if supported for the repository's visibility**. An optional intake form is stored at [`.github/VULNERABILITY_REPORT.yml`](.github/VULNERABILITY_REPORT.yml); a form file does not enable reporting. Until a working confidential reporting route is confirmed, **do not claim that researchers can submit vulnerability reports privately**. Maintainers must provide an approved private channel; do not invent an email address. See [release evidence package](docs/RELEASE_EVIDENCE_PACKAGE.md).
+
 ## Report vulnerabilities responsibly
 
 **Do not post exploitation details, credentials, sensitive integrations, real patient data or attack artifacts in a public issue.** Use GitHub's **Report a vulnerability** private advisory mechanism **if enabled** for this repository:
