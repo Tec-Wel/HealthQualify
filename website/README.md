@@ -1,4 +1,4 @@
-# HealthQualify Web Experience (MONAI-inspired, original design)
+# HealthQualify Web Experience — Independent Product Website
 
 A free, original Astro-based, responsive marketing and navigation website for HealthQualify. The **technical documentation remains MkDocs Material** and builds into `/docs/` under the same static website.
 
@@ -47,4 +47,4 @@ Run `cd website && npm test` for the static website contract tests. GitHub Actio
 
 GitHub Actions workflow `.github/workflows/website-build.yml` creates a downloadable preview artifact. **It does not automatically deploy publicly.** HealthQualify is currently private pending public launch owner/IP, security-history and redistribution review in [Issue #36](https://github.com/Tec-Wel/HealthQualify/issues/36). Do not enable public Pages or mark the alpha as regulated-production ready before the approval gates are closed.
 
-The website’s visual components are independently authored; do not copy MONAI branding, logos, layouts, images, or texts. All first-party source remains under the repository Apache-2.0 licensing, subject to accurate ownership review.
+The HealthQualify website is presented as an independent product experience. Do not copy another project's logos, artwork, distinctive visual elements, page content, or protected code without documented permission or a compatible license. The source and asset provenance still require human review; original authorship is not conclusively established by this README. See [Independent design and IP review](../docs/INDEPENDENT_DESIGN_IP_REVIEW.md) and [third-party license register](../THIRD_PARTY_NOTICES.md) before publication.
