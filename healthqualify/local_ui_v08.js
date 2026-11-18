@@ -142,9 +142,9 @@ async function loadModel(){
  try{
   const m=await api("/api/model");
   $("modelStatus").textContent=m.enabled?
-   "Local model enabled. Click Discover installed models to choose one.":
+   (selectedModel?"Selected local model: "+selectedModel+". Ready for draft explanations.":
+    "Local model enabled. Click Discover installed models to choose one.") :
    "Local model disabled. Restart with --allow-local-qwen to enable optional explanations.";
-  $("localModelSelect").disabled=true;
  }catch(e){showMessage(e.message,true);}
 }
 $("authForm").addEventListener("submit",async event=>{
