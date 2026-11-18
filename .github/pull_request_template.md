@@ -12,6 +12,8 @@ What problem does this solve? Link related issue.
 - [ ] Sample synthetic commands and exit codes checked
 - [ ] Documentation/README links updated
 - [ ] No PHI, credentials, protected standards text or external project secrets
+- [ ] DCO Signed-off-by trailers on new commits; source, graphics and AI-assisted contributions are authorized and appropriately attributed
+- [ ] No unauthorized borrowed website design/code/art, and legally required license notices preserved
 - [ ] No automatic release/qualification approval introduced
 - [ ] Conservative UNKNOWN_IMPACT behavior retained
 

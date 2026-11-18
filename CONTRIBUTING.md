@@ -59,4 +59,6 @@ By contributing, confirm that you authored or are authorized to submit the code 
 
 For **new code commits**, include a Developer Certificate of Origin sign-off using `git commit -s -m "your message"`. The `Signed-off-by: Name <email>` trailer represents your agreement to the [Developer Certificate of Origin 1.1](https://developercertificate.org/) (a contributor provenance statement, not an employment/IP clearance by itself). Do not add someone else's sign-off. If you cannot truthfully sign, contact maintainers privately and do not submit the code until rights are resolved.
 
-See [Code of Conduct](CODE_OF_CONDUCT.md), [Governance](GOVERNANCE.md), [Privacy](PRIVACY.md), and [Disclaimer](DISCLAIMER.md).
+The [DCO CI check](.github/workflows/dco-check.yml) checks PR commit trailers against Git commit author information. This is a technical declaration only, not legal proof of title; reviewers must still investigate external code, assets, AI-assisted contributions, employee/contractor obligations and missing provenance. The owner may require additional independently reviewed contributor agreements if warranted; do not imply an unexecuted agreement transfers copyright.
+
+See [Trademark and brand-use guidance](TRADEMARK_POLICY.md), [Code of Conduct](CODE_OF_CONDUCT.md), [Governance](GOVERNANCE.md), [Privacy](PRIVACY.md), and [Disclaimer](DISCLAIMER.md).

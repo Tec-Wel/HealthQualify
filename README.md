@@ -15,6 +15,8 @@
 
 HealthQualify is licensed under **[Apache-2.0](LICENSE)**. The project is currently a **private developer-alpha repository preparing for public release**; it must not be described as a cleared, qualified, or production-ready clinical platform. Public visibility and binary releases require separate owner/IP, security/history, third-party-license and distribution approval.
 
+**Owner/IP and brand safeguards:** [Trademark and brand use](TRADEMARK_POLICY.md) · [Owner, invention and release decision](docs/OWNER_IP_RELEASE_DECISION.md) · [Independent branding/IP review](docs/INDEPENDENT_DESIGN_IP_REVIEW.md). Publication remains on hold pending qualified human review.
+
 **Read before use or contribution:** [Privacy](PRIVACY.md) · [Safety/FDA disclaimer](DISCLAIMER.md) · [Security reporting](SECURITY.md) · [Third-party notices](THIRD_PARTY_NOTICES.md) · [Contributor guide](CONTRIBUTING.md) · [Code of Conduct](CODE_OF_CONDUCT.md) · [Governance](GOVERNANCE.md) · [Public-launch readiness checklist](docs/PUBLIC_LAUNCH_READINESS.md).
 
 **No mandatory cloud account, paid API key or LLM subscription.** The core runs locally with synthetic data. The optional local Ollama/Qwen setup is separate and not bundled; operating hardware and downloaded software have their own licensing and privacy considerations.

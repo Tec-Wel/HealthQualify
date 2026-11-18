@@ -1,0 +1,60 @@
+name: Contributor DCO sign-off
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+permissions:
+  contents: read
+  pull-requests: read
+jobs:
+  verify-dco:
+    name: Verify Signed-off-by trailers
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Check sign-off trailers on PR commits
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch --no-tags --depth=200 origin "$BASE_SHA" "$HEAD_SHA" || true
+          if ! git cat-file -e "$BASE_SHA^{commit}" 2>/dev/null; then
+            echo "::error::Cannot inspect base SHA for DCO verification"
+            exit 1
+          fi
+          if ! git cat-file -e "$HEAD_SHA^{commit}" 2>/dev/null; then
+            echo "::error::Cannot inspect PR head SHA for DCO verification"
+            exit 1
+          fi
+          python - <<'PY'
+          import os, re, subprocess, sys
+          base, head = os.environ["BASE_SHA"], os.environ["HEAD_SHA"]
+          commits = subprocess.check_output(
+              ["git", "rev-list", "--reverse", f"{base}..{head}"], text=True
+          ).splitlines()
+          if not commits:
+              print("No PR commits to inspect.")
+              sys.exit(0)
+          bad = []
+          for sha in commits:
+              fmt = "%an%n%ae%n%B"
+              info = subprocess.check_output(["git", "show", "-s", f"--format={fmt}", sha], text=True)
+              lines = info.splitlines()
+              author_name, author_email = lines[0].strip(), lines[1].strip()
+              body = "\n".join(lines[2:])
+              trailers = re.findall(r"(?im)^Signed-off-by:\s*(.+?)\s*<([^<>\s]+)>\s*$", body)
+              valid = any(name.strip().casefold() == author_name.casefold() and
+                          email.casefold() == author_email.casefold()
+                          for name,email in trailers)
+              if not valid:
+                  bad.append(sha[:12])
+          if bad:
+              print("Missing or mismatched author DCO trailers on commits:", ", ".join(bad))
+              print("Contributors: use git commit -s and ask a maintainer how to fix existing PR commits.")
+              sys.exit(1)
+          print(f"Verified author DCO trailers for {len(commits)} commit(s).")
+          PY
