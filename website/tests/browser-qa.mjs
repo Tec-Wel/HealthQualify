@@ -38,6 +38,11 @@ try{
     assert(!overflow,'Horizontal layout overflow at '+viewport.name);
     const audit=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21a','wcag21aa']).analyze();
     const high=audit.violations.filter(v=>v.impact==='serious'||v.impact==='critical');
+    if (high.length) {
+      for (const violation of high) {
+        console.error('AXE ',viewport.name,violation.id,violation.nodes.slice(0,40).map(n=>({target:n.target,summary:n.failureSummary?.slice(0,190),html:n.html?.slice(0,160)})));
+      }
+    }
     assert(high.length===0,'Accessibility issues at '+viewport.name+': '+high.map(v=>v.id+'('+v.nodes.length+')').join(', '));
     await page.screenshot({path:join(output,'website-'+viewport.name+'.png'),fullPage:true});
     await page.goto(site+'demo/',{waitUntil:'networkidle'});
