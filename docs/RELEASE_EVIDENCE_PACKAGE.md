@@ -23,6 +23,14 @@ python -m unittest discover -s tests -q
 
 Store the generated JSON outside the future published repository along with the exact commit SHA and review timestamp. The script records tracked asset and dependency declaration SHA-256 values, **not** license authorship or permissions. Prefer generating final evidence on a clean checkout and compare with the actual packaged website/build output.
 
+## Dependency-license research — preliminary, not redistribution clearance
+
+- `zod-to-ts` is listed in the website lockfile without a license field. Public package metadata indicates an MIT license for the package family; verify the **exact pinned v1.2.0 distribution's LICENSE text** and record the verified evidence before asserting a final license.
+- `@img/sharp-libvips-*` native optional packages declare LGPL-3.0-or-later obligations. Confirm whether the final released website, installer, container or other binaries **actually contain** these components, and if so include the correct LGPL notices, source/relinking information and other applicable obligations. A static Astro site does not automatically redistribute every npm build dependency.
+- Do not redistribute Ollama or Qwen weights by default; optional local download remains the separate operator's choice and must be evaluated against the exact upstream model license if the project ever changes its packaging.
+
+These findings are dependency-diligence leads, **not a complete license audit**, an Apache relicensing of dependencies or permission to publish.
+
 ## Owner / patent / legal review (all PENDING)
 
 | Decision | Required evidence / sign-off |
