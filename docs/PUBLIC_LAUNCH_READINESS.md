@@ -50,4 +50,4 @@ The project remains free to run with no cloud account, purchased API tokens, pai
 | Responsible publication approver and date | PENDING |
 | Decision | **HOLD / NOT APPROVED FOR PUBLICATION** |
 
-See [LICENSE](../LICENSE), [NOTICE](../NOTICE), [THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md), [PRIVACY.md](../PRIVACY.md), [DISCLAIMER.md](../DISCLAIMER.md), and [SECURITY.md](../SECURITY.md).
+See [LICENSE](https://github.com/Tec-Wel/HealthQualify/blob/main/LICENSE), [NOTICE](https://github.com/Tec-Wel/HealthQualify/blob/main/NOTICE), [THIRD_PARTY_NOTICES.md](https://github.com/Tec-Wel/HealthQualify/blob/main/THIRD_PARTY_NOTICES.md), [PRIVACY.md](https://github.com/Tec-Wel/HealthQualify/blob/main/PRIVACY.md), [DISCLAIMER.md](https://github.com/Tec-Wel/HealthQualify/blob/main/DISCLAIMER.md), and [SECURITY.md](https://github.com/Tec-Wel/HealthQualify/blob/main/SECURITY.md).
