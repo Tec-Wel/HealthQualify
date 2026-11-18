@@ -1,0 +1,63 @@
+---
+import '../styles/site.css';
+
+interface Props {
+  title: string;
+  description: string;
+  active?: string;
+}
+const { title, description, active = '' } = Astro.props;
+const root = import.meta.env.BASE_URL;
+const pages = [
+  { label: 'Platform', path: 'qualification/', id: 'qualification' },
+  { label: 'AI Agents', path: 'agents/', id: 'agents' },
+  { label: 'Local Edition', path: 'local-edition/', id: 'local' },
+  { label: 'Community', path: 'community/', id: 'community' },
+];
+const href = (path: string) => root + path;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#0b1527" />
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title + ' — HealthQualify'} />
+    <meta property="og:description" content={description} />
+    <title>{title} — HealthQualify</title>
+    <link rel="icon" type="image/svg+xml" href={href('brand-mark.svg')} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="top-strip">DEVELOPER ALPHA <span aria-hidden="true">/</span> SYNTHETIC DATA ONLY <span aria-hidden="true">/</span> FREE &amp; OPEN SOURCE</div>
+    <header class="site-header">
+      <div class="container nav-inner">
+        <a class="brand" href={href('')} aria-label="HealthQualify home">
+          <img src={href('brand-mark.svg')} alt="" height="36" width="36" />
+          <span>Health<span class="brand-accent">Qualify</span></span>
+        </a>
+        <nav class="primary-nav" aria-label="Main navigation">
+          {pages.map(page => <a href={href(page.path)} aria-current={active === page.id ? 'page' : undefined}>{page.label}</a>)}
+          <a href={href('docs/')}>Docs</a>
+        </nav>
+        <a class="nav-github" href="https://github.com/Tec-Wel/HealthQualify" aria-label="View HealthQualify on GitHub">GitHub <span aria-hidden="true">↗</span></a>
+      </div>
+    </header>
+    <main id="main"><slot /></main>
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>
+          <a class="brand" href={href('')}><img src={href('brand-mark.svg')} alt="" height="32" width="32" /><span>Health<span class="brand-accent">Qualify</span></span></a>
+          <p>Qualification evidence, not assumptions. Built for local-first software engineering demonstrations.</p>
+          <span class="tiny">Apache-2.0 · No mandatory paid API · No mandatory cloud</span>
+        </div>
+        <div><strong>Explore</strong><a href={href('qualification/')}>Qualification</a><a href={href('agents/')}>Five AI Agents</a><a href={href('local-edition/')}>Local Edition</a><a href={href('docs/')}>Documentation</a></div>
+        <div><strong>Trust</strong><a href={href('docs/disclaimer-policy/')}>Safety &amp; regulatory limitations</a><a href={href('docs/privacy-policy/')}>Privacy</a><a href={href('docs/PUBLIC_LAUNCH_READINESS/')}>Launch readiness</a><a href="https://github.com/Tec-Wel/HealthQualify/blob/main/SECURITY.md">Security</a></div>
+        <div><strong>Community</strong><a href={href('community/')}>Contribute</a><a href="https://github.com/Tec-Wel/HealthQualify/issues">Issues</a><a href="https://github.com/Tec-Wel/HealthQualify/blob/main/LICENSE">License</a></div>
+      </div>
+      <div class="container footer-legal">Developer alpha · Synthetic/public nonsensitive fixtures only · Not FDA-cleared/approved or validated for regulated production · No PHI or clinical use. © Attribution subject to maintainer ownership review.</div>
+    </footer>
+  </body>
+</html>

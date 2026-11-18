@@ -1,0 +1,77 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const root = import.meta.env.BASE_URL;
+const agents = [
+  ['01','Release Impact','Understand what a code change could affect.','release-impact'],
+  ['02','Gap Hunter','Find requirements or execution evidence that may be missing.','gap-hunter'],
+  ['03','Failure Investigation','Explore failed and unresolved synthetic runs.','failure-investigation'],
+  ['04','QA Readiness','Prepare evidence questions for a human reviewer.','qa-readiness'],
+  ['05','Dependency Investigator','Surface downstream impact and unknown dependencies.','dependency-investigator'],
+];
+---
+<BaseLayout title="Open-source healthcare software qualification" description="Free and local-first developer-alpha software qualification, evidence and five advisory AI agents. Synthetic data only.">
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="live-dot"></span> OPEN SOURCE · APACHE 2.0 · LOCAL FIRST</div>
+        <h1>Know what's <em>qualified.</em><br />Investigate what <em>changed.</em></h1>
+        <p class="lead">A transparent, local-first toolkit for healthcare software engineering teams. Trace requirements, run reproducible synthetic tests and investigate quality gaps with five advisory agents.</p>
+        <div class="cta-row">
+          <a class="button primary" href={root+'local-edition/'}>Explore Local Edition <span aria-hidden="true">↗</span></a>
+          <a class="button ghost" href={root+'docs/GETTING_STARTED/'}>Read the docs <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="value-tags"><span>No mandatory paid API fees</span><span>Offline deterministic core</span><span>Human-controlled QA</span></div>
+      </div>
+      <div class="hero-visual" aria-label="Illustrative HealthQualify qualification dashboard">
+        <div class="visual-head"><span class="visual-head-logo"><span class="live-dot"></span> QUALIFICATION WORKSPACE</span><span class="alpha-pill">SYNTHETIC DEMO</span></div>
+        <div class="metric-row"><div><span>Requirements</span><strong>7</strong></div><div><span>PASS</span><strong class="mint">2</strong></div><div><span>Seeded FAIL</span><strong class="amber">5</strong></div></div>
+        <div class="visual-chart">
+          <div class="chart-title"><span>Evidence &amp; traceability</span><span class="mono">Draft · Not approved</span></div>
+          <div class="trace-row"><span class="trace-id">REQ-01</span><span class="trace-bar"><i class="fill-pass" style="width:82%"></i></span><span class="trace-status">PASS</span></div>
+          <div class="trace-row"><span class="trace-id">REQ-02</span><span class="trace-bar"><i class="fill-fail" style="width:60%"></i></span><span class="trace-status fail">FAIL</span></div>
+          <div class="trace-row"><span class="trace-id">REQ-03</span><span class="trace-bar"><i class="fill-fail" style="width:72%"></i></span><span class="trace-status fail">FAIL</span></div>
+          <div class="trace-row"><span class="trace-id">REQ-04</span><span class="trace-bar"><i class="fill-pass" style="width:92%"></i></span><span class="trace-status">PASS</span></div>
+          <div class="trace-row"><span class="trace-id">REQ-05</span><span class="trace-bar"><i class="fill-fail" style="width:48%"></i></span><span class="trace-status fail">FAIL</span></div>
+        </div>
+        <div class="visual-foot"><span><span class="soft-dot"></span> Five advisory investigators</span><span>Review required <span aria-hidden="true">→</span></span></div>
+      </div>
+    </div>
+    <div class="hero-orb one"></div><div class="hero-orb two"></div>
+  </section>
+  <section class="trust-line"><div class="container trust-inner"><strong>Built for engineering clarity.</strong><span>Deterministic testing</span><span>Traceable evidence</span><span>Offline-first</span><span>Optional local Qwen</span></div></section>
+  <section class="section light" id="platform">
+    <div class="container">
+      <div class="section-intro"><span class="kicker">THE PLATFORM</span><h2>One toolkit. Two connected workflows.</h2><p>Understand test outcomes with deterministic evidence. Then investigate potential impact without allowing AI to change approved results.</p></div>
+      <div class="pillar-grid">
+        <article class="pillar-card"><div class="card-index">01 / QUALIFICATION</div><div class="icon-bubble">⌁</div><h3>Qualification &amp; Evidence</h3><p>Create synthetic protocols, run predefined tests, inspect requirement coverage and preserve technical integrity references.</p><div class="pill-list"><span>IQ / OQ / PQ</span><span>Traceability</span><span>Evidence verification</span></div><a class="text-link" href={root+'qualification/'}>Explore qualification <span aria-hidden="true">↗</span></a></article>
+        <article class="pillar-card"><div class="card-index">02 / INVESTIGATION</div><div class="icon-bubble">✳</div><h3>Five Advisory AI Agents</h3><p>Investigate release impact, coverage gaps, failure history, QA readiness and cross-system dependencies using scoped evidence.</p><div class="pill-list"><span>Source-linked</span><span>Draft only</span><span>Local Qwen optional</span></div><a class="text-link" href={root+'agents/'}>Meet the agents <span aria-hidden="true">↗</span></a></article>
+      </div>
+    </div>
+  </section>
+  <section class="section slate" id="how-it-works"><div class="container"><div class="section-intro"><span class="kicker">A CLEARER WORKFLOW</span><h2>From requirement to reviewable evidence.</h2><p>Explore an intentionally imperfect synthetic LIS scenario. Each finding stays connected to its original test, protocol and requirement.</p></div>
+    <div class="steps-grid">
+      <div class="step-card"><span>01</span><h3>Define</h3><p>Seven synthetic requirements and a versioned draft protocol.</p></div>
+      <div class="step-card"><span>02</span><h3>Execute</h3><p>Run bounded deterministic checks without an AI model.</p></div>
+      <div class="step-card"><span>03</span><h3>Investigate</h3><p>Explore two passes and five intentionally seeded failures.</p></div>
+      <div class="step-card"><span>04</span><h3>Review</h3><p>Record draft findings for independent human QA review.</p></div>
+    </div>
+    <a href={root+'docs/END_TO_END_WORKFLOW/'} class="text-link">View full synthetic walkthrough <span aria-hidden="true">↗</span></a>
+  </div></section>
+  <section class="section light" id="agents"><div class="container">
+    <div class="section-intro"><span class="kicker">MEET THE FIVE INVESTIGATORS</span><h2>Agent intelligence, grounded in evidence.</h2><p>Every investigator is advisory. The deterministic engine owns results; people own qualification decisions.</p></div>
+    <div class="agent-grid">{agents.map(([number,title,desc,slug])=><article class="agent-tile"><div class="agent-num">{number}</div><h3>{title}</h3><p>{desc}</p><a href={root+'agents/#'+slug} aria-label={'Read about '+title}>Learn more <span aria-hidden="true">↗</span></a></article>)}</div>
+  </div></section>
+  <section class="section pale" id="local"><div class="container local-split">
+    <div><span class="kicker">NO CLOUD ACCOUNT REQUIRED</span><h2>Built for your machine.<br/>Not someone else's API.</h2><p>Run the core locally with Python and SQLite. Add Ollama/Qwen only if you want optional draft explanations. No mandatory paid LLM, tokens or hosted service.</p><div class="cta-row"><a class="button dark" href={root+'local-edition/'}>Get started locally <span aria-hidden="true">↗</span></a><a class="text-link" href={root+'docs/LOCAL_EDITION_V08/'}>Setup guide</a></div></div>
+    <div class="terminal"><div class="terminal-top"><span class="dots">● ● ●</span> TERMINAL · LOCAL MODE</div><pre><code><span class="terminal-dim"># Clone the repository</span>
+git clone https://github.com/Tec-Wel/HealthQualify.git
+cd HealthQualify
+
+<span class="terminal-dim"># Start the local app</span>
+python -m healthqualify.local_edition_v08
+
+<span class="terminal-green">✓ Core works without any LLM</span>
+<span class="terminal-green">✓ No purchased API token</span></code></pre></div>
+  </div></section>
+  <section class="section light"><div class="container final-cta"><span class="kicker">OPEN DEVELOPMENT</span><h2>Inspect the code. Reproduce the results.<br/>Improve the tools.</h2><p>Join a transparent software engineering project focused on testable evidence, local control and responsible AI.</p><div class="cta-row"><a class="button primary" href="https://github.com/Tec-Wel/HealthQualify">Explore GitHub <span aria-hidden="true">↗</span></a><a class="button outline" href={root+'docs/'}>Browse documentation <span aria-hidden="true">→</span></a></div><p class="safety-caption">Developer-alpha software. No PHI, patient care, regulated e-signatures or automated qualification approvals.</p></div></section>
+</BaseLayout>
