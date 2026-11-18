@@ -10,6 +10,7 @@
 | Privacy | Accurate privacy notice and synthetic-only handling | Assess traffic, storage, deletion, data processing and public claims |
 | Source and history | Full-history secrets / PHI / confidential-data scan | Human triage of findings, high-risk manual sampling, remove and rotate disclosed secrets if present |
 | Dependencies and assets | Versioned license inventory + SBOM | Manual transitive dependency and bundled asset review, including model weights |
+| Independent branding and design provenance | Original HealthQualify product positioning; no unnecessary third-party inspiration claims | Review website, screenshots, SVGs, logos, fonts, templates and source provenance against [design/IP checklist](INDEPENDENT_DESIGN_IP_REVIEW.md); preserve required attribution |
 | Security | Private disclosure route, supported-scope statement, tests, vulnerability review | Set private vulnerability reporting in repository settings; resolve critical issues |
 | Binaries | Platform build smoke tests, checksums and provenance | Native first-run UI tests, OS signing/notarization decision and separate bundle/license review |
 | Governance | Contribution, conduct and support docs | Confirm a private community-conduct reporting contact/channel and DCO or alternative process |
@@ -22,6 +23,7 @@
 - Confirm legal rights, inventor and copyright positions; do not guess a rights holder.
 - Inspect all **historical commits, branches, tags and hidden/deleted paths** for secrets, confidential code, patient/health data or employer-controlled material. Automated detection can miss undisclosed intellectual property. Remediate and rotate any compromised secrets **before publication**.
 - Verify distribution license compatibility for optional Ollama/model weights and all packaged software. Qwen is **not bundled**.
+- Complete the independent-branding and asset-provenance checklist; removing an inspiration phrase alone does not establish original design or IP clearance.
 - Confirm a private vulnerability intake and confidential community-conduct contact (no addresses have been invented).
 - Test the native UI and installers on Windows, macOS and Linux; GitHub Action help-text smoke tests are insufficient.
 - Approve final README descriptions, disclaimers and regulated intended use with qualified reviewers.
