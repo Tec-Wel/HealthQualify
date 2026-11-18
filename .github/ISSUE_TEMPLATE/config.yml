@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security vulnerability reporting (private)
+    url: https://github.com/Tec-Wel/HealthQualify/security/advisories
+    about: Do not post credentials, PHI, or exploit details in public issues; use private advisory reporting if enabled.
+  - name: Community and support guidance
+    url: https://github.com/Tec-Wel/HealthQualify/blob/main/SUPPORT.md
+    about: Best-effort support for synthetic developer-alpha tooling.

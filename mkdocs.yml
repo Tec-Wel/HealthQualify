@@ -105,6 +105,12 @@ nav:
       - FAQ: FAQ.md
       - Regulatory mapping: REGULATORY_MAPPING.md
       - Site setup & costs: DOCS_SITE_SETUP.md
+  - Public launch & policies:
+      - Readiness and legal review: PUBLIC_LAUNCH_READINESS.md
+      - Privacy and data handling: privacy-policy.md
+      - Safety / regulatory disclaimer: disclaimer-policy.md
+      - Third-party licensing: third-party-notices.md
+      - Community and contributor policy: community-governance.md
   - Contributing:
       - Visual contribution guide: CONTRIBUTOR_VISUAL_GUIDE.md
       - Design system: DESIGN_GUIDELINES.md
