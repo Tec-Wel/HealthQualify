@@ -11,6 +11,14 @@
 > [!IMPORTANT]
 > **Synthetic developer alpha.** Not FDA certification, validated GxP software, Part 11 electronic signatures, medical-device control, or production clinical use. No PHI. AI findings are advisory and never grant qualification approval. [Read the security boundaries](docs/SECURITY_AND_LIMITATIONS.md).
 
+## Trust, license and public-launch status
+
+HealthQualify is licensed under **[Apache-2.0](LICENSE)**. The project is currently a **private developer-alpha repository preparing for public release**; it must not be described as a cleared, qualified, or production-ready clinical platform. Public visibility and binary releases require separate owner/IP, security/history, third-party-license and distribution approval.
+
+**Read before use or contribution:** [Privacy](PRIVACY.md) · [Safety/FDA disclaimer](DISCLAIMER.md) · [Security reporting](SECURITY.md) · [Third-party notices](THIRD_PARTY_NOTICES.md) · [Contributor guide](CONTRIBUTING.md) · [Code of Conduct](CODE_OF_CONDUCT.md) · [Governance](GOVERNANCE.md) · [Public-launch readiness checklist](docs/PUBLIC_LAUNCH_READINESS.md).
+
+**No mandatory cloud account, paid API key or LLM subscription.** The core runs locally with synthetic data. The optional local Ollama/Qwen setup is separate and not bundled; operating hardware and downloaded software have their own licensing and privacy considerations.
+
 ## 🖥️ Local Edition v0.8 — install, sign in, qualify
 
 **No cloud account, purchased API token, mandatory LLM, or AI subscription.** The local edition bundles a guided synthetic LIS qualification journey, five offline-capable advisory agents, traceability/evidence views, a QA draft-review queue and optional local Qwen explanations.
