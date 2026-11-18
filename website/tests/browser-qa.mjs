@@ -12,7 +12,7 @@ import { setTimeout as sleep } from 'node:timers/promises';
 const root=process.cwd();
 const output=join(root,'website','screenshots-preview');
 mkdirSync(output,{recursive:true});
-const site=process.env.SITE_URL||'http://127.0.0.1:8765/HealthQualify/';
+const site=process.env.SITE_URL||'http://127.0.0.1:8765/';
 const local='http://127.0.0.1:8899/';
 const errors=[];
 function assert(cond,msg){if(!cond)throw Error(msg);}
