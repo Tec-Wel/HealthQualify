@@ -43,7 +43,7 @@ jobs:
           SITE_URL=http://127.0.0.1:8765/HealthQualify/ node website/tests/browser-qa.mjs
       - name: Upload actual application and website captures (private artifact)
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: healthqualify-browser-qa-synthetic-screenshots
           path: website/screenshots-preview/

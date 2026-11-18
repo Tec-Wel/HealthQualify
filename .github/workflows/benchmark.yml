@@ -20,7 +20,7 @@ jobs:
       - name: Run three implementations with identical synthetic inputs
         run: python -m benchmarks.compare --repetitions 3 --out benchmark-results.json
       - name: Publish measured machine-readable report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: healthqualify-equal-input-benchmark
           path: benchmark-results.json

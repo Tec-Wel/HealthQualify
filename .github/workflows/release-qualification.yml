@@ -27,7 +27,7 @@ jobs:
           HQ_RELEASE_OUTPUT: ${{ runner.temp }}/release-impact.json
         run: python -m healthqualify.release_ci
       - name: Upload unsigned review package (never approval)
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: qualification-impact-advisory
           path: ${{ runner.temp }}/release-impact.json

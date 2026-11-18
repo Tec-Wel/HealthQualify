@@ -45,7 +45,7 @@ jobs:
             dist/HealthQualifyLocal --help
           fi
       - name: Publish developer-alpha binary bundle
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: healthqualify-local-${{ matrix.os }}
           path: dist/HealthQualifyLocal*
