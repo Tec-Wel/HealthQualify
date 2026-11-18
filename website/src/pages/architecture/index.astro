@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const root=import.meta.env.BASE_URL;
+const components=[
+ {id:'interface',title:'Local Edition & CLI',type:'INTERFACE',desc:'Local loopback dashboard and Python command-line workflows for synthetic qualification demonstrations.',docs:'LOCAL_EDITION_V08/'},
+ {id:'engine',title:'Deterministic Qualification Engine',type:'CORE',desc:'Strict predefined checks, explicit PASS/FAIL/ERROR/NOT_RUN outcomes and requirement-to-test traceability. Does not require any LLM.',docs:'USER_GUIDE/'},
+ {id:'storage',title:'SQLite Workspace & Evidence',type:'LOCAL STORAGE',desc:'Locally stored synthetic systems, protocols, runs, deviations, reviews, evidence digests and audit metadata. Not WORM or regulated record retention.',docs:'VERIFICATION_GUIDE/'},
+ {id:'agents',title:'Five Advisory Investigators',type:'ANALYSIS',desc:'Five scoped, deterministic agents prepare DRAFT investigations. Findings cannot alter underlying test verdicts or approve a release.',docs:'AI_AGENTS_GUIDE/'},
+ {id:'qwen',title:'Optional Local Ollama + Qwen',type:'OPTIONAL',desc:'A separately installed local model may draft explanations only after explicit opt-in. Never required, never authoritative, and live inference quality remains unverified.',docs:'AGENT_RUNTIME_V07/'},
+ {id:'qa',title:'Independent Human QA Review',type:'REVIEW',desc:'A separately authorized reviewer can record limited QA dispositions on advisory observations. This is not a regulated electronic signature.',docs:'LOCAL_EDITION_V08/'}
+];
+---
+<BaseLayout title="Visual architecture explorer" description="Explore HealthQualify's local-first deterministic qualification engine, scoped AI investigators and human review boundaries.">
+  <section class="page-hero"><div class="container"><div class="eyebrow"><span class="live-dot"></span> UNDERSTAND THE SYSTEM</div><h1>Transparent architecture.<br/><em>No hidden approval path.</em></h1><p class="lead">See the boundary between deterministic qualification, optional local inference, evidence storage and independent human decisions.</p></div></section>
+  <section class="section light"><div class="container">
+    <div class="section-intro"><span class="kicker">INTERACTIVE ARCHITECTURE</span><h2>Select a layer to learn how it works.</h2><p>A conceptual illustration of existing developer-alpha modules; not a validated security architecture diagram.</p></div>
+    <div class="architecture-shell">
+      <div class="architecture-flow" aria-label="HealthQualify architecture layers">
+        <button class="architecture-node" type="button" data-component="interface" aria-pressed="true"><span>01</span><strong>Local Edition &amp; CLI</strong><small>Entry point</small></button>
+        <div class="arch-arrow" aria-hidden="true">↓</div>
+        <button class="architecture-node" type="button" data-component="engine" aria-pressed="false"><span>02</span><strong>Deterministic Engine</strong><small>PASS / FAIL / ERROR</small></button>
+        <div class="arch-row"><span class="arch-arrow" aria-hidden="true">↙</span><span class="arch-arrow" aria-hidden="true">↘</span></div>
+        <div class="arch-row nodes"><button class="architecture-node" type="button" data-component="storage" aria-pressed="false"><span>03</span><strong>SQLite &amp; Evidence</strong><small>Local records</small></button><button class="architecture-node" type="button" data-component="agents" aria-pressed="false"><span>04</span><strong>Five Investigators</strong><small>Draft findings</small></button></div>
+        <div class="arch-row"><span class="arch-arrow" aria-hidden="true">↓</span><span class="arch-arrow" aria-hidden="true">↓</span></div>
+        <div class="arch-row nodes"><button class="architecture-node" type="button" data-component="qa" aria-pressed="false"><span>05</span><strong>Human QA Review</strong><small>No automatic approval</small></button><button class="architecture-node optional" type="button" data-component="qwen" aria-pressed="false"><span>06</span><strong>Local Qwen</strong><small>Optional explanations only</small></button></div>
+      </div>
+      <aside class="architecture-detail" aria-live="polite">
+        <span class="kicker" id="arch-type">{components[0].type}</span>
+        <h3 id="arch-title">{components[0].title}</h3>
+        <p id="arch-desc">{components[0].desc}</p>
+        <a class="button outline" id="arch-link" href={root+'docs/'+components[0].docs}>Read technical documentation ↗</a>
+        <div class="notice-panel"><strong>Boundary:</strong> Test verdicts come from deterministic checks; AI output is never a qualification or regulatory approval.</div>
+      </aside>
+    </div>
+  </div></section>
+  <script define:vars={{components,root}}>
+    const buttons=[...document.querySelectorAll('[data-component]')];
+    for(const button of buttons)button.addEventListener('click',()=>{
+      const item=components.find(x=>x.id===button.dataset.component);
+      if(!item)return;
+      buttons.forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
+      document.getElementById('arch-type').textContent=item.type;
+      document.getElementById('arch-title').textContent=item.title;
+      document.getElementById('arch-desc').textContent=item.desc;
+      document.getElementById('arch-link').setAttribute('href',root+'docs/'+item.docs);
+    });
+  </script>
+</BaseLayout>
