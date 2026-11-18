@@ -18,6 +18,8 @@
 
 **Do not infer that Apache-2.0 on the repository relicenses third-party software or model weights.** Model availability and lack of per-token fees do not establish redistribution rights.
 
+The [visual-asset and website dependency audit](docs/VISUAL_ASSET_DEPENDENCY_AUDIT.md) inventories tracked graphics and lockfile declarations. **Do not interpret the preliminary inventory as clearance** of designs, binary distributions or transitive dependency obligations.
+
 ## Automated evidence
 
 The launch-check workflow produces an SPDX SBOM for checked-out repository files and a Python distribution license report for the *CI environment*. Neither alone establishes completeness for packaged binaries, separately installed models or external content. See [public launch checklist](docs/PUBLIC_LAUNCH_READINESS.md) for required human verification.
