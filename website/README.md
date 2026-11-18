@@ -25,7 +25,7 @@ python -m mkdocs build --site-dir website/dist/docs
 python scripts/verify_website_build.py
 ```
 
-Run `cd website && npm test` for the static website contract tests.
+Run `cd website && npm test` for the static website contract tests. GitHub Actions also runs Chromium browser QA at 390px, 768px and 1440px, plus the real local application against temporary synthetic data; screenshots are stored as **private workflow artifacts**. Because the repository remains private and public-launch approvals are pending, HTML meta and robots rules use **noindex / Disallow**. Change those rules only after publication approval.
 
 ## Pages
 
@@ -34,6 +34,9 @@ Run `cd website && npm test` for the static website contract tests.
 - `/agents/` — five source-linked draft investigators
 - `/local-edition/` — offline-first demo instructions
 - `/community/` — contributions, licensing and governance
+- `/demo/` — accessible, static synthetic guided tour with no backend
+- `/architecture/` — keyboard-operable architecture explorer
+- `/showcase/` — links to actual synthetic Local Edition screenshots produced by browser QA
 - `/docs/` — existing MkDocs Material technical documentation with search
 
 **Important:** Relative URLs assume the GitHub Pages repository base path `/HealthQualify/`. An alternate host/base path requires updating Astro and MkDocs together.
