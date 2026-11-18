@@ -13,7 +13,7 @@ jobs:
         with:
           fetch-depth: 2
           persist-credentials: false
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
       - name: Evaluate all five deterministic agents on 30 labeled scenarios
