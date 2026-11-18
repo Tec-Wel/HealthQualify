@@ -20,6 +20,10 @@
 
 The [visual-asset and website dependency audit](docs/VISUAL_ASSET_DEPENDENCY_AUDIT.md) inventories tracked graphics and lockfile declarations. **Do not interpret the preliminary inventory as clearance** of designs, binary distributions or transitive dependency obligations.
 
+## Release evidence fingerprinting
+
+Use [`scripts/create_provenance_manifest.py`](scripts/create_provenance_manifest.py) to record local SHA-256 identities of tracked visual/font assets and selected license/dependency declarations. It does not validate rights, completeness or actual distributed bundles. See [prepublication evidence package](docs/RELEASE_EVIDENCE_PACKAGE.md).
+
 ## Automated evidence
 
 The launch-check workflow produces an SPDX SBOM for checked-out repository files and a Python distribution license report for the *CI environment*. Neither alone establishes completeness for packaged binaries, separately installed models or external content. See [public launch checklist](docs/PUBLIC_LAUNCH_READINESS.md) for required human verification.
