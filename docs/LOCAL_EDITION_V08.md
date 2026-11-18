@@ -30,14 +30,14 @@ These are **unsigned development binaries**, not certified, notarized or indepen
 
 ## Optional Qwen — no paid inference tokens
 
-Install Ollama separately, then download a reviewed Qwen model once:
+Install Ollama separately, then download a model once (the larger example below is optional):
 
 ```bash
 ollama pull qwen3:8b
 python -m healthqualify.local_edition_v08 --allow-local-qwen
 ```
 
-The application checks only `http://127.0.0.1:11434/api/tags` when the user clicks **Check locally installed Qwen**. If the model is present, users may click **Explain with local Qwen** after generating an agent investigation. Only bounded summaries and deterministic source-linked findings are passed to local Ollama. The resulting explanation is **DRAFT_UNVERIFIED** and never changes existing findings, PASS/FAIL, deviations or release approval.
+The application checks only `http://127.0.0.1:11434/api/tags` when the user clicks **Discover installed models**. Select any available Ollama model in the dashboard dropdown, including smaller models such as `qwen3:0.6b` (download separately with `ollama pull qwen3:0.6b`). After generating an investigation, click **Explain with selected local model** on the **Five AI agents** page. No Python source edits are needed. Only bounded summaries and deterministic source-linked findings are passed to local Ollama. The resulting explanation is **DRAFT_UNVERIFIED** and never changes existing findings, PASS/FAIL, deviations or release approval.
 
 The availability check is not a real inference acceptance test. For model evaluation, use `python -m healthqualify.agent_model_probe_v07 --enable-local-ollama --model qwen3:8b --max-cases 30 --out local-model-review.json` and independently review the results. The CI tests mock Ollama, so they do not establish model groundedness.
 
@@ -52,3 +52,9 @@ The availability check is not a real inference acceptance test. For model evalua
 - No internet or LLM is required for the basic synthetic workflow.
 
 Run `python -m unittest tests.test_local_edition_v08 -v` for the HTTP acceptance suite, and `python -m unittest discover -s tests -v` for the entire project.
+
+### Dashboard model selection (v0.9 preview)
+
+Start the local server with `--allow-local-qwen`, open **Local Qwen**, and click **Discover installed models**. The dropdown lists the model names returned from the local Ollama server at `127.0.0.1:11434`. Pick the model you want to use, such as `qwen3:0.6b`, then go to **Five AI agents** and generate an investigation. The **Explain with selected local model** action appears under **Latest investigation** (below the cards). The server verifies the requested name against locally installed models before calling Ollama. No model is automatically downloaded. No cross-session model preference is saved; the selection is local to the browser session.
+
+Only the advisory explanation uses the selected model; deterministic findings, evidence hashes, QA decisions and approval status are unchanged. Small models may be less accurate. Availability and a successful inference request do not establish regulatory acceptability or factual groundedness.

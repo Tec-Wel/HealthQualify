@@ -10,7 +10,7 @@ import tempfile
 import threading
 import unittest
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
 from urllib.request import urlopen
 from healthqualify.local_edition_v08 import LocalServer
 
@@ -146,6 +146,39 @@ class LocalEditionTests(unittest.TestCase):
         self.assertEqual(explained[1]["status"],"DRAFT_UNVERIFIED")
         self.assertFalse(explained[1]["qualification_approved"])
         self.assertTrue(explained[1]["human_review_required"])
+
+    def test_discovery_and_selected_local_model(self):
+        self.bootstrap()
+        self.server.allow_model=True
+        demo=self.request("/api/demo",{})[1]
+        obs=self.request("/api/agent",{
+            "system_id":demo["system"]["id"],"agent":"gap-hunter"})[1]["id"]
+        response=MagicMock()
+        response.read.return_value=json.dumps({"models":[
+            {"name":"qwen3:0.6b"},{"name":"qwen3:1.7b"}]}).encode()
+        response.__enter__.return_value=response
+        with patch("urllib.request.urlopen",return_value=response) as local_call:
+            listing=self.request("/api/model-check",{})[1]
+            self.assertEqual(listing["models"],["qwen3:0.6b","qwen3:1.7b"])
+            self.assertEqual(local_call.call_args.args[0],
+                             "http://127.0.0.1:11434/api/tags")
+            with patch("healthqualify.ai.local_draft",
+                       return_value={"status":"DRAFT_UNVERIFIED","text":"Draft only."}) as draft:
+                result=self.request("/api/model-explain",{
+                    "observation_id":obs,"model":"qwen3:0.6b"})
+                self.assertEqual(result[0],200)
+                self.assertEqual(result[1]["model"],"qwen3:0.6b")
+                self.assertFalse(result[1]["qualification_approved"])
+                self.assertEqual(draft.call_args.args[2],"qwen3:0.6b")
+            self.assertEqual(self.request("/api/model-explain",{
+                "observation_id":obs,"model":"missing:model"})[0],400)
+            self.assertEqual(self.request("/api/model-explain",{
+                "observation_id":obs,"model":"http://evil.test"})[0],400)
+
+    def test_discovery_disabled_without_server_opt_in(self):
+        self.bootstrap()
+        with patch("urllib.request.urlopen",side_effect=AssertionError("Should not call Ollama")):
+            self.assertEqual(self.request("/api/model-check",{})[1]["reason"],"opt_in_required")
 
     def test_css_and_javascript_load_under_strict_csp(self):
         code,html,_=self.request("/")

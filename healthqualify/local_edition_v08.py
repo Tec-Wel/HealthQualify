@@ -11,6 +11,7 @@ import hashlib
 import hmac
 import json
 import os
+import re
 import secrets
 import socket
 import threading
@@ -32,6 +33,28 @@ DEMO_V3=ROOT/"examples"/"synthetic_lis_v3"/"protocol.json"
 UI=Path(__file__).with_name("local_ui_v08.html")
 MODEL="qwen3:8b"
 LIMIT=32*1024
+MODEL_NAME_RE=re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,95}$")
+
+
+def _installed_local_models():
+    """Discover locally installed models only; never download or use remote endpoints."""
+    from urllib.request import urlopen
+    with urlopen("http://127.0.0.1:11434/api/tags",timeout=2) as resp:
+        raw=resp.read(16385)
+    if len(raw)>16384:
+        raise ValueError("Oversized Ollama model listing")
+    listing=json.loads(raw)
+    if not isinstance(listing,dict) or not isinstance(listing.get("models"),list):
+        raise ValueError("Invalid Ollama model listing")
+    names=[]
+    for row in listing["models"][:100]:
+        if isinstance(row,dict):
+            name=row.get("name")
+            if isinstance(name,str) and MODEL_NAME_RE.fullmatch(name) and name not in names:
+                names.append(name)
+    return names
+
+
 
 
 def _read_document(path):
@@ -320,8 +343,15 @@ class LocalHandler(BaseHTTPRequestHandler):
                 # redacted findings are sent to the local pinned Ollama endpoint.
                 if not self.server.allow_model:
                     raise PermissionError("Local Qwen disabled by server policy")
-                if set(data)!={"observation_id"} or not isinstance(data["observation_id"],str):
+                if set(data) not in ({"observation_id"},{"observation_id","model"}):
+                    raise ValueError("Unexpected model explanation fields")
+                if not isinstance(data.get("observation_id"),str):
                     raise ValueError("Existing observation ID required")
+                model=data.get("model",MODEL)
+                if not isinstance(model,str) or not MODEL_NAME_RE.fullmatch(model):
+                    raise ValueError("Invalid model name")
+                if "model" in data and model not in _installed_local_models():
+                    raise ValueError("Selected model not installed locally")
                 runtime=ScopedAgentRuntime(self.server.database)
                 try:
                     row=runtime.conn.execute("""SELECT system_id,agent,report,report_digest
@@ -339,9 +369,9 @@ class LocalHandler(BaseHTTPRequestHandler):
                     if len(explanation_input)>11000:
                         raise ValueError("Agent context is too large")
                     from .ai import local_draft
-                    narrative=local_draft(row["agent"],explanation_input,MODEL,consent=True)
+                    narrative=local_draft(row["agent"],explanation_input,model,consent=True)
                     return self.response(200,{"observation_id":data["observation_id"],
-                        "model":MODEL,"text":narrative["text"],
+                        "model":model,"text":narrative["text"],
                         "status":"DRAFT_UNVERIFIED","human_review_required":True,
                         "qualification_approved":False,
                         "deterministic_report_sha256":row["report_digest"]})
@@ -351,21 +381,15 @@ class LocalHandler(BaseHTTPRequestHandler):
                     raise ValueError("Unexpected input")
                 if not self.server.allow_model:
                     return self.response(200,{"available":False,"reason":"opt_in_required"})
-                # Local, bounded connectivity check. Never download a model.
-                from urllib.request import urlopen
+                # Explicit model discovery only; no model downloads or inference.
                 try:
-                    with urlopen("http://127.0.0.1:11434/api/tags",timeout=2) as resp:
-                        raw=resp.read(16385)
-                    if len(raw)>16384:
-                        raise ValueError("Model registry reply oversized")
-                    listing=json.loads(raw)
-                    names=[m.get("name","") for m in listing.get("models",[])
-                           if isinstance(m,dict)]
-                    return self.response(200,{"available":MODEL in names,
-                        "installed_models":len(names),"target":MODEL,
+                    names=_installed_local_models()
+                    return self.response(200,{"available":bool(names),
+                        "models":names,"installed_models":len(names),"target":MODEL,
                         "notice":"Availability is not evidence of validated inference"})
                 except (OSError,ValueError,TypeError):
-                    return self.response(200,{"available":False,"reason":"ollama_unavailable"})
+                    return self.response(200,{"available":False,"models":[],
+                        "reason":"ollama_unavailable"})
             return self.response(404,{"error":"not_found"})
         except (AuthenticationError,PermissionError):
             self.response(403,{"error":"access_denied"})
