@@ -26,6 +26,7 @@
 - Inspect all **historical commits, branches, tags and hidden/deleted paths** for secrets, confidential code, patient/health data or employer-controlled material. Automated detection can miss undisclosed intellectual property. Remediate and rotate any compromised secrets **before publication**.
 - Verify distribution license compatibility for optional Ollama/model weights and all packaged software. Qwen is **not bundled**.
 - Complete the independent-branding and asset-provenance checklist; removing an inspiration phrase alone does not establish original design or IP clearance.
+- Review the [visual assets and website dependency audit](VISUAL_ASSET_DEPENDENCY_AUDIT.md), resolving unverified authorship, generated screenshot provenance, licensing and similarity questions before public publication.
 - Confirm a private vulnerability intake and confidential community-conduct contact (no addresses have been invented).
 - Test the native UI and installers on Windows, macOS and Linux; GitHub Action help-text smoke tests are insufficient.
 - Approve final README descriptions, disclaimers and regulated intended use with qualified reviewers.
