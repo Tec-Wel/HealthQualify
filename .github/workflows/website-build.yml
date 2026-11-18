@@ -39,6 +39,19 @@ jobs:
       - name: Install Astro with project-local dependencies
         working-directory: website
         run: npm install --no-audit --no-fund
+      - name: Generate dependency lock snapshot for review
+        working-directory: website
+        shell: bash
+        run: |
+          python - <<'PY'
+          import base64
+          from pathlib import Path
+          b=base64.b64encode(Path("package-lock.json").read_bytes()).decode("ascii")
+          print("HQLOCK_START")
+          for i in range(0,len(b),1200):
+              print("HQLOCK_CHUNK "+b[i:i+1200])
+          print("HQLOCK_END")
+          PY
       - name: Run static website contract checks
         working-directory: website
         run: npm test
