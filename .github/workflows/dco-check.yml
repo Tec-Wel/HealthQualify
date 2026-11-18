@@ -18,6 +18,7 @@ jobs:
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
         shell: bash
         run: |
           set -euo pipefail
@@ -40,6 +41,7 @@ jobs:
               print("No PR commits to inspect.")
               sys.exit(0)
           bad = []
+          bot_pr = os.environ.get("PR_AUTHOR") == "dependabot[bot]"
           for sha in commits:
               fmt = "%an%n%ae%n%B"
               info = subprocess.check_output(["git", "show", "-s", f"--format={fmt}", sha], text=True)
@@ -47,7 +49,13 @@ jobs:
               author_name, author_email = lines[0].strip(), lines[1].strip()
               body = "\n".join(lines[2:])
               trailers = re.findall(r"(?im)^Signed-off-by:\s*(.+?)\s*<([^<>\s]+)>\s*$", body)
-              valid = any(name.strip().casefold() == author_name.casefold() and
+              # GitHub-authenticated Dependabot PRs generate automated updates;
+              # do not falsely require a human DCO declaration from the bot.
+              # The exception applies ONLY to bot-authored commits in a PR
+              # whose GitHub PR author is dependabot[bot].
+              recognized_bot = (bot_pr and author_name == "dependabot[bot]" and
+                                author_email == "49699333+dependabot[bot]@users.noreply.github.com")
+              valid = recognized_bot or any(name.strip().casefold() == author_name.casefold() and
                           email.casefold() == author_email.casefold()
                           for name,email in trailers)
               if not valid:
@@ -56,5 +64,5 @@ jobs:
               print("Missing or mismatched author DCO trailers on commits:", ", ".join(bad))
               print("Contributors: use git commit -s and ask a maintainer how to fix existing PR commits.")
               sys.exit(1)
-          print(f"Verified author DCO trailers for {len(commits)} commit(s).")
+          print(f"Verified {len(commits)} PR commit(s): DCO trailers or recognized Dependabot bot identity.")
           PY
