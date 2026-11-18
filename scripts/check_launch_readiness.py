@@ -9,6 +9,8 @@ REQUIRED = {
     "DISCLAIMER.md": ("FDA", "synthetic", "Apache"),
     "NOTICE": ("HealthQualify", "copyright"),
     "THIRD_PARTY_NOTICES.md": ("Qwen", "Ollama", "license"),
+    "TRADEMARK_POLICY.md": ("Apache", "owner", "brand"),
+    "docs/OWNER_IP_RELEASE_DECISION.md": ("NOT APPROVED", "patent", "PENDING"),
     "CODE_OF_CONDUCT.md": ("Reporting", "harassment"),
     "GOVERNANCE.md": ("public", "maintainers"),
     "SECURITY.md": ("Report vulnerabilities",),
