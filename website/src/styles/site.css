@@ -1,4 +1,4 @@
-/* HealthQualify Web Experience — original MIT/Apache-compatible CSS. No remote fonts or trackers. */
+/* HealthQualify website styling. Rights and provenance require documented review before publication. No font files are bundled here. */
 :root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-synthesis:none;color:#193145;background:#fff;--navy:#0a1729;--navy-2:#132a42;--teal:#0b8a79;--teal-dark:#086d64;--cream:#eaf7f4;--ink:#152e40;--muted:#5c7080;--border:#dce8e9}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
