@@ -1,0 +1,53 @@
+name: Website visual QA and real synthetic screenshots
+on:
+  pull_request:
+    paths:
+      - 'website/**'
+      - '.github/workflows/web-browser-qa.yml'
+      - 'healthqualify/local_edition_v08.py'
+      - 'healthqualify/local_ui_v08.*'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  visual:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Astro and Playwright OSS
+        run: |
+          cd website
+          npm install --no-audit --no-fund
+          npm install --no-save --package-lock=false 'playwright@^1.56.0'
+          npx playwright install --with-deps chromium
+      - name: Build Astro site
+        run: cd website && npm run build
+      - name: Test real browsers at three viewports and capture synthetic app
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/preview/HealthQualify"
+          cp -R website/dist/. "$RUNNER_TEMP/preview/HealthQualify/"
+          python -m http.server 8765 --bind 127.0.0.1 --directory "$RUNNER_TEMP/preview" > /tmp/hq-browser-http.log 2>&1 &
+          echo $! > /tmp/hq-browser-http.pid
+          trap 'kill "$(cat /tmp/hq-browser-http.pid)" 2>/dev/null || true' EXIT
+          SITE_URL=http://127.0.0.1:8765/HealthQualify/ node website/tests/browser-qa.mjs
+      - name: Upload actual application and website captures (private artifact)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: healthqualify-browser-qa-synthetic-screenshots
+          path: website/screenshots-preview/
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Publication remains gated
+        run: echo 'Browser screenshots are from synthetic-only test data. This workflow does not deploy public Pages.' >> "$GITHUB_STEP_SUMMARY"
