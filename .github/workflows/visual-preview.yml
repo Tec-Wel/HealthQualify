@@ -23,7 +23,7 @@ jobs:
       - name: Capture real synthetic dashboard (no Qwen)
         run: python scripts/capture_agent_dashboard.py --output-dir .healthqualify/screenshots
       - name: Upload reviewed-later synthetic captures
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: healthqualify-synthetic-dashboard-screenshots
           path: .healthqualify/screenshots/*.png

@@ -25,13 +25,13 @@ jobs:
         run: python -m healthqualify.agent_ci_v07
       - name: Publish main-change advisory
         if: github.event_name == 'push'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: healthqualify-five-agent-main-advisory
           path: agent-main-advisories.json
           retention-days: 30
       - name: Publish unsigned evaluation report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: healthqualify-agent-deterministic-evaluation
           path: agent-evaluation.json

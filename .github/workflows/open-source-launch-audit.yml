@@ -49,7 +49,7 @@ jobs:
           format: spdx-json
           output-file: healthqualify-source.spdx.json
           upload-artifact: false
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: healthqualify-preliminary-source-sbom
           path: healthqualify-source.spdx.json
