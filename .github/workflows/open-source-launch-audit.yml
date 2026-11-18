@@ -71,6 +71,7 @@ jobs:
       - name: Scan Git history (human triage required for any detection)
         shell: bash
         run: |
+          set +e
           set -uo pipefail
           /tmp/gitleaks git --no-banner --redact --exit-code 1 \
             --report-format json --report-path /tmp/healthqualify-gitleaks.json . 
