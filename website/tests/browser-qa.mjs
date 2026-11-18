@@ -2,6 +2,7 @@
  * Runs only against loopback servers with synthetic fixtures.
  */
 import { chromium } from 'playwright';
+import AxeBuilder from '@axe-core/playwright';
 import { spawn } from 'node:child_process';
 import { mkdtempSync, mkdirSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -34,6 +35,9 @@ try{
     assert(await page.locator('a[href*="demo/"]').count()>0,'Demo link missing');
     const overflow=await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+2);
     assert(!overflow,'Horizontal layout overflow at '+viewport.name);
+    const audit=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21a','wcag21aa']).analyze();
+    const high=audit.violations.filter(v=>v.impact==='serious'||v.impact==='critical');
+    assert(high.length===0,'Accessibility issues at '+viewport.name+': '+high.map(v=>v.id+'('+v.nodes.length+')').join(', '));
     await page.screenshot({path:join(output,'website-'+viewport.name+'.png'),fullPage:true});
     await page.goto(site+'demo/',{waitUntil:'networkidle'});
     await page.locator('#tour-next').click();
