@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const root=import.meta.env.BASE_URL;
+---
+<BaseLayout title="Product showcase" description="Explore HealthQualify's synthetic qualification workflow and find actual developer-alpha screenshots captured by automated browser testing.">
+<section class="page-hero"><div class="container"><div class="eyebrow"><span class="live-dot"></span> PRODUCT SHOWCASE</div><h1>See the workflow.<br/><em>Verify what is real.</em></h1><p class="lead">Explore our synthetic demonstration in-browser and access real Local Edition screenshots generated automatically on GitHub Actions. Illustrations are clearly distinguished from application captures.</p><div class="cta-row"><a class="button primary" href={root+'demo/'}>Explore interactive tour ↗</a><a class="button ghost" href="https://github.com/Tec-Wel/HealthQualify/actions/workflows/web-browser-qa.yml">Browse captured screenshots →</a></div></div></section>
+<section class="section light"><div class="container"><div class="section-intro"><span class="kicker">VERIFIED FROM LOCAL APPLICATION</span><h2>Actual screen captures, synthetic data.</h2><p>The browser QA workflow launches HealthQualify Local Edition on loopback, creates a temporary synthetic admin workspace, executes a seeded qualification, then captures the real interface. The screenshots are available in the workflow's downloadable artifact once a successful run finishes.</p></div>
+<div class="steps-grid">
+<article class="step-card"><span>01</span><h3>Local overview</h3><p>Actual `actual-local-overview.png` capture after first-run administrator setup.</p></article>
+<article class="step-card"><span>02</span><h3>Qualification results</h3><p>Actual `actual-local-qualification.png` capture showing a seeded technical run.</p></article>
+<article class="step-card"><span>03</span><h3>Five investigators</h3><p>Actual `actual-local-agents.png` capture from the local agent dashboard.</p></article>
+<article class="step-card"><span>04</span><h3>Visual QA</h3><p>Website, tour and architecture screenshots at mobile, tablet and desktop viewports.</p></article>
+</div>
+<div class="notice-panel"><strong>Availability:</strong> These are downloadable GitHub Actions artifacts, not live embedded product screenshots. A GitHub sign-in may be necessary while the repository remains private. Do not present CSS illustrations as genuine software captures.</div>
+<a class="button dark" href="https://github.com/Tec-Wel/HealthQualify/actions/workflows/web-browser-qa.yml">View browser QA and screenshots ↗</a>
+</div></section>
+</BaseLayout>
