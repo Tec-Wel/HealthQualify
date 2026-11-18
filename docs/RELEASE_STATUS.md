@@ -11,7 +11,7 @@
 ---
 
 
-**v0.4 additions:** PBKDF2 identity, role-gated short-lived sessions, authenticated local API, technical QA review attestations, AES-256-GCM encrypted exports, Ed25519 integrity signatures, opt-in approved-origin HTTPS FHIR checks, bounded MLLP framing, offline DICOM metadata and passive device snapshot inspections, minimized persisted observations, and fail-closed regulated release gates. See [Security & Interoperability v0.4](SECURITY_INTEROP_V04.md). **Important:** This release is not a complete regulated-production platform. All features below are independently authored HealthQualify proof-of-concepts and developer tools. Do not use on PHI or for a regulated approval decision.
+**v0.4 additions:** PBKDF2 identity, role-gated short-lived sessions, authenticated local API, technical QA review attestations, AES-256-GCM encrypted exports, Ed25519 integrity signatures, opt-in approved-origin HTTPS FHIR checks, bounded MLLP framing, offline DICOM metadata and passive device snapshot inspections, minimized persisted observations, and fail-closed regulated release gates. See [Security & Interoperability v0.4](SECURITY_INTEROP_V04.md). **Important:** This release is not a complete regulated-production platform. The features below are HealthQualify project proof-of-concepts and developer tools; source, asset ownership and applicable licenses require verification before public release. Do not use on PHI or for a regulated approval decision.
 
 | Requested module | Built now | Still required for production |
 |---|---|---|
@@ -58,7 +58,7 @@ python -m healthqualify.appcli verify-seal /tmp/hq-report
 Keep the key external to the report directory. This verifies against a shared secret; it is **not** a digital signature, Part 11 electronic signature, or proof of regulatory approval.
 
 ## Development and compliance boundaries
-- HealthQualify code is independently developed; third-party license obligations must be reviewed before reusing external code.
+- The legal provenance and ownership of project-developed components remain subject to documented review; third-party license obligations must be verified before reuse or redistribution.
 - No copyrighted GAMP 5 text is redistributed.
 - Every authoritative qualification decision is human-controlled under a separately established quality process.
 - Hashes and shared-secret receipts do not alone create immutable regulated records.
